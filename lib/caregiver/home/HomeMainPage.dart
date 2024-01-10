@@ -18,7 +18,7 @@ class _HomeMainPageWidgetState extends State<HomeMainPageWidget> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/background.png'),
+            image: AssetImage('assets/images/background.png'),
             fit: BoxFit.cover,
           ),
         ),
@@ -41,7 +41,7 @@ class _HomeMainPageWidgetState extends State<HomeMainPageWidget> {
                         color: Colors.white))
               ],
             )),
-            Container(child: Image.asset('assets/logo_only.png')),
+            Container(child: Image.asset('assets/iamges/logo_only.png')),
             Container(
                 child: Text("Your Caring Recipient : Anna Waslon",
                     style: TextStyle(

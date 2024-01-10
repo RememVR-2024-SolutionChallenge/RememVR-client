@@ -18,13 +18,13 @@ class _StartPageWidgetState extends State<StartPageWidget> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/background.png'),
+            image: AssetImage('assets/images/background.png'),
             fit: BoxFit.cover,
           ),
         ),
         child: Center(
             child: Image.asset(
-          "assets/logo.png",
+          "assets/images/logo.png",
           width: 395,
           height: 110,
         )),

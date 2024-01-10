@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:remember_me/auth/CompleteSelectionPage.dart';
+import 'package:remember_me/auth/CompleteSignUpPage.dart';
 import 'package:remember_me/auth/LoginPage.dart';
 import 'package:remember_me/auth/StartPage.dart';
 import 'package:remember_me/caregiver/NavigatonPage.dart';
@@ -14,7 +16,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: "main",
-      home: NavigationPageWidget(),
+      home: LoginPageWidget(),
     );
   }
 }
