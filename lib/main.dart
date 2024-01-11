@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:remember_me/LoadingPage.dart';
 import 'package:remember_me/auth/CompleteSelectionPage.dart';
 import 'package:remember_me/auth/CompleteSignUpPage.dart';
 import 'package:remember_me/auth/LoginPage.dart';
@@ -16,7 +17,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: "main",
-      home: LoginPageWidget(),
+      home: LoadingPageWidget(),
     );
   }
 }

@@ -56,8 +56,8 @@ class _SelectUserTypePageWidgetState extends State<SelectUserTypePageWidget> {
                     child: Container(
                         margin: EdgeInsets.only(right: 15),
                         alignment: Alignment.center,
-                        width: MediaQuery.of(context).size.width * 0.3,
-                        height: MediaQuery.of(context).size.height * 0.35,
+                        width: MediaQuery.of(context).size.width * 0.38,
+                        height: MediaQuery.of(context).size.height * 0.3,
                         decoration: ShapeDecoration(
                           gradient: LinearGradient(
                             colors: [
@@ -88,8 +88,8 @@ class _SelectUserTypePageWidgetState extends State<SelectUserTypePageWidget> {
                 Container(
                     margin: EdgeInsets.only(left: 15),
                     alignment: Alignment.center,
-                    width: MediaQuery.of(context).size.width * 0.3,
-                    height: MediaQuery.of(context).size.height * 0.35,
+                    width: MediaQuery.of(context).size.width * 0.38,
+                    height: MediaQuery.of(context).size.height * 0.3,
                     decoration: ShapeDecoration(
                       gradient: LinearGradient(
                         colors: [

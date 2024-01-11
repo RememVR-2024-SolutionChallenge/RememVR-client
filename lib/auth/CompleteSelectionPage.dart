@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:remember_me/auth/SelectUserTypePage.dart';
+import 'package:remember_me/auth/SendMailPage.dart';
 
 class CompleteSelectionPageWidget extends StatefulWidget {
   const CompleteSelectionPageWidget({super.key});
@@ -43,10 +44,16 @@ class _CompleteSelectionPageWidgetState
             ),
           ),
           GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SendMailPageWidget()));
+              },
               child: Container(
                   margin: EdgeInsets.only(top: 15),
                   alignment: Alignment.center,
-                  width: MediaQuery.of(context).size.width * 0.4,
+                  width: MediaQuery.of(context).size.width * 0.5,
                   height: MediaQuery.of(context).size.height * 0.05,
                   decoration: ShapeDecoration(
                     color: Color(0xff4769A1),

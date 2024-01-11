@@ -38,8 +38,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
               padding: EdgeInsets.only(bottom: 10),
               child: Image.asset(
                 "assets/images/logo.png",
-                width: 395,
-                height: 110,
+                width: MediaQuery.of(context).size.width * 0.9,
+                height: MediaQuery.of(context).size.height * 0.15,
               ),
             ),
             Container(
@@ -61,7 +61,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                           builder: (context) => CompleteSignUpPageWidget()));
                 },
                 child: Container(
-                    width: MediaQuery.of(context).size.width * 0.55,
+                    width: MediaQuery.of(context).size.width * 0.7,
                     height: MediaQuery.of(context).size.height * 0.08,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
