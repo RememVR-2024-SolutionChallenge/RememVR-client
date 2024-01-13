@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:remember_me/auth/CompleteSelectionPage.dart';
+import 'package:remember_me/pages/auth/CompleteSelectionPage.dart';
 
 class SelectUserTypePageWidget extends StatefulWidget {
   const SelectUserTypePageWidget({super.key});

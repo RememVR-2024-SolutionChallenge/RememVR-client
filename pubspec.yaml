@@ -7,9 +7,13 @@ environment:
   sdk: '>=3.2.3 <4.0.0'
 
 dependencies:
+  provider: ^6.1.1
+  shared_preferences: any
+  flutter_secure_storage: ^5.0.2
   dio: ^5.4.0
   flutter:
     sdk: flutter
+  flutter_widget_from_html: ^0.14.11
 
 dev_dependencies:
   flutter_test:

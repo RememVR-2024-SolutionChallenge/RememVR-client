@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:remember_me/auth/SelectUserTypePage.dart';
-import 'package:remember_me/auth/VerifyCodePage.dart';
+import 'package:remember_me/pages/auth/SelectUserTypePage.dart';
+import 'package:remember_me/pages/auth/VerifyCodePage.dart';
 
 class SendMailPageWidget extends StatefulWidget {
   const SendMailPageWidget({super.key});

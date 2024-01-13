@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:remember_me/auth/SelectUserTypePage.dart';
+import 'package:remember_me/pages/auth/SelectUserTypePage.dart';
 
 class FinishRegisterationPageWidget extends StatefulWidget {
   const FinishRegisterationPageWidget({super.key});
@@ -15,12 +15,6 @@ class _FinishRegisterationPageWidgetState
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 2), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => SelectUserTypePageWidget()),
-      );
-    });
   }
 
   @override
@@ -34,11 +28,11 @@ class _FinishRegisterationPageWidgetState
           ),
         ),
         child: Center(
-            child: SizedBox(
-          width: 237,
-          height: 33,
+            child: Container(
+          // width: MediaQuery.of(context).size.width * 0.5,
+          // height:MediaQuery.of(context),
           child: Text(
-            'Care Recipient\nRegistered',
+            'Care Recipient\nRegistered!',
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Color(0xFFDCDCE8),

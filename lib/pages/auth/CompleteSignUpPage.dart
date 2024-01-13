@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:remember_me/auth/SelectUserTypePage.dart';
+import 'package:remember_me/pages/auth/SelectUserTypePage.dart';
 
 class CompleteSignUpPageWidget extends StatefulWidget {
   const CompleteSignUpPageWidget({super.key});

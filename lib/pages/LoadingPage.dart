@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:remember_me/pages/auth/FinishRegisterationPage.dart';
 import 'dart:async';
 
-import 'package:remember_me/auth/SelectUserTypePage.dart';
+import 'package:remember_me/pages/auth/SelectUserTypePage.dart';
 
 class LoadingPageWidget extends StatefulWidget {
   const LoadingPageWidget({super.key});
@@ -33,6 +34,13 @@ class _LoadingPageWidgetState extends State<LoadingPageWidget>
       duration: Duration(seconds: 2),
     );
     _startTimer();
+    Timer(Duration(seconds: 6), () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) => FinishRegisterationPageWidget()),
+      );
+    });
   }
 
   void _startTimer() {

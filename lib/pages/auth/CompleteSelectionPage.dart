@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:remember_me/auth/SelectUserTypePage.dart';
-import 'package:remember_me/auth/SendMailPage.dart';
+import 'package:remember_me/pages/auth/SelectUserTypePage.dart';
+import 'package:remember_me/pages/auth/SendMailPage.dart';
 
 class CompleteSelectionPageWidget extends StatefulWidget {
   const CompleteSelectionPageWidget({super.key});

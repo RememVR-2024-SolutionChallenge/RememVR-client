@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:remember_me/caregiver/beloved/BelovedMainPage.dart';
-import 'package:remember_me/caregiver/home/HomeMainPage.dart';
-import 'package:remember_me/caregiver/mypage/MyMainPage.dart';
-import 'package:remember_me/caregiver/vr/VrMainPage.dart';
+import 'package:remember_me/pages/caregiver/beloved/BelovedMainPage.dart';
+import 'package:remember_me/pages/caregiver/home/HomeMainPage.dart';
+import 'package:remember_me/pages/caregiver/mypage/MyMainPage.dart';
+import 'package:remember_me/pages/caregiver/vr/VrMainPage.dart';
 
 class NavigationPageWidget extends StatefulWidget {
   const NavigationPageWidget({super.key});
