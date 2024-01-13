@@ -11,7 +11,7 @@ class NavigationPageWidget extends StatefulWidget {
 }
 
 class _NavigationPageWidgetState extends State<NavigationPageWidget> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
   @override
   void initState() {
     super.initState();
@@ -35,8 +35,16 @@ class _NavigationPageWidgetState extends State<NavigationPageWidget> {
         body: SafeArea(
           child: _widgetOptions.elementAt(_selectedIndex),
         ),
-        bottomNavigationBar: Container(
+        bottomNavigationBar: ClipRRect(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30.0),
+            topRight: Radius.circular(30.0),
+            bottomLeft: Radius.circular(30.0),
+            bottomRight: Radius.circular(30.0),
+          ),
           child: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            backgroundColor: Color(0xff544A87),
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(Icons.home, size: 44),

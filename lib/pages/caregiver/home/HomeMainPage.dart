@@ -41,7 +41,7 @@ class _HomeMainPageWidgetState extends State<HomeMainPageWidget> {
                         color: Colors.white))
               ],
             )),
-            Container(child: Image.asset('assets/iamges/logo_only.png')),
+            Container(child: Image.asset('assets/images/logo_only.png')),
             Container(
                 child: Text("Your Caring Recipient : Anna Waslon",
                     style: TextStyle(
