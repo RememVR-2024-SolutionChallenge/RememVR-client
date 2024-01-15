@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:remember_me/pages/caregiver/vr/VrQueuePage.dart';
 
 class VrMainPageWidget extends StatefulWidget {
   const VrMainPageWidget({super.key});
@@ -87,6 +88,12 @@ class _VrMainPageWidgetState extends State<VrMainPageWidget> {
                             borderRadius: BorderRadius.circular(30),
                             color: Color(0x33ffffff)))),
                 GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => VrQueuePageWidget()));
+                    },
                     child: Container(
                         child: Text("contents in queue",
                             style: TextStyle(
