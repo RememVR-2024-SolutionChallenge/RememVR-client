@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:remember_me/pages/caregiver/vr/VrAvatarCompletionPage.dart';
 
-class VrAvatarPageWidget extends StatefulWidget {
-  const VrAvatarPageWidget({super.key});
+class VrAvatarAlertPageWidget extends StatefulWidget {
+  const VrAvatarAlertPageWidget({super.key});
   @override
-  _VrAvatarPageWidgetState createState() => _VrAvatarPageWidgetState();
+  _VrAvatarAlertPageWidgetState createState() =>
+      _VrAvatarAlertPageWidgetState();
 }
 
-class _VrAvatarPageWidgetState extends State<VrAvatarPageWidget> {
+class _VrAvatarAlertPageWidgetState extends State<VrAvatarAlertPageWidget> {
   @override
   void initState() {
     super.initState();
@@ -22,33 +24,81 @@ class _VrAvatarPageWidgetState extends State<VrAvatarPageWidget> {
               fit: BoxFit.cover,
             ),
           ),
-          child: Center(
-              child: Container(
-                  child: Column(children: [
-                    Text("Reminiscence therapy",
-                        style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.w700,
-                        )),
-                    Text(
-                        "VR videos can help patients recall past memories. Patients can experience specific periods of an individual's appearance and particular locations in virtual reality. This is based on the effectiveness of reminiscence therapy. Please upload detailed photos of the desired person and specific location photos for implementation in virtual reality.",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                        )),
-                    InkWell(
-                        child: Container(
-                            child: Text("Continue",
+          child: Stack(children: [
+            Center(
+                child: Stack(
+              children: [
+                Container(
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(top: 40),
+                            child: Text("Create Avatar",
                                 style: TextStyle(
-                                  fontSize: 20,
+                                  color: Colors.white,
+                                  fontSize: 17,
                                   fontWeight: FontWeight.w700,
-                                ))))
-                  ]),
-                  width: 288,
-                  height: 469,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Color(0x33ffffff))))),
+                                )),
+                          ),
+                          Container(
+                            padding:
+                                EdgeInsets.only(top: 20, left: 30, right: 30),
+                            child: Text(
+                                "Remember Me generates avatars representing the patient's cherished individuals. These avatars, combined with location VR, offer the patient an immersive recollection of memories. Remember Me assists in safeguarding the continuity of the patient's memories. Please upload photos of the individuals you wish to transform into avatars, ensuring they are captured from various angles.",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                )),
+                          ),
+                          InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            VrAvatarCompletionPageWidget()));
+                              },
+                              child: Container(
+                                  padding: EdgeInsets.only(
+                                      top: 10, bottom: 10, left: 60, right: 60),
+                                  margin: EdgeInsets.only(top: 20),
+                                  child: Text("Upload Photos",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w700,
+                                      )),
+                                  decoration: ShapeDecoration(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(40),
+                                    ),
+                                    color: Color(0xff76749F),
+                                    shadows: [
+                                      BoxShadow(
+                                        color: Color(0x3F000000),
+                                        blurRadius: 4,
+                                        offset: Offset(0, 3),
+                                        spreadRadius: 0,
+                                      )
+                                    ],
+                                  )))
+                        ]),
+                    width: 288,
+                    height: 519,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Color(0x33ffffff)))
+              ],
+            )),
+            Positioned(
+                top: 100,
+                left: 150,
+                child: Image.asset(
+                  "assets/images/logo1.png",
+                )),
+          ])),
     );
   }
 }

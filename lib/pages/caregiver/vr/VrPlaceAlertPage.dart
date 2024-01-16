@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:remember_me/pages/caregiver/vr/VrPlaceCompletionPage.dart';
 
-class VrAvatarPageWidget extends StatefulWidget {
-  const VrAvatarPageWidget({super.key});
+class VrPlaceAlertPageWidget extends StatefulWidget {
+  const VrPlaceAlertPageWidget({super.key});
   @override
-  _VrAvatarPageWidgetState createState() => _VrAvatarPageWidgetState();
+  _VrPlaceAlertPageWidgetState createState() => _VrPlaceAlertPageWidgetState();
 }
 
-class _VrAvatarPageWidgetState extends State<VrAvatarPageWidget> {
+class _VrPlaceAlertPageWidgetState extends State<VrPlaceAlertPageWidget> {
   @override
   void initState() {
     super.initState();
@@ -22,33 +23,81 @@ class _VrAvatarPageWidgetState extends State<VrAvatarPageWidget> {
               fit: BoxFit.cover,
             ),
           ),
-          child: Center(
-              child: Container(
-                  child: Column(children: [
-                    Text("Create Avatar",
-                        style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.w700,
-                        )),
-                    Text(
-                        "VR videos can help patients recall past memories. Patients can experience specific periods of an individual's appearance and particular locations in virtual reality. This is based on the effectiveness of reminiscence therapy. Please upload detailed photos of the desired person and specific location photos for implementation in virtual reality.",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                        )),
-                    InkWell(
-                        child: Container(
-                            child: Text("Continue",
+          child: Stack(children: [
+            Center(
+                child: Stack(
+              children: [
+                Container(
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(top: 20),
+                            child: Text("Create Place VR",
                                 style: TextStyle(
-                                  fontSize: 20,
+                                  color: Colors.white,
+                                  fontSize: 17,
                                   fontWeight: FontWeight.w700,
-                                ))))
-                  ]),
-                  width: 288,
-                  height: 469,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Color(0x33ffffff))))),
+                                )),
+                          ),
+                          Container(
+                            padding:
+                                EdgeInsets.only(top: 20, left: 30, right: 30),
+                            child: Text(
+                                "Remember Me creates VR experiences encapsulating the places intertwined with a patient's memories. We all live with our unique sense of places, as visiting specific locations can evoke memories from particular times. Places in VR will make them feel as if they are physically present in the location.Please upload several photos that showcase distinctive features of the location. The more detailed and specific the images of objects and the place, the better.",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                )),
+                          ),
+                          InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            VrPlaceCompletionPageWidget()));
+                              },
+                              child: Container(
+                                  padding: EdgeInsets.only(
+                                      top: 10, bottom: 10, left: 60, right: 60),
+                                  margin: EdgeInsets.only(top: 20),
+                                  child: Text("Upload Photos",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w700,
+                                      )),
+                                  decoration: ShapeDecoration(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(40),
+                                    ),
+                                    color: Color(0xff76749F),
+                                    shadows: [
+                                      BoxShadow(
+                                        color: Color(0x3F000000),
+                                        blurRadius: 4,
+                                        offset: Offset(0, 3),
+                                        spreadRadius: 0,
+                                      )
+                                    ],
+                                  )))
+                        ]),
+                    width: 288,
+                    height: 559,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Color(0x33ffffff)))
+              ],
+            )),
+            Positioned(
+                top: 50,
+                left: 150,
+                child: Image.asset(
+                  "assets/images/logo1.png",
+                )),
+          ])),
     );
   }
 }

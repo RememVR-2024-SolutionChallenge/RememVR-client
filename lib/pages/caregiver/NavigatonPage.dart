@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:remember_me/pages/caregiver/beloved/BelovedMainPage.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:remember_me/pages/caregiver/records/BelovedMainPage.dart';
 import 'package:remember_me/pages/caregiver/home/HomeMainPage.dart';
-import 'package:remember_me/pages/caregiver/mypage/MyMainPage.dart';
+import 'package:remember_me/pages/caregiver/settings/SettingMainPage.dart';
 import 'package:remember_me/pages/caregiver/vr/VrMainPage.dart';
 
 class NavigationPageWidget extends StatefulWidget {
@@ -11,68 +13,70 @@ class NavigationPageWidget extends StatefulWidget {
 }
 
 class _NavigationPageWidgetState extends State<NavigationPageWidget> {
-  int _selectedIndex = 1;
+  PersistentTabController _controller =
+      PersistentTabController(initialIndex: 1);
+
+  List<Widget> _widgetOptions() {
+    return [
+      HomeMainPageWidget(),
+      VrMainPageWidget(),
+      BelovedMainPageWidget(),
+      SettingPageWidget()
+    ];
+  }
+
+  List<PersistentBottomNavBarItem> _navBarItems() {
+    return [
+      PersistentBottomNavBarItem(
+        activeColorSecondary: Colors.white,
+        activeColorPrimary: Color(0xff9292b7),
+        icon: Image.asset("assets/images/home_icon.png"),
+        title: "Home",
+      ),
+      PersistentBottomNavBarItem(
+        activeColorSecondary: Colors.white,
+        activeColorPrimary: Color(0xff9292b7),
+        icon: Image.asset("assets/images/vr_icon.png"),
+        title: "VR",
+      ),
+      PersistentBottomNavBarItem(
+        activeColorPrimary: Color(0xff9292b7),
+        activeColorSecondary: Colors.white,
+        icon: Image.asset("assets/images/records_icon.png"),
+        title: "beloved",
+      ),
+      PersistentBottomNavBarItem(
+        activeColorPrimary: Color(0xff9292b7),
+        activeColorSecondary: Colors.white,
+        icon: Image.asset("assets/images/settings_icon.png"),
+        title: "Mypage",
+      ),
+    ];
+  }
+
   @override
   void initState() {
     super.initState();
   }
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    final List<Widget> _widgetOptions = <Widget>[
-      HomeMainPageWidget(),
-      VrMainPageWidget(),
-      BelovedMainPageWidget(),
-      MyMainPageWidget()
-    ];
     return Scaffold(
-        body: SafeArea(
-          child: _widgetOptions.elementAt(_selectedIndex),
+      body: PersistentTabView(
+        decoration: NavBarDecoration(
+          borderRadius: BorderRadius.circular(30.0),
+          colorBehindNavBar: CupertinoColors.black,
         ),
-        bottomNavigationBar: ClipRRect(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(30.0),
-            topRight: Radius.circular(30.0),
-            bottomLeft: Radius.circular(30.0),
-            bottomRight: Radius.circular(30.0),
-          ),
-          child: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            backgroundColor: Color(0xff544A87),
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home, size: 44),
-                activeIcon: Icon(Icons.home_filled, size: 44),
-                label: "Home",
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.video_call, size: 44),
-                activeIcon: Icon(Icons.video_call_outlined, size: 44),
-                label: "VR",
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.image, size: 44),
-                activeIcon: Icon(Icons.image_outlined, size: 44),
-                label: "beloved",
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.info, size: 44),
-                activeIcon: Icon(Icons.info_outline, size: 44),
-                label: "Mypage",
-              ),
-            ],
-            currentIndex: _selectedIndex,
-            selectedItemColor: Colors.black,
-            unselectedItemColor: const Color(0xff757575),
-            onTap: _onItemTapped,
-            selectedLabelStyle: TextStyle(fontFamily: "SUITE"),
-          ),
-        ));
+        context,
+        controller: _controller,
+        screens: _widgetOptions(),
+        items: _navBarItems(),
+        backgroundColor: Color(0xff554A87),
+        hideNavigationBarWhenKeyboardShows: true,
+        popAllScreensOnTapOfSelectedTab: true,
+        navBarStyle: NavBarStyle.style7,
+        navBarHeight: 65,
+      ),
+    );
   }
 }

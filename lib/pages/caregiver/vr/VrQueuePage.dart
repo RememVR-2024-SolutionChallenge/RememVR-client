@@ -34,7 +34,7 @@ class _VrQueuePageWidgetState extends State<VrQueuePageWidget> {
               ? Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    TopBar(),
+                    TopBar(content: "Contents in Queue"),
                     Center(
                         child: Container(
                             width: 180,
@@ -51,7 +51,7 @@ class _VrQueuePageWidgetState extends State<VrQueuePageWidget> {
                 )
               : Column(
                   children: [
-                    TopBar(),
+                    TopBar(content: "Contents in Queue"),
                     Expanded(
                         child: ListView.builder(
                       shrinkWrap: true,
@@ -68,7 +68,8 @@ class _VrQueuePageWidgetState extends State<VrQueuePageWidget> {
 }
 
 class TopBar extends StatelessWidget {
-  const TopBar({super.key});
+  const TopBar({super.key, required this.content});
+  final String content;
 
   @override
   Widget build(BuildContext context) {
@@ -79,8 +80,10 @@ class TopBar extends StatelessWidget {
           children: [
             Icon(Icons.arrow_back_ios, color: Color(0xffDCDCE8)),
             Container(
+                alignment: Alignment.center,
+                width: 300,
                 margin: EdgeInsets.only(left: 20, right: 20),
-                child: Text("Contents in Queue",
+                child: Text(content,
                     style: TextStyle(
                       color: Color(0xffDCDCE8),
                       fontSize: 30,

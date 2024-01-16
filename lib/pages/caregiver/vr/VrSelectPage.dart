@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:remember_me/pages/LoadingPage.dart';
+import 'package:remember_me/pages/caregiver/vr/VrAvatarAlertPage.dart';
+import 'package:remember_me/pages/caregiver/vr/VrPlaceAlertPage.dart';
 
 class VrSelectPageWidget extends StatefulWidget {
   const VrSelectPageWidget({super.key});
@@ -112,6 +114,12 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
                       },
                     )),
                 GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => VrAvatarAlertPageWidget()));
+                    },
                     child: Container(
                         margin: EdgeInsets.only(bottom: 40),
                         alignment: Alignment.center,
@@ -217,6 +225,12 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
                       },
                     )),
                 GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => VrPlaceAlertPageWidget()));
+                    },
                     child: Container(
                         margin: EdgeInsets.only(bottom: 40),
                         alignment: Alignment.center,
@@ -249,66 +263,78 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
                     showDialog(
                         context: context,
                         builder: (BuildContext context) {
-                          return AlertDialog(
-                            contentPadding: EdgeInsets.all(10.0),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30.0)),
-                            title: Container(
-                                padding: EdgeInsets.only(top: 40),
-                                alignment: Alignment.center,
-                                child: Text("Warning",
-                                    style: TextStyle(
-                                      fontSize: 23,
-                                      fontWeight: FontWeight.w700,
-                                    ))),
-                            content: Container(
-                              width: 120, // 원하는 폭으로 조절
-                              height: 100,
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Container(
-                                      padding:
-                                          EdgeInsets.only(left: 30, right: 30),
-                                      child: Text(
-                                          !isAvatarSelected
-                                              ? "Please choose at least 1 avatar generated in the row."
-                                              : "Please choose 1 place generated in the row.",
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w400,
-                                          )))
-                                ],
+                          return Stack(children: [
+                            AlertDialog(
+                              contentPadding: EdgeInsets.all(10.0),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0)),
+                              title: Container(
+                                  padding: EdgeInsets.only(top: 40),
+                                  alignment: Alignment.center,
+                                  child: Text("Warning",
+                                      style: TextStyle(
+                                        color: Color(0xff135297),
+                                        fontSize: 23,
+                                        fontWeight: FontWeight.w700,
+                                      ))),
+                              content: Container(
+                                width: 120, // 원하는 폭으로 조절
+                                height: 100,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Container(
+                                        padding: EdgeInsets.only(
+                                            left: 30, right: 30),
+                                        child: Text(
+                                            !isAvatarSelected
+                                                ? "Please choose at least 1 avatar generated in the row."
+                                                : "Please choose 1 place generated in the row.",
+                                            style: TextStyle(
+                                              color: Color(0xff135297),
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w400,
+                                            )))
+                                  ],
+                                ),
+                              ),
+                              actions: <Widget>[
+                                Center(
+                                  child: TextButton(
+                                    style: TextButton.styleFrom(
+                                      alignment: Alignment.center,
+                                      fixedSize: Size(150, 60),
+                                      backgroundColor: Color(0xbfae0000),
+                                      padding: const EdgeInsets.all(20.0),
+                                      textStyle: TextStyle(
+                                          fontSize: 20, color: Colors.white),
+                                    ),
+                                    child: Text(
+                                      textAlign: TextAlign.center,
+                                      "Close",
+                                      style: TextStyle(
+                                          fontSize: 20, color: Colors.white),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                )
+                              ],
+                            ),
+                            Positioned(
+                              top: MediaQuery.of(context).size.height * 0.25,
+                              left: MediaQuery.of(context).size.width * 0.38,
+                              child: Image.asset(
+                                'assets/images/logo1.png',
+                                width: 100,
+                                height: 100.0,
+                                fit: BoxFit.cover,
                               ),
                             ),
-                            actions: <Widget>[
-                              Container(
-                                width: 111,
-                                height: 42,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(25),
-                                    color: Color(0xbfae0000)),
-                                alignment: Alignment.center,
-                                child: TextButton(
-                                  style: TextButton.styleFrom(
-                                    padding: const EdgeInsets.all(20.0),
-                                    textStyle: TextStyle(
-                                        fontSize: 20, color: Colors.white),
-                                  ),
-                                  child: Text(
-                                    "Close",
-                                    style: TextStyle(
-                                        fontSize: 20, color: Colors.white),
-                                  ),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                              )
-                            ],
-                          );
+                          ]);
                         });
                   } else {
                     Navigator.push(
