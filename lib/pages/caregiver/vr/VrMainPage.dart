@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:remember_me/pages/caregiver/vr/VrAlertPage.dart';
 import 'package:remember_me/pages/caregiver/vr/VrQueuePage.dart';
 
 class VrMainPageWidget extends StatefulWidget {
@@ -73,6 +74,12 @@ class _VrMainPageWidgetState extends State<VrMainPageWidget> {
                       },
                     )),
                 GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => VrAlertPageWidget()));
+                    },
                     child: Container(
                         margin: EdgeInsets.only(bottom: 40),
                         alignment: Alignment.center,
@@ -84,9 +91,20 @@ class _VrMainPageWidgetState extends State<VrMainPageWidget> {
                             )),
                         width: 279,
                         height: 49,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            color: Color(0x33ffffff)))),
+                        decoration: ShapeDecoration(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          color: Color(0x33ffffff),
+                          shadows: [
+                            BoxShadow(
+                              color: Color(0x3F000000),
+                              blurRadius: 4,
+                              offset: Offset(0, 3),
+                              spreadRadius: 0,
+                            )
+                          ],
+                        ))),
                 GestureDetector(
                     onTap: () {
                       Navigator.push(

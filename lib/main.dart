@@ -5,6 +5,8 @@ import 'package:remember_me/pages/auth/LoginPage.dart';
 import 'package:remember_me/pages/auth/StartPage.dart';
 import 'package:remember_me/pages/caregiver/NavigatonPage.dart';
 import 'package:provider/provider.dart';
+import 'package:remember_me/pages/caregiver/vr/VrMainPage.dart';
+import 'package:remember_me/pages/caregiver/vr/VrQueuePage.dart';
 import 'package:remember_me/services/AuthService.dart';
 
 void main() {
@@ -20,7 +22,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: "main",
-      home: LoginPageWidget(),
+      home: VrMainPageWidget(),
     );
   }
 }
