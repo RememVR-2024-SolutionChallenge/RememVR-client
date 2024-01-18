@@ -43,13 +43,13 @@ class _NavigationPageWidgetState extends State<NavigationPageWidget> {
         activeColorPrimary: Color(0xff9292b7),
         activeColorSecondary: Colors.white,
         icon: Image.asset("assets/images/records_icon.png"),
-        title: "beloved",
+        title: "Records",
       ),
       PersistentBottomNavBarItem(
         activeColorPrimary: Color(0xff9292b7),
         activeColorSecondary: Colors.white,
         icon: Image.asset("assets/images/settings_icon.png"),
-        title: "Mypage",
+        title: "Settings",
       ),
     ];
   }

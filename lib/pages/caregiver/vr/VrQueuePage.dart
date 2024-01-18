@@ -78,7 +78,12 @@ class TopBar extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.arrow_back_ios, color: Color(0xffDCDCE8)),
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Icon(Icons.arrow_back_ios, color: Color(0xffDCDCE8)),
+            ),
             Container(
                 alignment: Alignment.center,
                 width: 300,
@@ -86,7 +91,7 @@ class TopBar extends StatelessWidget {
                 child: Text(content,
                     style: TextStyle(
                       color: Color(0xffDCDCE8),
-                      fontSize: 30,
+                      fontSize: 25,
                       fontWeight: FontWeight.w700,
                     ))),
           ],
