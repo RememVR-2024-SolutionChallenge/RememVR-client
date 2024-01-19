@@ -24,4 +24,7 @@ jobs:
     - name: Build APK
       run: flutter build apk --release --target=deploy/app-release.apk
 
+    - name: Move APK to Deploy Directory
+      run: mv build/app/outputs/flutter-apk/app-release.apk deploy/
+
     
