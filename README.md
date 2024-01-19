@@ -1,4 +1,6 @@
 # remember_me
 
 A new Flutter project.
-# application-client
+# Launch the app
+Download the app-release.apk
+You can launch this app on Android devices.

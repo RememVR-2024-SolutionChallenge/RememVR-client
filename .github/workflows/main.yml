@@ -22,10 +22,6 @@ jobs:
       run: flutter pub get
 
     - name: Build APK
-      run: flutter build apk --release
+      run: fflutter build apk --release --target=deploy/app-release.apk
 
-    - name: Upload APK
-      uses: actions/upload-artifact@v2
-      with:
-        name: app-release
-        path: ./app-release.apk
+    
