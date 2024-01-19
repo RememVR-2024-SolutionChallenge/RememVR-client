@@ -22,6 +22,6 @@ jobs:
       run: flutter pub get
 
     - name: Build APK
-      run: fflutter build apk --release --target=deploy/app-release.apk
+      run: flutter build apk --release --target=deploy/app-release.apk
 
     
