@@ -22,7 +22,7 @@ jobs:
       run: flutter pub get
 
     - name: Build APK
-      run: flutter build apk --release --target=deploy/app-release.apk
+      run: flutter build apk --release
 
     - name: Move APK to Deploy Directory
       run: mv build/app/outputs/flutter-apk/app-release.apk deploy/
