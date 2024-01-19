@@ -11,10 +11,10 @@ jobs:
 
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Set up Flutter
-      uses: subosito/flutter-action@v2
+      uses: subosito/flutter-action@v3
       with:
         flutter-version: '3.16.5'
 
@@ -24,7 +24,12 @@ jobs:
     - name: Build APK
       run: flutter build apk --release
 
-    - name: Move APK to Deploy Directory
-      run: mv build/app/outputs/flutter-apk/app-release.apk android/deploy/
+    # - name: Move APK to Deploy Directory
+    #   run: mv build/app/outputs/flutter-apk/app-release.apk android/deploy/
+    - name: Upload APK
+      uses: actions/upload-artifact@v3
+      with:
+        name: app-release
+        path: build/app/outputs/flutter-apk/app-release.apk
 
     
