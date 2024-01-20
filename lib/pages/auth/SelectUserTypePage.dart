@@ -53,76 +53,58 @@ class _SelectUserTypePageWidgetState extends State<SelectUserTypePageWidget> {
                               builder: (context) =>
                                   CompleteSelectionPageWidget()));
                     },
-                    child: Container(
-                        margin: EdgeInsets.only(right: 15),
-                        alignment: Alignment.center,
-                        width: MediaQuery.of(context).size.width * 0.38,
-                        height: MediaQuery.of(context).size.height * 0.3,
-                        decoration: ShapeDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Color(0xff4769A1),
-                              Color(0xff4F528E),
-                            ],
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          shadows: [
-                            BoxShadow(
-                              color: Color(0x3F000000),
-                              blurRadius: 4,
-                              offset: Offset(0, 6),
-                              spreadRadius: 0,
-                            )
-                          ],
-                        ),
-                        child: Text("Caregiver",
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w700,
-                                fontFamily: 'Inter',
-                                color: Colors.white)))),
-                Container(
-                    margin: EdgeInsets.only(left: 15),
-                    alignment: Alignment.center,
-                    width: MediaQuery.of(context).size.width * 0.38,
-                    height: MediaQuery.of(context).size.height * 0.3,
-                    decoration: ShapeDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Color(0xff4769A1),
-                          Color(0xff4F528E),
-                        ],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      shadows: [
-                        BoxShadow(
-                          color: Color(0x3F000000),
-                          blurRadius: 4,
-                          offset: Offset(0, 6),
-                          spreadRadius: 0,
-                        )
-                      ],
-                    ),
-                    child: Text("Care\nRecipent",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
-                            fontFamily: 'Inter',
-                            color: Colors.white))),
+                    child: TypeCard(
+                      type: "Caregiver",
+                    )),
+                TypeCard(
+                  type: "Care\nRecipient",
+                )
               ],
             )
           ],
         )),
       ),
     );
+  }
+}
+
+class TypeCard extends StatelessWidget {
+  const TypeCard({super.key, required this.type});
+  final String type;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        margin: EdgeInsets.only(right: 15),
+        alignment: Alignment.center,
+        width: MediaQuery.of(context).size.width * 0.38,
+        height: MediaQuery.of(context).size.height * 0.3,
+        decoration: ShapeDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(0xff4769A1),
+              Color(0xff4F528E),
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          shadows: [
+            BoxShadow(
+              color: Color(0x3F000000),
+              blurRadius: 4,
+              offset: Offset(0, 6),
+              spreadRadius: 0,
+            )
+          ],
+        ),
+        child: Text(type,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
+                fontFamily: 'Inter',
+                color: Colors.white)));
   }
 }

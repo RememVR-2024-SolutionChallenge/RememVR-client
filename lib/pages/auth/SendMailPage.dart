@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:remember_me/pages/auth/SelectUserTypePage.dart';
+import 'package:remember_me/pages/auth/SetNicknamePage.dart';
 import 'package:remember_me/pages/auth/VerifyCodePage.dart';
 
 class SendMailPageWidget extends StatefulWidget {
@@ -83,38 +84,8 @@ class _SendMailPageWidgetState extends State<SendMailPageWidget> {
                   hintText: 'email'),
             ),
           ),
-          GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => VerifyCodePageWidget()));
-              },
-              child: Container(
-                margin: EdgeInsets.only(top: 30),
-                child: Text("Generate Code",
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white)),
-                alignment: Alignment.center,
-                width: MediaQuery.of(context).size.width * 0.5,
-                height: MediaQuery.of(context).size.height * 0.05,
-                decoration: ShapeDecoration(
-                  color: Color(0xff4C5893),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  shadows: [
-                    BoxShadow(
-                      color: Color(0x3F000000),
-                      blurRadius: 4,
-                      offset: Offset(0, 3),
-                      spreadRadius: 0,
-                    )
-                  ],
-                ),
-              ))
+          SimpleButton(
+              type: "Generate Code", destination: VerifyCodePageWidget()),
         ],
       )),
     ));

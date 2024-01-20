@@ -28,6 +28,11 @@ class _VrAlertPageWidgetState extends State<VrAlertPageWidget> {
                 child: Stack(
               children: [
                 Container(
+                    width: 288,
+                    height: 469,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Color(0x33ffffff)),
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -82,12 +87,7 @@ class _VrAlertPageWidgetState extends State<VrAlertPageWidget> {
                                       )
                                     ],
                                   )))
-                        ]),
-                    width: 288,
-                    height: 469,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Color(0x33ffffff)))
+                        ]))
               ],
             )),
             Positioned(

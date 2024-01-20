@@ -59,16 +59,16 @@ class _VrMainPageWidgetState extends State<VrMainPageWidget> {
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
                                         color: Color(0x999292b7))),
-                                Container(
-                                    padding: EdgeInsets.only(
-                                      right: 20,
-                                      top: 10,
-                                    ),
-                                    child: Text("Seoyoung Kim,\nHome Town",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w700,
-                                            color: Colors.white)))
+                                // Container(
+                                //     padding: EdgeInsets.only(
+                                //       right: 20,
+                                //       top: 10,
+                                //     ),
+                                //     child: Text("Seoyoung Kim,\nHome Town",
+                                //         style: TextStyle(
+                                //             fontSize: 15,
+                                //             fontWeight: FontWeight.w700,
+                                //             color: Colors.white)))
                               ],
                             ));
                       },

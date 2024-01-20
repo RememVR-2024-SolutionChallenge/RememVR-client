@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:remember_me/pages/LoadingPage.dart';
+import 'package:remember_me/pages/auth/SetNicknamePage.dart';
 import 'package:remember_me/pages/caregiver/vr/VrAvatarAlertPage.dart';
 import 'package:remember_me/pages/caregiver/vr/VrPlaceAlertPage.dart';
 
@@ -33,7 +34,7 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
             children: [
               Container(
                   margin: EdgeInsets.fromLTRB(50, 140, 40, 40),
-                  child: Text(
+                  child: const Text(
                       "Please choose an avatar and a space. If you want to create a new avatar or space, please click on the 'Create New' button below each item.",
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -44,8 +45,8 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
               Container(
                   child: Column(children: [
                 Container(
-                  margin: EdgeInsets.only(bottom: 70),
-                  child: Text("Generated Avatars",
+                  margin: const EdgeInsets.only(bottom: 70),
+                  child: const Text("Generated Avatars",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 30,
@@ -113,41 +114,12 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
                             ));
                       },
                     )),
-                GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => VrAvatarAlertPageWidget()));
-                    },
-                    child: Container(
-                        margin: EdgeInsets.only(bottom: 40),
-                        alignment: Alignment.center,
-                        child: Text("Create New Avatar",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700,
-                            )),
-                        width: 279,
-                        height: 49,
-                        decoration: ShapeDecoration(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(40),
-                          ),
-                          color: Color(0xff76749F),
-                          shadows: [
-                            BoxShadow(
-                              color: Color(0x3F000000),
-                              blurRadius: 4,
-                              offset: Offset(0, 3),
-                              spreadRadius: 0,
-                            )
-                          ],
-                        ))),
+                SimpleButton(
+                    type: "Create New Avatar",
+                    destination: VrAvatarAlertPageWidget()),
               ])),
               Container(
-                margin: EdgeInsets.only(bottom: 40),
+                margin: EdgeInsets.only(top: 40, bottom: 40),
                 color: Color(0xff858EB3),
                 width: MediaQuery.of(context).size.width * 0.8,
                 height: 4,
@@ -224,38 +196,9 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
                             ));
                       },
                     )),
-                GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => VrPlaceAlertPageWidget()));
-                    },
-                    child: Container(
-                        margin: EdgeInsets.only(bottom: 40),
-                        alignment: Alignment.center,
-                        child: Text("Create New Space",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700,
-                            )),
-                        width: 279,
-                        height: 49,
-                        decoration: ShapeDecoration(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(40),
-                          ),
-                          color: Color(0xff76749F),
-                          shadows: [
-                            BoxShadow(
-                              color: Color(0x3F000000),
-                              blurRadius: 4,
-                              offset: Offset(0, 3),
-                              spreadRadius: 0,
-                            )
-                          ],
-                        ))),
+                SimpleButton(
+                    type: "Create New Space",
+                    destination: VrPlaceAlertPageWidget()),
               ])),
               GestureDetector(
                 onTap: () {
@@ -345,7 +288,7 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
                 },
                 child: GestureDetector(
                     child: Container(
-                        margin: EdgeInsets.only(bottom: 40),
+                        margin: EdgeInsets.only(top: 40, bottom: 40),
                         alignment: Alignment.center,
                         child: Text("Generate New VR",
                             style: TextStyle(

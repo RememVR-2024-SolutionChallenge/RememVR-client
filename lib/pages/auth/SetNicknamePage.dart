@@ -83,40 +83,52 @@ class _SetNicknamePageWidgetState extends State<SetNicknamePageWidget> {
                   hintText: 'nickname'),
             ),
           ),
-          GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => SelectUserTypePageWidget()));
-              },
-              child: Container(
-                margin: EdgeInsets.only(top: 30),
-                child: Text("Save",
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white)),
-                alignment: Alignment.center,
-                width: MediaQuery.of(context).size.width * 0.5,
-                height: MediaQuery.of(context).size.height * 0.05,
-                decoration: ShapeDecoration(
-                  color: Color(0xff4C5893),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  shadows: [
-                    BoxShadow(
-                      color: Color(0x3F000000),
-                      blurRadius: 4,
-                      offset: Offset(0, 3),
-                      spreadRadius: 0,
-                    )
-                  ],
-                ),
-              ))
+          SimpleButton(
+            type: "Save",
+            destination: SelectUserTypePageWidget(),
+          )
         ],
       )),
     ));
+  }
+}
+
+class SimpleButton extends StatelessWidget {
+  const SimpleButton(
+      {super.key, required this.type, required this.destination});
+  final String type;
+  final Widget destination;
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+        onTap: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => destination));
+        },
+        child: Container(
+          margin: EdgeInsets.only(top: 30),
+          child: Text(type,
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white)),
+          alignment: Alignment.center,
+          width: MediaQuery.of(context).size.width * 0.5,
+          height: MediaQuery.of(context).size.height * 0.05,
+          decoration: ShapeDecoration(
+            color: Color(0xff4C5893),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            shadows: [
+              BoxShadow(
+                color: Color(0x3F000000),
+                blurRadius: 4,
+                offset: Offset(0, 3),
+                spreadRadius: 0,
+              )
+            ],
+          ),
+        ));
   }
 }

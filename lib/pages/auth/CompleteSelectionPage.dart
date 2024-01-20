@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:remember_me/pages/auth/SelectUserTypePage.dart';
 import 'package:remember_me/pages/auth/SendMailPage.dart';
+import 'package:remember_me/pages/auth/SetNicknamePage.dart';
 
 class CompleteSelectionPageWidget extends StatefulWidget {
   const CompleteSelectionPageWidget({super.key});
@@ -43,38 +44,10 @@ class _CompleteSelectionPageWidgetState
               height: 0,
             ),
           ),
-          GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => SendMailPageWidget()));
-              },
-              child: Container(
-                  margin: EdgeInsets.only(top: 15),
-                  alignment: Alignment.center,
-                  width: MediaQuery.of(context).size.width * 0.5,
-                  height: MediaQuery.of(context).size.height * 0.05,
-                  decoration: ShapeDecoration(
-                    color: Color(0xff4769A1),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    shadows: [
-                      BoxShadow(
-                        color: Color(0x3F000000),
-                        blurRadius: 4,
-                        offset: Offset(0, 3),
-                        spreadRadius: 0,
-                      )
-                    ],
-                  ),
-                  child: Text("Continue",
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white)))),
+          SimpleButton(
+            type: "Continue",
+            destination: SendMailPageWidget(),
+          ),
         ],
       )),
     ));
