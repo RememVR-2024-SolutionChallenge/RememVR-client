@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:remember_me/pages/auth/SelectUserTypePage.dart';
+import 'package:remember_me/pages/auth/SetNicknamePage.dart';
 
 class CompleteSignUpPageWidget extends StatefulWidget {
   const CompleteSignUpPageWidget({super.key});
@@ -17,7 +18,7 @@ class _CompleteSignUpPageWidgetState extends State<CompleteSignUpPageWidget> {
     Timer(Duration(seconds: 2), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => SelectUserTypePageWidget()),
+        MaterialPageRoute(builder: (context) => SetNicknamePageWidget()),
       );
     });
   }
