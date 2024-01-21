@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-import 'package:remember_me/pages/caregiver/records/BelovedMainPage.dart';
+import 'package:remember_me/pages/caregiver/records/RecordsMainPage.dart';
 import 'package:remember_me/pages/caregiver/home/HomeMainPage.dart';
 import 'package:remember_me/pages/caregiver/settings/SettingMainPage.dart';
 import 'package:remember_me/pages/caregiver/vr/VrMainPage.dart';
@@ -14,13 +14,13 @@ class NavigationPageWidget extends StatefulWidget {
 
 class _NavigationPageWidgetState extends State<NavigationPageWidget> {
   PersistentTabController _controller =
-      PersistentTabController(initialIndex: 1);
+      PersistentTabController(initialIndex: 2);
 
   List<Widget> _widgetOptions() {
     return [
       HomeMainPageWidget(),
       VrMainPageWidget(),
-      BelovedMainPageWidget(),
+      RecordsMainPageWidget(),
       SettingPageWidget()
     ];
   }
