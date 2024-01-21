@@ -3,8 +3,9 @@ import 'package:remember_me/pages/auth/CompleteSelectionPage.dart';
 import 'package:remember_me/pages/auth/CompleteSignUpPage.dart';
 import 'package:remember_me/pages/auth/LoginPage.dart';
 import 'package:remember_me/pages/auth/StartPage.dart';
-import 'package:remember_me/pages/caregiver/NavigatonPage.dart';
+import 'package:remember_me/pages/caregiver/CaregiverNavigatonPage.dart';
 import 'package:provider/provider.dart';
+import 'package:remember_me/pages/carerecipient/home/HomeMainPage.dart';
 import 'package:remember_me/pages/caregiver/vr/VrMainPage.dart';
 import 'package:remember_me/pages/caregiver/vr/VrQueuePage.dart';
 import 'package:remember_me/services/AuthService.dart';
@@ -22,7 +23,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: "main",
-      home: NavigationPageWidget(),
+      home: HomeMainPageWidget(),
     );
   }
 }

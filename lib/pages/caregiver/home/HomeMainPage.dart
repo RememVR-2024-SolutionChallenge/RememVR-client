@@ -26,151 +26,144 @@ class _HomeMainPageWidgetState extends State<HomeMainPageWidget> {
             child: Column(
           children: [
             Container(
+                margin: EdgeInsets.only(top: 60, bottom: 40),
+                width: MediaQuery.of(context).size.width * 0.7,
+                alignment: Alignment.centerLeft,
                 child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Hi,",
-                    style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white)),
-                Text("Seoyoung",
-                    style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white))
-              ],
-            )),
-            Container(child: Image.asset('assets/images/logo_only.png')),
-            Container(
-                child: Text("Your Caring Recipient : Anna Waslon",
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white))),
-            Container(
-                child: Text("You’re not alone in this journey.",
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white))),
-            Container(
-                width: 299,
-                height: 194,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: Colors.white),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Daily Quiz Completion Rate",
+                    Text("Hi,",
                         style: TextStyle(
-                          fontSize: 18,
+                            fontSize: 30,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.white)),
+                    Text("Seoyoung",
+                        style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white))
+                  ],
+                )),
+            Container(
+                margin: EdgeInsets.only(bottom: 30),
+                child: Image.asset('assets/images/logo_only.png')),
+            Text(
+                "Your Caring Recipient : Anna Waslon\n\nYou’re not alone in this journey.",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.white)),
+            Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Color(0xff4C5995),
+                ),
+                margin: EdgeInsets.only(
+                  top: 25,
+                ),
+                padding: EdgeInsets.only(
+                  top: 10,
+                ),
+                width: MediaQuery.of(context).size.width * 0.8,
+                child: Column(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(
+                        bottom: 10,
+                      ),
+                      child: Text("2024.01",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 17,
+                            fontWeight: FontWeight.w700,
+                          )),
+                    ),
+                    Text(
+                        "M          T          W          T           F           S           S",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
                           fontWeight: FontWeight.w700,
                         )),
                     Container(
-                        child: Column(
-                      children: [
-                        Container(
-                            width: MediaQuery.of(context).size.width * 0.45,
-                            child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Container(
-                                    child: Text("Recognition",
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w700,
-                                        )),
-                                  ),
-                                  Stack(
-                                    children: [
-                                      Container(
-                                          width: 75.21428680419922,
-                                          height: 17,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(30),
-                                              color: Color(0xff212d78))),
-                                      Container(
-                                          width: 117,
-                                          height: 17,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(30),
-                                              color: Color(0x7c212d78)))
-                                    ],
-                                  )
-                                ])),
-                        Container(
-                            width: MediaQuery.of(context).size.width * 0.45,
-                            child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Container(
-                                    child: Text("Memory",
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w700,
-                                        )),
-                                  ),
-                                  Stack(
-                                    children: [
-                                      Container(
-                                          width: 101.04545593261719,
-                                          height: 17,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(30),
-                                              color: Color(0xff291f6b))),
-                                      Container(
-                                          width: 117,
-                                          height: 17,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(30),
-                                              color: Color(0x75291f6b)))
-                                    ],
-                                  )
-                                ])),
-                        Container(
-                            width: MediaQuery.of(context).size.width * 0.45,
-                            child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Container(
-                                    child: Text("Logic",
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w700,
-                                        )),
-                                  ),
-                                  Stack(
-                                    children: [
-                                      Container(
-                                          width: 57.74026107788086,
-                                          height: 17,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(30),
-                                              color: Color(0xff1a65a9))),
-                                      Container(
-                                        width: 117,
-                                        height: 17,
-                                      )
-                                    ],
-                                  )
-                                ]))
-                      ],
-                    ))
+                        padding:
+                            EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                        margin: EdgeInsets.only(top: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Container(
+                                child: Image.asset(
+                                    "assets/images/calendar_non_check.png")),
+                            Container(
+                                child: Image.asset(
+                                    "assets/images/calendar_non_check.png")),
+                            Container(
+                                child: Image.asset(
+                                    "assets/images/calendar_non_check.png")),
+                            Container(
+                                child: Image.asset(
+                                    "assets/images/calendar_non_check.png")),
+                            Container(
+                                child: Image.asset(
+                                    "assets/images/calendar_non_check.png")),
+                            Container(
+                                child: Image.asset(
+                                    "assets/images/calendar_non_check.png")),
+                            Container(
+                                child: Image.asset(
+                                    "assets/images/calendar_non_check.png"))
+                          ],
+                        )),
+                  ],
+                )),
+            Container(
+                margin: EdgeInsets.only(top: 20),
+                width: MediaQuery.of(context).size.width * 0.8,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ScoreCard(title: "VR", num: 6),
+                    ScoreCard(title: "Records", num: 10),
+                    ScoreCard(title: "Days with R.M.", num: 237)
                   ],
                 ))
           ],
         )),
       ),
     );
+  }
+}
+
+class ScoreCard extends StatelessWidget {
+  const ScoreCard({super.key, required this.title, required this.num});
+  final String title;
+  final int num;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Color(0xff4C5995),
+        ),
+        child: Column(
+          children: [
+            Text(title,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
+                )),
+            Text(num.toString(),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 35,
+                  fontWeight: FontWeight.w700,
+                ))
+          ],
+        ));
   }
 }
