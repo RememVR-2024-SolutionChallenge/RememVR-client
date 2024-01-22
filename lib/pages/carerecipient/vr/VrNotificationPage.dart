@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:remember_me/pages/auth/SetNicknamePage.dart';
 import 'package:remember_me/pages/carerecipient/home/HomeMainPage.dart';
+import 'package:remember_me/pages/carerecipient/vr/VrListeningPage.dart';
 import 'package:remember_me/pages/carerecipient/vr/VrSelectPage.dart';
 
 class VrNotificationPageWidget extends StatefulWidget {
@@ -84,7 +85,9 @@ class _VrNotificationPageWidgetState extends State<VrNotificationPageWidget> {
                         "Disagree",
                         style: TextStyle(fontSize: 20, color: Colors.white),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                     ),
                     TextButton(
                       style: TextButton.styleFrom(
@@ -104,7 +107,10 @@ class _VrNotificationPageWidgetState extends State<VrNotificationPageWidget> {
                         ),
                       ),
                       onPressed: () {
-                        Navigator.pop(context);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => VrListeningPageWidget()));
                       },
                     ),
                   ],
