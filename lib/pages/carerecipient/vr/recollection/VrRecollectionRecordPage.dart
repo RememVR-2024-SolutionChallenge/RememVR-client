@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:remember_me/pages/auth/SetNicknamePage.dart';
 import 'package:remember_me/pages/carerecipient/home/HomeMainPage.dart';
-import 'package:remember_me/pages/carerecipient/vr/VrRecollectionQuestionPage.dart';
-import 'package:remember_me/pages/carerecipient/vr/VrRecollectionResponse.dart';
 import 'package:remember_me/pages/carerecipient/vr/VrSelectPage.dart';
+import 'package:remember_me/pages/carerecipient/vr/recollection/VrRecollectionQuestionPage.dart';
+import 'package:remember_me/pages/carerecipient/vr/recollection/VrRecollectionResponse.dart';
+import 'package:remember_me/pages/carerecipient/vr/reinforcement/VrReinforcementPage.dart';
 
 class VrRecollectionRecordPageWidget extends StatefulWidget {
   const VrRecollectionRecordPageWidget({super.key, required this.type});
@@ -50,6 +51,10 @@ class _VrRecollectionRecordPageWidgetState
                           builder: (context) =>
                               VrRecollectionResponsePageWidget(type: 2)));
                 } else if (widget.type == 6) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => VrReinforcementPageWidget()));
                 } else {
                   Navigator.push(
                       context,

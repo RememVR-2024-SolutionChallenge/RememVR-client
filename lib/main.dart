@@ -9,7 +9,7 @@ import 'package:remember_me/pages/carerecipient/home/HomeMainPage.dart';
 import 'package:remember_me/pages/caregiver/vr/VrMainPage.dart';
 import 'package:remember_me/pages/caregiver/vr/VrQueuePage.dart';
 import 'package:remember_me/pages/carerecipient/vr/VrListeningPage.dart';
-import 'package:remember_me/pages/carerecipient/vr/VrRecollectionStartPage.dart';
+import 'package:remember_me/pages/carerecipient/vr/recollection/VrRecollectionStartPage.dart';
 import 'package:remember_me/services/AuthService.dart';
 
 void main() {
