@@ -23,7 +23,7 @@ class _VrReinforcementTransmissionPageWidgetState
     Future.delayed(Duration(seconds: 3), () {
       setState(() {
         displayText = "You’ve got a badge \nfor today’s task! \nCongrats :)";
-        displayImage = 'assets/images/background.png';
+        displayImage = 'assets/images/badge1.png';
       });
     });
   }
