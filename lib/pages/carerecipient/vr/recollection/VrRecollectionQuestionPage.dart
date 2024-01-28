@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:remember_me/pages/auth/SetNicknamePage.dart';
 import 'package:remember_me/pages/carerecipient/home/HomeMainPage.dart';
-import 'package:remember_me/pages/carerecipient/vr/VrRecollectionRecordPage.dart';
 import 'package:remember_me/pages/carerecipient/vr/VrSelectPage.dart';
-import 'package:remember_me/etc/questions.dart';
+import 'package:remember_me/etc/texts.dart';
+import 'package:remember_me/pages/carerecipient/vr/recollection/VrRecollectionRecordPage.dart';
 
 class VrRecollectionQuestionPageWidget extends StatefulWidget {
   const VrRecollectionQuestionPageWidget({super.key, required this.type});

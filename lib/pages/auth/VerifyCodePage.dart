@@ -57,7 +57,7 @@ class _VerifyCodePageWidgetState extends State<VerifyCodePageWidget> {
           Container(
               margin: EdgeInsets.only(top: 15),
               child: Text(
-                "Enter 4 digit verification code sent to \n helper@gmail.com",
+                "Enter 4 digit verification code sent to \n helper@gmail.com in 30 minutes.",
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w300,

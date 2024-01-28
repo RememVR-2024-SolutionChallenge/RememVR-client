@@ -10,10 +10,12 @@ class VrQueuePageWidget extends StatefulWidget {
 class _VrQueuePageWidgetState extends State<VrQueuePageWidget> {
   bool isEmpty = false;
   List<Widget> widgetsInQueue = [
-    AvatarSpaceCard(name: "choi jin woo", space: "Korea University", time: 40),
-    AvatarCard(name: "choi jin woo", time: 40),
-    AvatarSpaceCard(name: "choi jin woo", space: "Korea University", time: 40),
-    SpaceCard(space: "Korea University", time: 40),
+    AvatarSpaceCard(
+        name: "choi jin woo", space: "Korea University", status: "In progress"),
+    AvatarCard(name: "choi jin woo", status: "Failed"),
+    AvatarSpaceCard(
+        name: "choi jin woo", space: "Korea University", status: "Success"),
+    SpaceCard(space: "Korea University", status: "Success"),
   ];
   @override
   void initState() {
@@ -127,10 +129,13 @@ class ProgressionBar extends StatelessWidget {
 
 class AvatarSpaceCard extends StatelessWidget {
   const AvatarSpaceCard(
-      {super.key, required this.name, required this.space, required this.time});
+      {super.key,
+      required this.name,
+      required this.space,
+      required this.status});
   final String name;
   final String space;
-  final int time;
+  final String status;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -168,6 +173,12 @@ class AvatarSpaceCard extends StatelessWidget {
                 child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text("VR",
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                    )),
                 Container(
                     child: Row(
                   children: [
@@ -199,23 +210,10 @@ class AvatarSpaceCard extends StatelessWidget {
                   ],
                 )),
                 Text(
-                  "Expected Time Required ",
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.w700),
-                ),
-                Text(
-                  ": ${time} minute",
+                  "Status :  ${status}",
                   style: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.w300),
                 ),
-                ProgressionBar(progress: 82),
-                Container(
-                    child: Text("82/100(%)",
-                        style: TextStyle(
-                          fontSize: 10,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w400,
-                        ))),
               ],
             ))
           ],
@@ -224,9 +222,9 @@ class AvatarSpaceCard extends StatelessWidget {
 }
 
 class AvatarCard extends StatelessWidget {
-  const AvatarCard({super.key, required this.name, required this.time});
+  const AvatarCard({super.key, required this.name, required this.status});
   final String name;
-  final int time;
+  final String status;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -260,6 +258,12 @@ class AvatarCard extends StatelessWidget {
                 child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text("Avatar",
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                    )),
                 Container(
                     child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -277,23 +281,10 @@ class AvatarCard extends StatelessWidget {
                   ],
                 )),
                 Text(
-                  "Expected Time Required ",
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.w700),
-                ),
-                Text(
-                  ": ${time} minute",
+                  "Status : ${status}",
                   style: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.w300),
                 ),
-                ProgressionBar(progress: 82),
-                Container(
-                    child: Text("82/100(%)",
-                        style: TextStyle(
-                          fontSize: 10,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w400,
-                        ))),
               ],
             ))
           ],
@@ -302,9 +293,9 @@ class AvatarCard extends StatelessWidget {
 }
 
 class SpaceCard extends StatelessWidget {
-  const SpaceCard({super.key, required this.space, required this.time});
+  const SpaceCard({super.key, required this.space, required this.status});
   final String space;
-  final int time;
+  final String status;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -338,6 +329,12 @@ class SpaceCard extends StatelessWidget {
                 child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text("Place",
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                    )),
                 Container(
                     child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -355,23 +352,10 @@ class SpaceCard extends StatelessWidget {
                   ],
                 )),
                 Text(
-                  "Expected Time Required ",
+                  "Status : ${status}",
                   style: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.w700),
                 ),
-                Text(
-                  ": ${time} minute",
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.w300),
-                ),
-                ProgressionBar(progress: 82),
-                Container(
-                    child: Text("82/100(%)",
-                        style: TextStyle(
-                          fontSize: 10,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w400,
-                        ))),
               ],
             ))
           ],

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:remember_me/pages/auth/SetNicknamePage.dart';
 import 'package:remember_me/pages/carerecipient/home/HomeMainPage.dart';
-import 'package:remember_me/pages/carerecipient/vr/VrListeningPage.dart';
+import 'package:remember_me/pages/carerecipient/vr/listening/VrListeningPage.dart';
 import 'package:remember_me/pages/carerecipient/vr/VrSelectPage.dart';
 
 class VrNotificationPageWidget extends StatefulWidget {
@@ -44,7 +44,7 @@ class _VrNotificationPageWidgetState extends State<VrNotificationPageWidget> {
                         fontWeight: FontWeight.w700,
                       ))),
               content: Container(
-                width: 120, // 원하는 폭으로 조절
+                width: 120,
                 height: 280,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,

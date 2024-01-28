@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:remember_me/pages/caregiver/vr/VrEnterNamePage.dart';
 import 'package:remember_me/pages/caregiver/vr/VrPlaceCompletionPage.dart';
 
 class VrPlaceAlertPageWidget extends StatefulWidget {
@@ -57,7 +58,7 @@ class _VrPlaceAlertPageWidgetState extends State<VrPlaceAlertPageWidget> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            VrPlaceCompletionPageWidget()));
+                                            VrEnterNamePageWidget(type: 1)));
                               },
                               child: Container(
                                   padding: EdgeInsets.only(

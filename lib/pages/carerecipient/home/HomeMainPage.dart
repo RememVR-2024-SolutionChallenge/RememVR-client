@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:remember_me/pages/caregiver/vr/VrSelectPage.dart';
+import 'package:remember_me/pages/carerecipient/home/CaregiversPage.dart';
 import 'package:remember_me/pages/carerecipient/vr/VrStartPage.dart';
 
 class HomeMainPageWidget extends StatefulWidget {
@@ -28,7 +29,7 @@ class _HomeMainPageWidgetState extends State<HomeMainPageWidget> {
             child: Column(
           children: [
             Container(
-                margin: EdgeInsets.only(top: 60, bottom: 40),
+                margin: EdgeInsets.only(top: 60, bottom: 20),
                 width: MediaQuery.of(context).size.width * 0.7,
                 alignment: Alignment.centerLeft,
                 child: Column(
@@ -47,22 +48,57 @@ class _HomeMainPageWidgetState extends State<HomeMainPageWidget> {
                   ],
                 )),
             Container(
-                margin: EdgeInsets.only(bottom: 30),
+                margin: EdgeInsets.only(bottom: 20),
                 child: Image.asset('assets/images/logo_only.png')),
-            Text(
-                "Your Caring Giver : Seoyoung Kim\nYou’re doing great with\n your activites",
+            Text("You’re doing great\n with your activites",
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w400,
+                    fontSize: 30,
+                    fontWeight: FontWeight.w700,
                     color: Colors.white)),
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CaregiversPageWidget()));
+              },
+              child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Color(0xff4C5995),
+                  ),
+                  margin: EdgeInsets.only(
+                    top: 15,
+                  ),
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                          child: Text("My Caregiver ",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 22,
+                                fontWeight: FontWeight.w700,
+                              )),
+                          margin: EdgeInsets.fromLTRB(15, 15, 15, 15)),
+                      Container(
+                          margin: EdgeInsets.fromLTRB(15, 15, 15, 15),
+                          child: Icon(
+                            Icons.arrow_forward_ios,
+                            color: Colors.white,
+                          ))
+                    ],
+                  )),
+            ),
             Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Color(0xff4C5995),
                 ),
                 margin: EdgeInsets.only(
-                  top: 25,
+                  top: 15,
                 ),
                 padding: EdgeInsets.only(
                   top: 10,
