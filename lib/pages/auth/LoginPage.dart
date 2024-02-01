@@ -83,7 +83,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
               ),
               GestureDetector(
                   onTap: () async {
-                    await authService.SignUp();
+                    await authService.signUp();
                     print(authService.isSuccess);
                     String _htmlCode = authService.htmlCode;
                     if (_isChecked) {
