@@ -11,7 +11,7 @@ class AuthService extends ChangeNotifier {
   Future<void> signUp() async {
     SharedPreferences sharedPreference = await SharedPreferences.getInstance();
     try {
-      Response response = await Dio().post(
+      Response response = await Dio().get(
           "https://application-server-n3wk2vhygq-uc.a.run.app/auth/google");
       if (response.statusCode == 200) {
         print('GET 요청 성공');

@@ -7,12 +7,14 @@ import 'package:remember_me/services/TokenService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CaregiverService extends ChangeNotifier {
-  late UserInfo user;
+  UserInfo user = UserInfo();
 
   Future<void> getUserInfo() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
-    String? token = sharedPreferences.getString("access_token");
+    // String? token = sharedPreferences.getString("access_token");
+    String? token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwNTEyNjg4NzcyMjIzNjYwNTA1MSIsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3MDcwMzI5MzIsImV4cCI6MTcwNzAzNDczMn0.Q39MKqr1D-dvQ4Oz1Tpb6tRTFe1KYnGFS8-UtcXLowc";
     try {
       Response response = await Dio().get(
         "https://application-server-n3wk2vhygq-uc.a.run.app/user",

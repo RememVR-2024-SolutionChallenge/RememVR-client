@@ -12,7 +12,9 @@ class CarerecipientService extends ChangeNotifier {
   Future<void> getCaregiverGroup() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
-    String? token = sharedPreferences.getString("access_token");
+    // String? token = sharedPreferences.getString("access_token");
+    String? token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwMjU3NTA4NTE3MTU1ODYxOTI4NCIsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3MDcwMzQ2MzEsImV4cCI6MTcwNzAzNjQzMX0.MRhjfgcKWHb4p_6tHPPGc4UTKuK8YWJVbzKMyrZevo8";
     try {
       Response response = await Dio().get(
         "https://application-server-n3wk2vhygq-uc.a.run.app/group",
@@ -42,7 +44,9 @@ class CarerecipientService extends ChangeNotifier {
   Future<void> getUserInfo() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
-    String? token = sharedPreferences.getString("access_token");
+    // String? token = sharedPreferences.getString("access_token");
+    String? token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwMjU3NTA4NTE3MTU1ODYxOTI4NCIsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3MDcwMzQ2MzEsImV4cCI6MTcwNzAzNjQzMX0.MRhjfgcKWHb4p_6tHPPGc4UTKuK8YWJVbzKMyrZevo8";
     try {
       Response response = await Dio().get(
         "https://application-server-n3wk2vhygq-uc.a.run.app/user",

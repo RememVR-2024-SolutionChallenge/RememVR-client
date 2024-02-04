@@ -1,6 +1,4 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:remember_me/pages/auth/CompleteSignUpPage.dart';
 import 'package:remember_me/services/AuthService.dart';
 import 'package:provider/provider.dart';
@@ -37,24 +35,6 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
     )
     ..loadRequest(Uri.parse(
         "https://application-server-n3wk2vhygq-uc.a.run.app/auth/google"));
-
-  void _launchURL() async {
-    try {
-      launch('https://application-server-n3wk2vhygq-uc.a.run.app/auth/google');
-      var response = await Dio().get(
-          'https://application-server-n3wk2vhygq-uc.a.run.app/auth/google/callback');
-      if (response.statusCode == 200) {
-        // JSON 처리
-        print(response.data);
-        // 여기서 response.body에는 JSON 내용이 포함됩니다.
-      } else {
-        // 오류 처리
-        print('Failed to load data: ${response.statusCode}');
-      }
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-  }
 
   bool _isChecked = false;
   void initState() {
@@ -103,31 +83,29 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
               ),
               GestureDetector(
                   onTap: () async {
-                    _launchURL();
-                    // await authService.signUp();
-                    // print(authService.isSuccess);
-                    // String _htmlCode = authService.htmlCode;
+                    authService.signUp();
+                    print(authService.isSuccess);
+                    String _htmlCode = authService.htmlCode;
                     if (_isChecked) {
                       if (authService.isSuccess) {
-                        // print(_htmlCode);
+                        print(_htmlCode);
                         // showDialog(
                         //     context: context,
                         //     builder: (BuildContext context) {
                         //       return Container(
                         //           child: Transform.scale(
-                        //               scale: 0.2,
-                        //               child: HtmlWidget(_htmlCode)));
+                        //               scale: 0.2, child: HtmlWidget(_htmlCode)));
                         //     });
-                        // showDialog(
-                        //     context: context,
-                        //     builder: (BuildContext context) {
-                        //       return Container(
-                        //           width:
-                        //               MediaQuery.of(context).size.width * 0.5,
-                        //           height:
-                        //               MediaQuery.of(context).size.height * 0.5,
-                        //           child: WebViewWidget(controller: controller));
-                        //     });
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.5,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.5,
+                                  child: WebViewWidget(controller: controller));
+                            });
 
                         Navigator.push(
                             context,

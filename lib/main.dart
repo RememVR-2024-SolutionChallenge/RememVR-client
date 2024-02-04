@@ -16,10 +16,14 @@ import 'package:remember_me/pages/caregiver/vr/VrQueuePage.dart';
 import 'package:remember_me/pages/carerecipient/vr/listening/VrListeningPage.dart';
 import 'package:remember_me/pages/carerecipient/vr/recollection/VrRecollectionStartPage.dart';
 import 'package:remember_me/services/AuthService.dart';
+import 'package:remember_me/services/CaregiverService.dart';
+import 'package:remember_me/services/CarerecipientService.dart';
 
 void main() {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => AuthService()),
+    ChangeNotifierProvider(create: (context) => CaregiverService()),
+    ChangeNotifierProvider(create: (context) => CarerecipientService()),
   ], child: const MainApp()));
 }
 
@@ -30,7 +34,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: "main",
-      home: HomeMainPageWidget(),
+      home: LoginPageWidget(),
     );
   }
 }

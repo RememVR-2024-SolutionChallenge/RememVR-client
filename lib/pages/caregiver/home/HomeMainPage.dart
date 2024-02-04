@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:remember_me/services/AuthService.dart';
+import 'package:remember_me/services/CaregiverService.dart';
 
 class HomeMainPageWidget extends StatefulWidget {
   const HomeMainPageWidget({super.key});
@@ -7,9 +10,19 @@ class HomeMainPageWidget extends StatefulWidget {
 }
 
 class _HomeMainPageWidgetState extends State<HomeMainPageWidget> {
+  String _userName = "";
   @override
   void initState() {
     super.initState();
+    _loadUserInfo();
+  }
+
+  Future<void> _loadUserInfo() async {
+    await Provider.of<CaregiverService>(context, listen: false).getUserInfo();
+    setState(() {
+      _userName =
+          Provider.of<CaregiverService>(context, listen: false).user.name!;
+    });
   }
 
   @override
@@ -37,7 +50,7 @@ class _HomeMainPageWidgetState extends State<HomeMainPageWidget> {
                             fontSize: 30,
                             fontWeight: FontWeight.w400,
                             color: Colors.white)),
-                    Text("Seoyoung",
+                    Text(_userName,
                         style: TextStyle(
                             fontSize: 30,
                             fontWeight: FontWeight.w700,
