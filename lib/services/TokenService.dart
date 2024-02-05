@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:remember_me/etc/url.dart';
 import 'package:remember_me/model/AuthModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -7,8 +8,7 @@ class TokenService {
   void refreshToken() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     try {
-      Response response = await Dio().post(
-          "https://application-server-n3wk2vhygq-uc.a.run.app/auth/refresh",
+      Response response = await Dio().post("${baseUrl}/auth/refresh",
           data: {'refreshToken': sharedPreferences.getString("refresh_token")});
       if (response.statusCode == 201) {
         print("POST 요청 성공");

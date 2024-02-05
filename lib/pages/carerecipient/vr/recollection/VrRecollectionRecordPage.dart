@@ -82,10 +82,15 @@ class _VrRecollectionRecordPageWidgetState
                     ))),
             Image.asset("assets/images/radio-waves.png"),
             SimpleButton(
-              type: "Pass",
-              destination:
-                  VrRecollectionQuestionPageWidget(type: widget.type + 1),
-            )
+                type: "Pass",
+                func: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => VrRecollectionQuestionPageWidget(
+                            type: widget.type + 1),
+                      ));
+                })
           ],
         )),
       ),

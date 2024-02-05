@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:remember_me/model/AuthModel.dart';
 import 'package:remember_me/pages/auth/CompleteSelectionPage.dart';
+import 'package:remember_me/services/AuthService.dart';
 
 class SelectUserTypePageWidget extends StatefulWidget {
-  const SelectUserTypePageWidget({super.key});
+  const SelectUserTypePageWidget({super.key, required this.name});
+  final String name;
   @override
   _SelectUserTypePageWidgetState createState() =>
       _SelectUserTypePageWidgetState();
@@ -16,55 +20,73 @@ class _SelectUserTypePageWidgetState extends State<SelectUserTypePageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/background.png'),
-            fit: BoxFit.cover,
+    return Consumer<AuthService>(builder: (context, authService, child) {
+      return Scaffold(
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/background.png'),
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-        child: Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              margin: EdgeInsets.only(bottom: 30),
-              child: Text(
-                'Select Your Position',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Color(0xFFDCDCE8),
-                  fontSize: 25,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w400,
-                  height: 0,
+          child: Center(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                margin: EdgeInsets.only(bottom: 30),
+                child: Text(
+                  'Select Your Position',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Color(0xFFDCDCE8),
+                    fontSize: 25,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w400,
+                    height: 0,
+                  ),
                 ),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  CompleteSelectionPageWidget()));
-                    },
-                    child: TypeCard(
-                      type: "Caregiver",
-                    )),
-                TypeCard(
-                  type: "Care\nRecipient",
-                )
-              ],
-            )
-          ],
-        )),
-      ),
-    );
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                      onTap: () async {
+                        await authService.enrollInfo(
+                            SignUpInfo(name: widget.name, role: "CareGiver"));
+                        if (authService.isSuccess) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      CompleteSelectionPageWidget()));
+                        }
+                      },
+                      child: TypeCard(
+                        type: "Caregiver",
+                      )),
+                  GestureDetector(
+                      onTap: () async {
+                        await authService.enrollInfo(SignUpInfo(
+                            name: widget.name, role: "CareRecipient"));
+                        if (authService.isSuccess) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      CompleteSelectionPageWidget()));
+                        }
+                      },
+                      child: TypeCard(
+                        type: "Care\nRecipient",
+                      ))
+                ],
+              )
+            ],
+          )),
+        ),
+      );
+    });
   }
 }
 

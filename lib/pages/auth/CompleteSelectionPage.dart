@@ -45,9 +45,13 @@ class _CompleteSelectionPageWidgetState
             ),
           ),
           SimpleButton(
-            type: "Continue",
-            destination: SendMailPageWidget(),
-          ),
+              type: "Continue",
+              func: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SendMailPageWidget()));
+              }),
         ],
       )),
     ));

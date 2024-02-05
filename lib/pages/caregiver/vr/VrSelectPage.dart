@@ -116,7 +116,12 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
                     )),
                 SimpleButton(
                     type: "Create New Avatar",
-                    destination: VrAvatarAlertPageWidget()),
+                    func: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => VrAvatarAlertPageWidget()));
+                    }),
               ])),
               Container(
                 margin: EdgeInsets.only(top: 40, bottom: 40),
@@ -198,7 +203,12 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
                     )),
                 SimpleButton(
                     type: "Create New Space",
-                    destination: VrPlaceAlertPageWidget()),
+                    func: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => VrPlaceAlertPageWidget()));
+                    }),
               ])),
               GestureDetector(
                 onTap: () {

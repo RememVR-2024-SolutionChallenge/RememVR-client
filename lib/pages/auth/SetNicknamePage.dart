@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'dart:async';
 
 import 'package:remember_me/pages/auth/SelectUserTypePage.dart';
 import 'package:remember_me/pages/auth/VerifyCodePage.dart';
+import 'package:remember_me/services/AuthService.dart';
 
 class SetNicknamePageWidget extends StatefulWidget {
   const SetNicknamePageWidget({super.key});
@@ -85,7 +87,13 @@ class _SetNicknamePageWidgetState extends State<SetNicknamePageWidget> {
           ),
           SimpleButton(
             type: "Save",
-            destination: SelectUserTypePageWidget(),
+            func: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => SelectUserTypePageWidget(
+                          name: _textEditingController.text)));
+            },
           )
         ],
       )),
@@ -94,17 +102,13 @@ class _SetNicknamePageWidgetState extends State<SetNicknamePageWidget> {
 }
 
 class SimpleButton extends StatelessWidget {
-  const SimpleButton(
-      {super.key, required this.type, required this.destination});
+  const SimpleButton({super.key, required this.type, required this.func});
   final String type;
-  final Widget destination;
+  final void Function()? func;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => destination));
-        },
+        onTap: func,
         child: Container(
           margin: EdgeInsets.only(top: 30),
           child: Text(type,

@@ -50,7 +50,14 @@ class _VrEndPageWidgetState extends State<VrEndPageWidget> {
                       fontWeight: FontWeight.w700,
                     ))),
             SimpleButton(
-                type: "Continue", destination: VrNotificationPageWidget()),
+              type: "Continue",
+              func: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => VrNotificationPageWidget()));
+              },
+            ),
           ],
         )),
       ),

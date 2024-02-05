@@ -1,18 +1,20 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:remember_me/etc/url.dart';
 import 'package:remember_me/model/AuthModel.dart';
 import 'package:remember_me/services/TokenService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService extends ChangeNotifier {
   bool isSuccess = false;
+  bool isSend = false;
+  bool isVerified = false;
   String htmlCode = "";
   late Tokens userTokens;
   Future<void> signUp() async {
     SharedPreferences sharedPreference = await SharedPreferences.getInstance();
     try {
-      Response response = await Dio().get(
-          "https://application-server-n3wk2vhygq-uc.a.run.app/auth/google");
+      Response response = await Dio().get("${baseUrl}/auth/google");
       if (response.statusCode == 200) {
         print('GET 요청 성공');
         htmlCode = response.toString();
@@ -37,7 +39,7 @@ class AuthService extends ChangeNotifier {
       String? token = sharedPreference.getString("access_token");
       Map<String, dynamic> data = signUpInfo.toJson();
       Response response = await Dio().post(
-        "https://application-server-n3wk2vhygq-uc.a.run.app/user/enroll/info",
+        "${baseUrl}/user/enroll/info",
         data: data,
         options: Options(
           headers: {
@@ -48,6 +50,7 @@ class AuthService extends ChangeNotifier {
       );
       if (response.statusCode == 201) {
         print('POST 요청 성공');
+        isSuccess = true;
       } else if (response.statusCode == 401) {
         print("ACCESS_TOKEN 만료");
         TokenService().refreshToken();
@@ -69,7 +72,7 @@ class AuthService extends ChangeNotifier {
       String? token = sharedPreference.getString("access_token");
       Map<String, dynamic> data = emailInfo.toJson();
       Response response = await Dio().post(
-        "https://application-server-n3wk2vhygq-uc.a.run.app/user/enroll/care/email",
+        "${baseUrl}/user/enroll/care/email",
         data: data,
         options: Options(
           headers: {
@@ -80,6 +83,7 @@ class AuthService extends ChangeNotifier {
       );
       if (response.statusCode == 201) {
         print('POST 요청 성공');
+        isSend = true;
       } else if (response.statusCode == 401) {
         print("ACCESS_TOKEN 만료");
         TokenService().refreshToken();
@@ -101,7 +105,7 @@ class AuthService extends ChangeNotifier {
       String? token = sharedPreference.getString("access_token");
       Map<String, dynamic> data = codeInfo.toJson();
       Response response = await Dio().post(
-        "https://application-server-n3wk2vhygq-uc.a.run.app/user/enroll/care/certificate",
+        "${baseUrl}/user/enroll/care/certificate",
         data: data,
         options: Options(
           headers: {
@@ -112,6 +116,7 @@ class AuthService extends ChangeNotifier {
       );
       if (response.statusCode == 201) {
         print('POST 요청 성공');
+        isVerified = true;
       } else {
         print('POST 요청 실패');
         print('Status Code: ${response.statusCode}');

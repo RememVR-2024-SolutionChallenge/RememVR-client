@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:remember_me/etc/url.dart';
 import 'package:remember_me/model/AuthModel.dart';
 import 'package:remember_me/model/GroupModel.dart';
 import 'package:remember_me/model/UserModel.dart';
@@ -17,7 +18,7 @@ class CarerecipientService extends ChangeNotifier {
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwMjU3NTA4NTE3MTU1ODYxOTI4NCIsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3MDcwMzQ2MzEsImV4cCI6MTcwNzAzNjQzMX0.MRhjfgcKWHb4p_6tHPPGc4UTKuK8YWJVbzKMyrZevo8";
     try {
       Response response = await Dio().get(
-        "https://application-server-n3wk2vhygq-uc.a.run.app/group",
+        "${baseUrl}/group",
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
@@ -49,7 +50,7 @@ class CarerecipientService extends ChangeNotifier {
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwMjU3NTA4NTE3MTU1ODYxOTI4NCIsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3MDcwMzQ2MzEsImV4cCI6MTcwNzAzNjQzMX0.MRhjfgcKWHb4p_6tHPPGc4UTKuK8YWJVbzKMyrZevo8";
     try {
       Response response = await Dio().get(
-        "https://application-server-n3wk2vhygq-uc.a.run.app/user",
+        "${baseUrl}/user",
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',

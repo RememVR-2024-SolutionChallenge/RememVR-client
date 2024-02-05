@@ -83,9 +83,14 @@ class _VrEnterNamePageWidgetState extends State<VrEnterNamePageWidget> {
           ),
           SimpleButton(
               type: "save",
-              destination: widget.type == 0
-                  ? VrAvatarCompletionPageWidget()
-                  : VrPlaceCompletionPageWidget()),
+              func: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => widget.type == 0
+                            ? VrAvatarCompletionPageWidget()
+                            : VrPlaceCompletionPageWidget()));
+              }),
         ],
       )),
     ));

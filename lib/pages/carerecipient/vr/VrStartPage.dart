@@ -51,11 +51,18 @@ class _VrStartPageWidgetState extends State<VrStartPageWidget> {
                       fontWeight: FontWeight.w700,
                     ))),
             SimpleButton(
-                type: widget.type,
-                destination: widget.type == "Start"
-                    ? VrStartPageWidget(
-                        type: "Continue", destination: VrSelectPageWidget())
-                    : VrSelectPageWidget()),
+              type: widget.type,
+              func: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => widget.type == "Start"
+                            ? VrStartPageWidget(
+                                type: "Continue",
+                                destination: VrSelectPageWidget())
+                            : VrSelectPageWidget()));
+              },
+            ),
             GestureDetector(
                 onTap: () {
                   Navigator.push(
