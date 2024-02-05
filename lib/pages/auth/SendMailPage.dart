@@ -88,20 +88,60 @@ class _SendMailPageWidgetState extends State<SendMailPageWidget> {
                     hintText: 'email'),
               ),
             ),
-            SimpleButton(
-              type: "Generate Code",
-              func: () async {
-                await authService
-                    .sendEmail(EmailInfo(email: _textEditingController.text));
-                if (authService.isSend) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => VerifyCodePageWidget(
-                              email: _textEditingController.text)));
-                }
-              },
-            ),
+            // SimpleButton(
+            //   type: "Generate Code",
+            //   func: () async {
+            //     print("hello");
+            //     await authService
+            //         .sendEmail(EmailInfo(email: _textEditingController.text));
+
+            //     if (authService.isSend) {
+            //       Navigator.push(
+            //           context,
+            //           MaterialPageRoute(
+            //               builder: (context) => VerifyCodePageWidget(
+            //                   email: _textEditingController.text)));
+            //     }
+            //   },
+            // ),
+            GestureDetector(
+                onTap: () async {
+                  print(_textEditingController.text);
+                  await authService
+                      .sendEmail(EmailInfo(email: _textEditingController.text));
+                  if (authService.isSend) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => VerifyCodePageWidget(
+                                email: _textEditingController.text)));
+                  }
+                },
+                child: Container(
+                  margin: EdgeInsets.only(top: 30),
+                  child: Text("Generate Code",
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white)),
+                  alignment: Alignment.center,
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  height: MediaQuery.of(context).size.height * 0.05,
+                  decoration: ShapeDecoration(
+                    color: Color(0xff4C5893),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    shadows: [
+                      BoxShadow(
+                        color: Color(0x3F000000),
+                        blurRadius: 4,
+                        offset: Offset(0, 3),
+                        spreadRadius: 0,
+                      )
+                    ],
+                  ),
+                ))
           ],
         )),
       ));

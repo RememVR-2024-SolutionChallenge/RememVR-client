@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:provider/provider.dart';
+import 'package:remember_me/services/CaregiverService.dart';
 
 class VrQueuePageWidget extends StatefulWidget {
   const VrQueuePageWidget({super.key});
@@ -20,6 +22,12 @@ class _VrQueuePageWidgetState extends State<VrQueuePageWidget> {
   @override
   void initState() {
     super.initState();
+    _loadQueue();
+  }
+
+  Future<void> _loadQueue() async {
+    await Provider.of<CaregiverService>(context, listen: false).getQueue();
+    setState(() {});
   }
 
   @override

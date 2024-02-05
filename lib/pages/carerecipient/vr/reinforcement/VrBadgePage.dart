@@ -1,47 +1,21 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:remember_me/etc/texts.dart';
 import 'package:remember_me/pages/auth/SetNicknamePage.dart';
 import 'package:remember_me/pages/carerecipient/home/HomeMainPage.dart';
 import 'package:remember_me/pages/carerecipient/vr/VrSelectPage.dart';
 import 'package:remember_me/pages/carerecipient/vr/recollection/VrRecollectionStartPage.dart';
-import 'package:remember_me/services/CarerecipientService.dart';
 
-class VrReinforcementTransmissionPageWidget extends StatefulWidget {
-  const VrReinforcementTransmissionPageWidget({super.key});
+class VrBadgePageWidget extends StatefulWidget {
+  const VrBadgePageWidget({super.key});
   @override
-  _VrReinforcementTransmissionPageWidgetState createState() =>
-      _VrReinforcementTransmissionPageWidgetState();
+  _VrBadgePageWidgetState createState() => _VrBadgePageWidgetState();
 }
 
-class _VrReinforcementTransmissionPageWidgetState
-    extends State<VrReinforcementTransmissionPageWidget> {
-  String displayText =
-      "Voice recording \ntransmission has\n been successfully\n completed!";
-  String displayImage = 'assets/images/cloud.png';
+class _VrBadgePageWidgetState extends State<VrBadgePageWidget> {
+  String displayText = reinforcementTexts[0];
   @override
   void initState() {
     super.initState();
-    _requestBadge();
-    Future.delayed(Duration(seconds: 3), () {
-      setState(() {
-        displayText = "You’ve got a badge \nfor today’s task! \nCongrats :)";
-        List<String> badgeImages = ['badge1.png', 'badge2.png', 'badge3.png'];
-
-        Random random = Random();
-
-        int randomIndex = random.nextInt(badgeImages.length);
-
-        String randomImage = badgeImages[randomIndex];
-        displayImage = 'assets/images/' + randomImage;
-      });
-    });
-  }
-
-  Future<void> _requestBadge() async {
-    await Provider.of<CarerecipientService>(context, listen: false).getBadge();
   }
 
   @override
@@ -60,7 +34,7 @@ class _VrReinforcementTransmissionPageWidgetState
           children: [
             Container(
               child: Image.asset(
-                displayImage,
+                "assets/images/badge1.png",
                 width: 350,
                 height: 350,
               ),

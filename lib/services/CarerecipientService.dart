@@ -8,14 +8,14 @@ import 'package:remember_me/services/TokenService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CarerecipientService extends ChangeNotifier {
-  late GiverGroup givergroup;
+  GiverGroup givergroup = GiverGroup();
   late UserInfo user;
+  bool isGiverExist = false;
   Future<void> getCaregiverGroup() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
     // String? token = sharedPreferences.getString("access_token");
-    String? token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwMjU3NTA4NTE3MTU1ODYxOTI4NCIsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3MDcwMzQ2MzEsImV4cCI6MTcwNzAzNjQzMX0.MRhjfgcKWHb4p_6tHPPGc4UTKuK8YWJVbzKMyrZevo8";
+
     try {
       Response response = await Dio().get(
         "${baseUrl}/group",
@@ -26,7 +26,9 @@ class CarerecipientService extends ChangeNotifier {
           },
         ),
       );
+
       if (response.statusCode == 200) {
+        print('GET 요청 성공');
         givergroup = GiverGroup.fromJson(response.data);
       } else if (response.statusCode == 401) {
         print("ACCESS_TOKEN 만료");
@@ -46,8 +48,7 @@ class CarerecipientService extends ChangeNotifier {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
     // String? token = sharedPreferences.getString("access_token");
-    String? token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwMjU3NTA4NTE3MTU1ODYxOTI4NCIsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3MDcwMzQ2MzEsImV4cCI6MTcwNzAzNjQzMX0.MRhjfgcKWHb4p_6tHPPGc4UTKuK8YWJVbzKMyrZevo8";
+
     try {
       Response response = await Dio().get(
         "${baseUrl}/user",
@@ -59,17 +60,53 @@ class CarerecipientService extends ChangeNotifier {
         ),
       );
       if (response.statusCode == 200) {
+        print('GET 요청 성공');
+        isGiverExist = true;
         user = UserInfo.fromJson(response.data);
       } else if (response.statusCode == 401) {
         print("ACCESS_TOKEN 만료");
         TokenService().refreshToken();
         getUserInfo();
+      } else if (response.statusCode == 403) {
+        print("caregiver 등록 필요");
       } else {
         print('GET 요청 실패');
         print('Status Code: ${response.statusCode}');
       }
     } catch (e) {
       print('GET 요청 에러');
+      print(e.toString());
+    }
+  }
+
+  Future<void> getBadge() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    // String? token = sharedPreferences.getString("access_token");
+
+    try {
+      Response response = await Dio().post(
+        "${baseUrl}/badge",
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+      if (response.statusCode == 201) {
+        print('POST 요청 성공');
+        isGiverExist = true;
+      } else if (response.statusCode == 401) {
+        print("ACCESS_TOKEN 만료");
+        TokenService().refreshToken();
+        // getBadge();
+      } else {
+        print('POST 요청 실패');
+        print('Status Code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('POST 요청 에러');
       print(e.toString());
     }
   }

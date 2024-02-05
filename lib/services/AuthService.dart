@@ -11,6 +11,7 @@ class AuthService extends ChangeNotifier {
   bool isVerified = false;
   String htmlCode = "";
   late Tokens userTokens;
+
   Future<void> signUp() async {
     SharedPreferences sharedPreference = await SharedPreferences.getInstance();
     try {
@@ -36,7 +37,7 @@ class AuthService extends ChangeNotifier {
     try {
       SharedPreferences sharedPreference =
           await SharedPreferences.getInstance();
-      String? token = sharedPreference.getString("access_token");
+      // String? token = sharedPreference.getString("access_token");
       Map<String, dynamic> data = signUpInfo.toJson();
       Response response = await Dio().post(
         "${baseUrl}/user/enroll/info",
@@ -69,11 +70,12 @@ class AuthService extends ChangeNotifier {
     try {
       SharedPreferences sharedPreference =
           await SharedPreferences.getInstance();
-      String? token = sharedPreference.getString("access_token");
+      // String? token = sharedPreference.getString("access_token");
+      print("dd" + emailInfo.email!);
       Map<String, dynamic> data = emailInfo.toJson();
       Response response = await Dio().post(
         "${baseUrl}/user/enroll/care/email",
-        data: data,
+        data: {"email": emailInfo.email!},
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
@@ -102,7 +104,7 @@ class AuthService extends ChangeNotifier {
     try {
       SharedPreferences sharedPreference =
           await SharedPreferences.getInstance();
-      String? token = sharedPreference.getString("access_token");
+      // String? token = sharedPreference.getString("access_token");
       Map<String, dynamic> data = codeInfo.toJson();
       Response response = await Dio().post(
         "${baseUrl}/user/enroll/care/certificate",

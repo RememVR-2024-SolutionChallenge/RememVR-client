@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:remember_me/model/AuthModel.dart';
 import 'package:remember_me/pages/auth/CompleteSelectionPage.dart';
+import 'package:remember_me/pages/carerecipient/home/HomeMainPage.dart';
 import 'package:remember_me/services/AuthService.dart';
 
 class SelectUserTypePageWidget extends StatefulWidget {
@@ -73,8 +74,7 @@ class _SelectUserTypePageWidgetState extends State<SelectUserTypePageWidget> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      CompleteSelectionPageWidget()));
+                                  builder: (context) => HomeMainPageWidget()));
                         }
                       },
                       child: TypeCard(
