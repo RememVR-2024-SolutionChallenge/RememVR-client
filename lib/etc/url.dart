@@ -1,3 +1,8 @@
 String baseUrl = "https://gateway-server-n3wk2vhygq-uc.a.run.app";
 String token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwMjU3NTA4NTE3MTU1ODYxOTI4NCIsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3MDcxNDM3NDksImV4cCI6MTcwNzE0NTU0OX0.PXHya6XL0RP0Tuo2jeUFLyQmTiMjXKlC_4OxolHM82k";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwNTEyNjg4NzcyMjIzNjYwNTA1MSIsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3MDcyODczMzcsImV4cCI6MTcwNzI4OTEzN30.gW9xRDvwivxI3mAy6mMd-cD-9NdtLNgOTRhy99jC9Qs";
+Map<String, String> badgeTypes = {
+  "GREAT_JOB": "badge1.png",
+  "EXCELLENT_WORK": "badge2.png",
+  "LOVELY": "badge3.png"
+};

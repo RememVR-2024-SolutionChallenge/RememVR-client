@@ -1,10 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
+import 'package:remember_me/etc/url.dart';
+import 'package:remember_me/model/AuthModel.dart';
 import 'package:remember_me/pages/auth/CompleteSignUpPage.dart';
 import 'package:remember_me/services/AuthService.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class LoginPageWidget extends StatefulWidget {
@@ -14,6 +17,7 @@ class LoginPageWidget extends StatefulWidget {
 }
 
 class _LoginPageWidgetState extends State<LoginPageWidget> {
+  late Tokens userTokens;
   @override
   WebViewController controller = WebViewController()
     ..setJavaScriptMode(JavaScriptMode.unrestricted)
@@ -27,25 +31,27 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
         onPageFinished: (String url) {},
         onWebResourceError: (WebResourceError error) {},
         onNavigationRequest: (NavigationRequest request) {
-          if (request.url.startsWith(
-              "https://application-server-n3wk2vhygq-uc.a.run.app/auth/google")) {
+          if (request.url.startsWith("${baseUrl}/auth/google")) {
             return NavigationDecision.prevent;
           }
           return NavigationDecision.navigate;
         },
       ),
     )
-    ..loadRequest(Uri.parse(
-        "https://application-server-n3wk2vhygq-uc.a.run.app/auth/google"));
+    ..loadRequest(Uri.parse("${baseUrl}/auth/google"));
 
   void _launchURL() async {
+    SharedPreferences sharedPreference = await SharedPreferences.getInstance();
     try {
-      launch('https://application-server-n3wk2vhygq-uc.a.run.app/auth/google');
-      var response = await Dio().get(
-          'https://application-server-n3wk2vhygq-uc.a.run.app/auth/google/callback');
+      launch('${baseUrl}/auth/google');
+      var response = await Dio().get('${baseUrl}/auth/google');
       if (response.statusCode == 200) {
         // JSON 처리
         print(response.data);
+        print("hello");
+        userTokens = Tokens.fromJson(response.data);
+        sharedPreference.setString("access_token", userTokens.accessToken!);
+        sharedPreference.setString("refresh_token", userTokens.refreshToken!);
         // 여기서 response.body에는 JSON 내용이 포함됩니다.
       } else {
         // 오류 처리
