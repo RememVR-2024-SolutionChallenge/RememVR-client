@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'package:provider/provider.dart';
 import 'package:remember_me/etc/url.dart';
 import 'package:remember_me/model/BadgeModel.dart';
-import 'package:remember_me/model/GroupModel.dart';
-import 'package:remember_me/pages/caregiver/settings/SettingAboutPage.dart';
 import 'package:remember_me/pages/caregiver/vr/VrQueuePage.dart';
-import 'package:remember_me/pages/caregiver/settings/SettingMainPage.dart';
-import 'package:remember_me/services/CarerecipientService.dart';
 
 class BadgeCalendarPageWidget extends StatefulWidget {
   final List<Badges> badges;
@@ -135,22 +129,25 @@ class _BadgeCalendarPageWidgetState extends State<BadgeCalendarPageWidget> {
                 itemCount: _daysInMonth.length,
                 itemBuilder: (context, index) {
                   final day = _daysInMonth[index];
-                  final badges = _badgesMap[day] ?? [];
+                  final badges = _badgesMap[day] ?? [Badges()];
+                  print(badges);
 
                   return Container(
                     padding: const EdgeInsets.all(4.0),
-                    child: Container(
-                      child: Column(
-                        children: [
-                          SizedBox(height: 5),
-                          ...badges.map((badge) => Image.asset(
-                              width: 30,
-                              height: 30,
-                              "assets/images/${badgeTypes[badge.type]!}")),
-                          Text('${day.day}',
-                              style: TextStyle(color: Colors.white)),
-                        ],
-                      ),
+                    child: Column(
+                      children: [
+                        badges[0].type == null
+                            ? Container(
+                                width: 27,
+                                height: 27,
+                              )
+                            : Image.asset(
+                                width: 27,
+                                height: 27,
+                                "assets/images/${badgeTypes[badges[0].type]}"),
+                        Text('${day.day}',
+                            style: TextStyle(color: Colors.white)),
+                      ],
                     ),
                   );
                 },

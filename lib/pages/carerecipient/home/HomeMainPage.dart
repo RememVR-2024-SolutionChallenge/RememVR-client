@@ -22,7 +22,7 @@ class _HomeMainPageWidgetState extends State<HomeMainPageWidget> {
   DateTime today = DateTime.now();
   late DateTime startOfWeek;
   List<Badges>? _badgeList = [];
-  List<String> thisWeekTypes = [];
+  List<String> thisWeekTypes = ["", "", "", "", "", "", ""];
 
   List<Givers>? _givers = [];
   @override
@@ -63,11 +63,16 @@ class _HomeMainPageWidgetState extends State<HomeMainPageWidget> {
           .badges;
       DateTime thisMonday =
           DateTime(today.year, today.month, today.day - today.weekday + 1);
-      thisWeekTypes = _badgeList!
-          .where((element) =>
-              DateTime.parse(element.createdAt!).isAfter(thisMonday))
-          .map<String>((element) => element.type as String)
-          .toList();
+      thisWeekTypes = List<String>.filled(7, "");
+
+      for (var badge in _badgeList!) {
+        var createdAt = DateTime.parse(badge.createdAt!);
+        var dayIndex = createdAt.weekday - 1; // 요일은 1부터 시작하므로 1을 빼줍니다.
+
+        if (createdAt.isAfter(thisMonday) && dayIndex >= 0 && dayIndex < 7) {
+          thisWeekTypes[dayIndex] = badge.type!;
+        }
+      }
     });
   }
 
@@ -266,8 +271,10 @@ class DayTile extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
           ),
           SizedBox(height: 4),
-          Image.asset("assets/images/${badgeTypes[badgeType]}",
-              width: 30, height: 30)
+          badgeType == ""
+              ? Container(width: 30, height: 30)
+              : Image.asset("assets/images/${badgeTypes[badgeType]}",
+                  width: 30, height: 30)
         ],
       ),
     );
