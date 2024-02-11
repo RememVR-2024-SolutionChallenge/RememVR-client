@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:remember_me/pages/caregiver/records/RecordsMainPage.dart';
-import 'package:remember_me/pages/caregiver/home/HomeMainPage.dart';
+import 'package:remember_me/pages/caregiver/home/HomeGiverMainPage.dart';
 import 'package:remember_me/pages/caregiver/settings/SettingMainPage.dart';
 import 'package:remember_me/pages/caregiver/vr/VrMainPage.dart';
 
@@ -19,7 +19,7 @@ class _CaregiverNavigationWidgetState extends State<CaregiverNavigationWidget> {
 
   List<Widget> _widgetOptions() {
     return [
-      HomeMainPageWidget(),
+      HomeGiverMainPageWidget(),
       VrMainPageWidget(),
       RecordsMainPageWidget(),
       SettingPageWidget()

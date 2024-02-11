@@ -10,13 +10,15 @@ import 'package:remember_me/pages/carerecipient/vr/VrStartPage.dart';
 import 'package:remember_me/services/CarerecipientService.dart';
 import 'package:intl/intl.dart';
 
-class HomeMainPageWidget extends StatefulWidget {
-  const HomeMainPageWidget({super.key});
+class HomeRecipientMainPageWidget extends StatefulWidget {
+  const HomeRecipientMainPageWidget({super.key});
   @override
-  _HomeMainPageWidgetState createState() => _HomeMainPageWidgetState();
+  _HomeRecipientMainPageWidgetState createState() =>
+      _HomeRecipientMainPageWidgetState();
 }
 
-class _HomeMainPageWidgetState extends State<HomeMainPageWidget> {
+class _HomeRecipientMainPageWidgetState
+    extends State<HomeRecipientMainPageWidget> {
   String _userName = "";
   bool _isGiverExist = false;
   DateTime today = DateTime.now();
@@ -248,7 +250,9 @@ class _HomeMainPageWidgetState extends State<HomeMainPageWidget> {
                               )))
                     ],
                   )
-                : Container(child: Text("You should enroll your care giver."))),
+                : Container(
+                    child: Text("You should enroll your care giver.",
+                        style: TextStyle(color: Colors.white)))),
       ),
     );
   }

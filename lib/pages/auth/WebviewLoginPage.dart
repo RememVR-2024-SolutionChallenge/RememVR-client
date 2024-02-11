@@ -2,44 +2,41 @@ import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:remember_me/etc/url.dart';
 import 'package:remember_me/pages/auth/CompleteSignUpPage.dart';
-import 'package:remember_me/pages/auth/EnterTokenPage.dart';
 import 'package:remember_me/services/AuthService.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
-import 'package:remember_me/services/TokenService.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
-class LoginPageWidget extends StatefulWidget {
-  const LoginPageWidget({super.key});
+class WebviewLoginPageWidget extends StatefulWidget {
+  const WebviewLoginPageWidget({super.key});
   @override
-  _LoginPageWidgetState createState() => _LoginPageWidgetState();
+  _WebviewLoginPageWidgetState createState() => _WebviewLoginPageWidgetState();
 }
 
-class _LoginPageWidgetState extends State<LoginPageWidget> {
-  Future<void> _launchURL(BuildContext context) async {
-    final url = '$baseUrl/auth/google';
-
-    try {
-      await launchUrl(
-        Uri.parse(url),
-        customTabsOptions: CustomTabsOptions(
-          colorSchemes: CustomTabsColorSchemes.defaults(),
-          shareState: CustomTabsShareState.on,
-          urlBarHidingEnabled: true,
-          showTitle: true,
-          closeButton: CustomTabsCloseButton(
-            icon: CustomTabsCloseButtonIcons.back,
-          ),
-        ),
-        safariVCOptions: SafariViewControllerOptions(
-          barCollapsingEnabled: true,
-          dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
-        ),
-      );
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-  }
-
+class _WebviewLoginPageWidgetState extends State<WebviewLoginPageWidget> {
+  WebViewController controller = WebViewController()
+    ..setUserAgent('userAgent')
+    ..setJavaScriptMode(JavaScriptMode.unrestricted)
+    ..setBackgroundColor(const Color(0x00000000))
+    ..setNavigationDelegate(
+      NavigationDelegate(
+        onProgress: (int progress) {
+          // Update loading bar.
+        },
+        onPageStarted: (String url) {},
+        onPageFinished: (_) {
+          print("hello00");
+        },
+        onWebResourceError: (WebResourceError error) {},
+        onNavigationRequest: (NavigationRequest request) {
+          if (request.url.startsWith('${baseUrl}/auth/google')) {
+            return NavigationDecision.prevent;
+          }
+          return NavigationDecision.navigate;
+        },
+      ),
+    )
+    ..loadRequest(Uri.parse('${baseUrl}/auth/google'));
   @override
   bool _isChecked = false;
   void initState() {
@@ -54,7 +51,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<TokenService>(builder: (context, tokenService, child) {
+    return Consumer<AuthService>(builder: (context, authService, child) {
       return Scaffold(
         body: Container(
           decoration: BoxDecoration(
@@ -88,48 +85,54 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
               ),
               GestureDetector(
                   onTap: () async {
+                    await authService.signUp();
+                    print(authService.isSuccess);
+                    String _htmlCode = authService.htmlCode;
                     if (_isChecked) {
-                      _launchURL(context);
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => EnterTokenPageWidget()));
-                    } else {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0)),
-                              title: Column(
-                                children: <Widget>[
-                                  Text("Confirm Agreement"),
-                                ],
-                              ),
-                              content: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    "You should confirm a following agreement to start the service",
-                                  ),
-                                ],
-                              ),
-                              actions: <Widget>[
-                                TextButton(
-                                  style: TextButton.styleFrom(
-                                    padding: const EdgeInsets.all(20.0),
-                                    foregroundColor: Colors.blue,
-                                    textStyle: const TextStyle(fontSize: 20),
-                                  ),
-                                  child: Text("Confirm"),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
+                      if (authService.isSuccess) {
+                        print(_htmlCode);
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return WebViewWidget(controller: controller);
+                            });
+                      } else {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0)),
+                                title: Column(
+                                  children: <Widget>[
+                                    Text("Confirm Agreement"),
+                                  ],
                                 ),
-                              ],
-                            );
-                          });
+                                content: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      "You should confirm a following agreement to start the service",
+                                    ),
+                                  ],
+                                ),
+                                actions: <Widget>[
+                                  TextButton(
+                                    style: TextButton.styleFrom(
+                                      padding: const EdgeInsets.all(20.0),
+                                      foregroundColor: Colors.blue,
+                                      textStyle: const TextStyle(fontSize: 20),
+                                    ),
+                                    child: Text("Confirm"),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                ],
+                              );
+                            });
+                      }
                     }
                   },
                   child: Container(

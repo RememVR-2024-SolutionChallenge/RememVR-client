@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:remember_me/pages/auth/SetNicknamePage.dart';
-import 'package:remember_me/pages/carerecipient/home/HomeMainPage.dart';
+import 'package:remember_me/pages/carerecipient/home/HomeRecipientMainPage.dart';
 import 'package:remember_me/pages/carerecipient/vr/VrSelectPage.dart';
 
 class VrStartPageWidget extends StatefulWidget {
@@ -68,7 +68,7 @@ class _VrStartPageWidgetState extends State<VrStartPageWidget> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => HomeMainPageWidget()));
+                          builder: (context) => HomeRecipientMainPageWidget()));
                 },
                 child: Container(
                     margin: EdgeInsets.only(top: 20),

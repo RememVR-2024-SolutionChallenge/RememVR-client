@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:remember_me/etc/texts.dart';
 import 'package:remember_me/pages/auth/SetNicknamePage.dart';
-import 'package:remember_me/pages/carerecipient/home/HomeMainPage.dart';
+import 'package:remember_me/pages/carerecipient/home/HomeRecipientMainPage.dart';
 import 'package:remember_me/pages/carerecipient/vr/VrSelectPage.dart';
 import 'package:remember_me/pages/carerecipient/vr/recollection/VrRecollectionStartPage.dart';
 import 'package:remember_me/services/CarerecipientService.dart';

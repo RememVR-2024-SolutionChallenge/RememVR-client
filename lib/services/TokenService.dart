@@ -1,9 +1,10 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:remember_me/etc/url.dart';
 import 'package:remember_me/model/AuthModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class TokenService {
+class TokenService extends ChangeNotifier {
   late Tokens newUserTokens;
   void refreshToken() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();

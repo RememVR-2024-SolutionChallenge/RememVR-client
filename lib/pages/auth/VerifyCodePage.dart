@@ -6,7 +6,7 @@ import 'dart:async';
 
 import 'package:remember_me/pages/auth/SelectUserTypePage.dart';
 import 'package:remember_me/pages/auth/SetNicknamePage.dart';
-import 'package:remember_me/pages/caregiver/home/HomeMainPage.dart';
+import 'package:remember_me/pages/caregiver/home/HomeGiverMainPage.dart';
 import 'package:remember_me/services/AuthService.dart';
 
 class VerifyCodePageWidget extends StatefulWidget {
@@ -127,7 +127,7 @@ class _VerifyCodePageWidgetState extends State<VerifyCodePageWidget> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => HomeMainPageWidget()));
+                          builder: (context) => HomeGiverMainPageWidget()));
                 }
               },
             ),

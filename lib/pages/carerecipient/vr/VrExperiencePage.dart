@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:remember_me/pages/auth/SetNicknamePage.dart';
-import 'package:remember_me/pages/carerecipient/home/HomeMainPage.dart';
+import 'package:remember_me/pages/carerecipient/home/HomeRecipientMainPage.dart';
 import 'package:remember_me/pages/carerecipient/vr/VrEndPage.dart';
 import 'package:remember_me/pages/carerecipient/vr/VrSelectPage.dart';
 

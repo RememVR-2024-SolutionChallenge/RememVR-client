@@ -14,9 +14,9 @@ class CarerecipientService extends ChangeNotifier {
   bool isGiverExist = false;
   BadgeBundle badgeBundle = BadgeBundle();
   Future<void> getCaregiverGroup() async {
-    // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
-    // String? token = sharedPreferences.getString("access_token");
+    String? token = sharedPreferences.getString("access_token");
 
     try {
       Response response = await Dio().get(
@@ -49,8 +49,7 @@ class CarerecipientService extends ChangeNotifier {
   Future<void> getUserInfo() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
-    // String? token = sharedPreferences.getString("access_token");
-
+    String? token = sharedPreferences.getString("access_token");
     try {
       Response response = await Dio().get(
         "${baseUrl}/user",
@@ -84,6 +83,7 @@ class CarerecipientService extends ChangeNotifier {
   Future<void> getBadge() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
+    String? token = sharedPreferences.getString("access_token");
     try {
       Response response = await Dio().post(
         "${baseUrl}/badge",
@@ -96,7 +96,6 @@ class CarerecipientService extends ChangeNotifier {
       );
       if (response.statusCode == 201) {
         print('POST 요청 성공');
-        isGiverExist = true;
       } else if (response.statusCode == 401) {
         print("ACCESS_TOKEN 만료");
         TokenService().refreshToken();
@@ -114,6 +113,7 @@ class CarerecipientService extends ChangeNotifier {
   Future<void> getBadgeList(int year, int month) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
+    String? token = sharedPreferences.getString("access_token");
     try {
       Response response = await Dio().get(
         "${baseUrl}/badge?year=${year}&month=${month}",

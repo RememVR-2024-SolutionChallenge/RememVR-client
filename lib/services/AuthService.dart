@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:remember_me/etc/url.dart';
 import 'package:remember_me/model/AuthModel.dart';
+import 'package:remember_me/model/UserModel.dart';
 import 'package:remember_me/services/TokenService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -11,6 +12,7 @@ class AuthService extends ChangeNotifier {
   bool isVerified = false;
   String htmlCode = "";
   late Tokens userTokens;
+  bool isGiver = true;
 
   Future<void> signUp() async {
     SharedPreferences sharedPreference = await SharedPreferences.getInstance();
@@ -37,7 +39,7 @@ class AuthService extends ChangeNotifier {
     try {
       SharedPreferences sharedPreference =
           await SharedPreferences.getInstance();
-      // String? token = sharedPreference.getString("access_token");
+      String? token = sharedPreference.getString("access_token");
       Map<String, dynamic> data = signUpInfo.toJson();
       Response response = await Dio().post(
         "${baseUrl}/user/enroll/info",
@@ -70,7 +72,7 @@ class AuthService extends ChangeNotifier {
     try {
       SharedPreferences sharedPreference =
           await SharedPreferences.getInstance();
-      // String? token = sharedPreference.getString("access_token");
+      String? token = sharedPreference.getString("access_token");
       print("dd" + emailInfo.email!);
       Map<String, dynamic> data = emailInfo.toJson();
       Response response = await Dio().post(
@@ -104,7 +106,7 @@ class AuthService extends ChangeNotifier {
     try {
       SharedPreferences sharedPreference =
           await SharedPreferences.getInstance();
-      // String? token = sharedPreference.getString("access_token");
+      String? token = sharedPreference.getString("access_token");
       Map<String, dynamic> data = codeInfo.toJson();
       Response response = await Dio().post(
         "${baseUrl}/user/enroll/care/certificate",
@@ -125,6 +127,36 @@ class AuthService extends ChangeNotifier {
       }
     } catch (e) {
       print('POST 요청 에러');
+      print(e.toString());
+    }
+  }
+
+  Future<void> checkUser() async {
+    try {
+      SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+      String? token = sharedPreferences.getString("access_token");
+      print("hhh : ${sharedPreferences.getString("access_token")}");
+      Response response = await Dio().get(
+        "${baseUrl}/user",
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+      if (response.statusCode == 200) {
+        print('GET 요청 성공');
+        isGiver = UserInfo.fromJson(response.data).role == "CareRecipient"
+            ? false
+            : true;
+      } else {
+        print('GET 요청 실패');
+        print('Status Code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('GET 요청 에러');
       print(e.toString());
     }
   }

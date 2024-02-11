@@ -1,41 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
+import 'package:remember_me/etc/url.dart';
 import 'package:remember_me/pages/auth/CompleteSignUpPage.dart';
 import 'package:remember_me/services/AuthService.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
-class LoginPageWidget extends StatefulWidget {
-  const LoginPageWidget({super.key});
+class TempLoginPageWidget extends StatefulWidget {
+  const TempLoginPageWidget({super.key});
   @override
-  _LoginPageWidgetState createState() => _LoginPageWidgetState();
+  _TempLoginPageWidgetState createState() => _TempLoginPageWidgetState();
 }
 
-class _LoginPageWidgetState extends State<LoginPageWidget> {
+class _TempLoginPageWidgetState extends State<TempLoginPageWidget> {
   @override
-  WebViewController controller = WebViewController()
-    ..setJavaScriptMode(JavaScriptMode.unrestricted)
-    ..setBackgroundColor(const Color(0x00000000))
-    ..setNavigationDelegate(
-      NavigationDelegate(
-        onProgress: (int progress) {
-          // Update loading bar.
-        },
-        onPageStarted: (String url) {},
-        onPageFinished: (String url) {},
-        onWebResourceError: (WebResourceError error) {},
-        onNavigationRequest: (NavigationRequest request) {
-          if (request.url.startsWith(
-              "https://application-server-n3wk2vhygq-uc.a.run.app/auth/google")) {
-            return NavigationDecision.prevent;
-          }
-          return NavigationDecision.navigate;
-        },
-      ),
-    )
-    ..loadRequest(Uri.parse(
-        "https://application-server-n3wk2vhygq-uc.a.run.app/auth/google"));
-
   bool _isChecked = false;
   void initState() {
     super.initState();
@@ -83,72 +61,57 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
               ),
               GestureDetector(
                   onTap: () async {
-                    authService.signUp();
+                    await authService.signUp();
                     print(authService.isSuccess);
                     String _htmlCode = authService.htmlCode;
                     if (_isChecked) {
                       if (authService.isSuccess) {
                         print(_htmlCode);
-                        // showDialog(
-                        //     context: context,
-                        //     builder: (BuildContext context) {
-                        //       return Container(
-                        //           child: Transform.scale(
-                        //               scale: 0.2, child: HtmlWidget(_htmlCode)));
-                        //     });
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                CompleteSignUpPageWidget(htmlCode: _htmlCode),
+                          ),
+                        );
+                      } else {
                         showDialog(
                             context: context,
                             builder: (BuildContext context) {
-                              return Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.5,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.5,
-                                  child: WebViewWidget(controller: controller));
-                            });
-
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    CompleteSignUpPageWidget()));
-                      }
-                    } else {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0)),
-                              title: Column(
-                                children: <Widget>[
-                                  Text("Confirm Agreement"),
-                                ],
-                              ),
-                              content: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    "You should confirm a following agreement to start the service",
-                                  ),
-                                ],
-                              ),
-                              actions: <Widget>[
-                                TextButton(
-                                  style: TextButton.styleFrom(
-                                    padding: const EdgeInsets.all(20.0),
-                                    foregroundColor: Colors.blue,
-                                    textStyle: const TextStyle(fontSize: 20),
-                                  ),
-                                  child: Text("Confirm"),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
+                              return AlertDialog(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0)),
+                                title: Column(
+                                  children: <Widget>[
+                                    Text("Confirm Agreement"),
+                                  ],
                                 ),
-                              ],
-                            );
-                          });
+                                content: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      "You should confirm a following agreement to start the service",
+                                    ),
+                                  ],
+                                ),
+                                actions: <Widget>[
+                                  TextButton(
+                                    style: TextButton.styleFrom(
+                                      padding: const EdgeInsets.all(20.0),
+                                      foregroundColor: Colors.blue,
+                                      textStyle: const TextStyle(fontSize: 20),
+                                    ),
+                                    child: Text("Confirm"),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                ],
+                              );
+                            });
+                      }
                     }
                   },
                   child: Container(
@@ -222,5 +185,26 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
         ),
       );
     });
+  }
+}
+
+class CompleteSignUpPageWidget extends StatelessWidget {
+  final String htmlCode;
+
+  CompleteSignUpPageWidget({required this.htmlCode});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Complete Sign Up'),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: HtmlWidget(htmlCode),
+        ),
+      ),
+    );
   }
 }

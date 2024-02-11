@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:remember_me/etc/url.dart';
 import 'package:remember_me/model/AuthModel.dart';
+import 'package:remember_me/model/BadgeModel.dart';
 import 'package:remember_me/model/GroupModel.dart';
 import 'package:remember_me/model/UserModel.dart';
 import 'package:remember_me/model/VrModel.dart';
@@ -13,11 +14,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 class CaregiverService extends ChangeNotifier {
   UserInfo user = UserInfo();
   List<Queue> queue = [];
-
+  bool isRecipientExist = false;
+  BadgeBundle badgeBundle = BadgeBundle();
   Future<void> getUserInfo() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
-    // String? token = sharedPreferences.getString("access_token");
+    String? token = sharedPreferences.getString("access_token");
 
     try {
       Response response = await Dio().get(
@@ -31,6 +33,7 @@ class CaregiverService extends ChangeNotifier {
       );
       if (response.statusCode == 200) {
         user = UserInfo.fromJson(response.data);
+        isRecipientExist = true;
       } else if (response.statusCode == 401) {
         print("ACCESS_TOKEN 만료");
         TokenService().refreshToken();
@@ -47,6 +50,8 @@ class CaregiverService extends ChangeNotifier {
 
   Future<void> getQueue() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    String? token = sharedPreferences.getString("access_token");
 
     try {
       Response response = await Dio().get(
@@ -66,6 +71,36 @@ class CaregiverService extends ChangeNotifier {
         print("ACCESS_TOKEN 만료");
         TokenService().refreshToken();
         getUserInfo();
+      } else {
+        print('GET 요청 실패');
+        print('Status Code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('GET 요청 에러');
+      print(e.toString());
+    }
+  }
+
+  Future<void> getBadgeList(int year, int month) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    String? token = sharedPreferences.getString("access_token");
+    try {
+      Response response = await Dio().get(
+        "${baseUrl}/badge?year=${year}&month=${month}",
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+      if (response.statusCode == 200) {
+        print('GET 요청 성공');
+        badgeBundle = BadgeBundle.fromJson(response.data);
+      } else if (response.statusCode == 401) {
+        print("ACCESS_TOKEN 만료");
+        TokenService().refreshToken();
       } else {
         print('GET 요청 실패');
         print('Status Code: ${response.statusCode}');
