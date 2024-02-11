@@ -6,6 +6,7 @@ import 'package:remember_me/pages/auth/LoginPage.dart';
 import 'package:remember_me/pages/caregiver/home/HomeGiverMainPage.dart';
 import 'package:remember_me/pages/carerecipient/home/HomeRecipientMainPage.dart';
 import 'package:remember_me/services/AuthService.dart';
+import 'package:remember_me/services/TokenService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class StartPageWidget extends StatefulWidget {
@@ -20,7 +21,7 @@ class _StartPageWidgetState extends State<StartPageWidget> {
   String? accessToken = "";
   String? refreshToken = "";
   bool _isGiver = true;
-
+  bool _isRefreshed = false;
   @override
   void initState() {
     super.initState();
@@ -72,7 +73,13 @@ class _StartPageWidgetState extends State<StartPageWidget> {
       );
       if (response.statusCode == 401) {
         print("ACCESS_TOKEN 만료");
-        return false;
+        await Provider.of<TokenService>(context, listen: false).refreshToken();
+        setState(() {
+          _isRefreshed =
+              Provider.of<TokenService>(context, listen: false).isRefreshed;
+        });
+
+        return _isRefreshed ? true : false;
       } else if (response.statusCode == 200) {
         print("자동 로그인 성공");
         return true;

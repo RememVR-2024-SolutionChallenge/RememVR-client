@@ -49,6 +49,16 @@ class _VrBadgePageWidgetState extends State<VrBadgePageWidget> {
                       fontSize: 30,
                       fontWeight: FontWeight.w700,
                     ))),
+            InkWell(
+                child: SimpleButton(
+              func: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => HomeRecipientMainPageWidget()));
+              },
+              type: 'Go to home',
+            ))
           ],
         )),
       ),
