@@ -25,7 +25,7 @@ class _VrReinforcementTransmissionPageWidgetState
   void initState() {
     super.initState();
     _requestBadge();
-    Future.delayed(Duration(seconds: 3), () {
+    Future.delayed(Duration(seconds: 2), () {
       setState(() {
         displayText = "You’ve got a badge \nfor today’s task! \nCongrats :)";
         List<String> badgeImages = ['badge1.png', 'badge2.png', 'badge3.png'];
@@ -75,6 +75,16 @@ class _VrReinforcementTransmissionPageWidgetState
                       fontSize: 30,
                       fontWeight: FontWeight.w700,
                     ))),
+            InkWell(
+                child: SimpleButton(
+              func: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => HomeRecipientMainPageWidget()));
+              },
+              type: 'Go to home',
+            ))
           ],
         )),
       ),

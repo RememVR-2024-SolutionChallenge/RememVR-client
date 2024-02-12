@@ -62,9 +62,6 @@ class _EnterTokenPageWidgetState extends State<EnterTokenPageWidget> {
                   String refreshToken = jsonMap['refreshToken'];
                   bool isEnrolled = jsonMap['isEnrolled'];
 
-                  print('AccessToken: $accessToken');
-                  print('RefreshToken: $refreshToken');
-                  print('IsEnrolled: $isEnrolled');
                   if (accessToken == "null") {
                     Navigator.push(
                         context,
