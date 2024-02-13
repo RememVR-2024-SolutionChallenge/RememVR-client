@@ -72,7 +72,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                 child: Image.asset(
                   "assets/images/logo.png",
                   width: MediaQuery.of(context).size.width * 0.9,
-                  height: MediaQuery.of(context).size.height * 0.15,
+                  height: MediaQuery.of(context).size.height * 0.2,
                 ),
               ),
               Container(

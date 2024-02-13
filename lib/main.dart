@@ -26,7 +26,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: "main",
-      home: StartPageWidget(),
+      home: LoginPageWidget(),
     );
   }
 }

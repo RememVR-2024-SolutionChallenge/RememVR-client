@@ -61,7 +61,7 @@ class _SettingAboutPageWidgetState extends State<SettingAboutPageWidget> {
                     Container(
                       padding: EdgeInsets.only(left: 10, bottom: 5, top: 20),
                       alignment: Alignment.centerLeft,
-                      child: Text("Team Remember Me",
+                      child: Text("Team RememVR",
                           style: TextStyle(
                             color: Color(0xffDCDCE8),
                             fontSize: 18,
