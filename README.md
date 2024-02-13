@@ -1,4 +1,4 @@
-# remember_me
+# RememVR
 
 ## 🚀 Launch the app
 
