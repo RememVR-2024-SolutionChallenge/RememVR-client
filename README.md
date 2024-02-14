@@ -5,8 +5,8 @@
 This project is developed using Flutter. You can launch this app by downloading an apk file or running with IDE(VSCode)!
 
 ### 📝 Download APK
-1. Enter https://github.com/RememberMe-2024-SolutionChallenge/RememVR-client/actions
-2. Click the latest action
+1. Enter https://github.com/RememberMe-2024-SolutionChallenge/RememVR-client/releases
+2. Click the latest release
 3. Download app-release.apk
 4. Launch this app on Android devices.
 
