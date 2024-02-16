@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:remember_me/pages/caregiver/vr/VrEnterNamePage.dart';
+import 'package:remember_me/pages/caregiver/vr/VrAvatarGuidancePage.dart';
 import 'package:remember_me/pages/caregiver/vr/VrPlaceCompletionPage.dart';
+import 'package:remember_me/pages/caregiver/vr/VrPlaceGuidancePage.dart';
 
 class VrPlaceAlertPageWidget extends StatefulWidget {
   const VrPlaceAlertPageWidget({super.key});
@@ -98,6 +100,25 @@ class _VrPlaceAlertPageWidgetState extends State<VrPlaceAlertPageWidget> {
                 child: Image.asset(
                   "assets/images/logo1.png",
                 )),
+            Positioned(
+              bottom: 100,
+              left: MediaQuery.of(context).size.width * 0.25,
+              child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => VrPlaceGuidancePageWidget()));
+                  },
+                  child: Container(
+                      child: Text("Click here for the guidance",
+                          style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              decorationColor: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white)))),
+            )
           ])),
     );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:remember_me/pages/caregiver/vr/VrAvatarCompletionPage.dart';
 import 'package:remember_me/pages/caregiver/vr/VrEnterNamePage.dart';
-import 'package:remember_me/pages/caregiver/vr/VrGuidancePage.dart';
+import 'package:remember_me/pages/caregiver/vr/VrAvatarGuidancePage.dart';
 
 class VrAvatarAlertPageWidget extends StatefulWidget {
   const VrAvatarAlertPageWidget({super.key});
@@ -108,7 +108,7 @@ class _VrAvatarAlertPageWidgetState extends State<VrAvatarAlertPageWidget> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => VrGuidancePageWidget()));
+                          builder: (context) => VrAvatarGuidancePageWidget()));
                 },
                 child: Container(
                     child: Text("Click here for the guidance",
