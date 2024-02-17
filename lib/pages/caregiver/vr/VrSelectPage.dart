@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:remember_me/model/VrModel.dart';
 import 'package:remember_me/pages/LoadingPage.dart';
 import 'package:remember_me/pages/auth/SetNicknamePage.dart';
 import 'package:remember_me/pages/caregiver/vr/VrAvatarAlertPage.dart';
 import 'package:remember_me/pages/caregiver/vr/VrPlaceAlertPage.dart';
+import 'package:remember_me/services/CaregiverService.dart';
 
 class VrSelectPageWidget extends StatefulWidget {
   const VrSelectPageWidget({super.key});
@@ -14,12 +17,32 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
   @override
   bool isAvatarSelected = false;
   bool isSpaceSelected = false;
+  List<VrResources> _createdAvatars = [];
+  List<VrResources> _createdPlaces = [];
+  List<VrResources> _createdResources = [];
+
   void initState() {
     super.initState();
+    _loadCreatedResources();
+  }
+
+  Future<void> _loadCreatedResources() async {
+    await Provider.of<CaregiverService>(context, listen: false).getResources();
+    _createdResources =
+        Provider.of<CaregiverService>(context, listen: false).vrResources;
+    setState(() {
+      _createdAvatars.addAll(
+          _createdResources.where((resource) => resource.type == 'avatar'));
+
+      _createdPlaces.addAll(
+          _createdResources.where((resource) => resource.type != 'avatar'));
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    print(_createdAvatars);
+    print(_createdPlaces);
     return Scaffold(
         body: SingleChildScrollView(
       child: Container(
@@ -53,67 +76,25 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
                         fontWeight: FontWeight.w700,
                       )),
                 ),
-                Container(
-                    height: MediaQuery.of(context).size.height * 0.35,
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 3,
-                      itemBuilder: (context, index) {
-                        return Container(
-                            width: MediaQuery.of(context).size.width * 0.3,
-                            margin: EdgeInsets.only(right: 15, left: 15),
-                            child: Column(
-                              children: [
-                                Container(
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                            padding: EdgeInsets.only(
-                                                top: 20, bottom: 10),
-                                            child: Image.asset(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.2,
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.2,
-                                                "assets/images/unknown_woman.png")), //image
-                                        Container(
-                                            padding: EdgeInsets.only(
-                                                left: 20, right: 20),
-                                            child: Text("Lucy Weasley",
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w700,
-                                                )))
-                                      ],
-                                    ),
-                                    width: MediaQuery.of(context).size.width *
-                                        0.35,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.25,
-                                    decoration: ShapeDecoration(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      color: Color(0xff9292b7),
-                                      shadows: [
-                                        BoxShadow(
-                                          color: Color(0x3F000000),
-                                          blurRadius: 4,
-                                          offset: Offset(0, 3),
-                                          spreadRadius: 0,
-                                        )
-                                      ],
-                                    )),
-                              ],
-                            ));
-                      },
-                    )),
+                _createdAvatars.isEmpty
+                    ? Text("There is no avatar created.",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                        ))
+                    : Container(
+                        height: MediaQuery.of(context).size.height * 0.35,
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemCount: _createdAvatars.length,
+                          itemBuilder: (context, index) {
+                            return CreatedAvatarBox(
+                              resource: _createdAvatars[index],
+                            );
+                          },
+                        )),
                 SimpleButton(
                     type: "Create New Avatar",
                     func: () {
@@ -140,67 +121,24 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
                         fontWeight: FontWeight.w700,
                       )),
                 ),
-                Container(
-                    height: MediaQuery.of(context).size.height * 0.35,
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 3,
-                      itemBuilder: (context, index) {
-                        return Container(
-                            width: MediaQuery.of(context).size.width * 0.3,
-                            margin: EdgeInsets.only(right: 15, left: 15),
-                            child: Column(
-                              children: [
-                                Container(
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                            padding: EdgeInsets.only(
-                                                top: 20, bottom: 10),
-                                            child: Image.asset(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.2,
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.2,
-                                                "assets/images/Cathedral.png")), //image
-                                        Container(
-                                            padding: EdgeInsets.only(
-                                                left: 20, right: 20),
-                                            child: Text("St.Paul's Cathedral",
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w700,
-                                                )))
-                                      ],
-                                    ),
-                                    width: MediaQuery.of(context).size.width *
-                                        0.35,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.25,
-                                    decoration: ShapeDecoration(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      color: Color(0xff9292b7),
-                                      shadows: [
-                                        BoxShadow(
-                                          color: Color(0x3F000000),
-                                          blurRadius: 4,
-                                          offset: Offset(0, 3),
-                                          spreadRadius: 0,
-                                        )
-                                      ],
-                                    )),
-                              ],
-                            ));
-                      },
-                    )),
+                _createdPlaces.isEmpty
+                    ? Text("There is no space created.",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                        ))
+                    : Container(
+                        height: MediaQuery.of(context).size.height * 0.25,
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemCount: _createdPlaces.length,
+                          itemBuilder: (context, index) {
+                            return CreatedPlaceBox(
+                                resource: _createdPlaces[index]);
+                          },
+                        )),
                 SimpleButton(
                     type: "Create New Space",
                     func: () {
@@ -326,5 +264,105 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
             ],
           )),
     ));
+  }
+}
+
+class CreatedAvatarBox extends StatelessWidget {
+  const CreatedAvatarBox({super.key, required this.resource});
+  final VrResources resource;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        width: MediaQuery.of(context).size.width * 0.3,
+        margin: EdgeInsets.only(right: 15, left: 15),
+        child: Column(
+          children: [
+            Container(
+                child: Column(
+                  children: [
+                    Container(
+                        padding: EdgeInsets.only(top: 20, bottom: 10),
+                        child: Image.asset(
+                            width: MediaQuery.of(context).size.width * 0.2,
+                            height: MediaQuery.of(context).size.width * 0.2,
+                            "assets/images/unknown_woman.png")), //image
+                    Container(
+                        padding: EdgeInsets.only(left: 20, right: 20),
+                        child: Text(resource.title!,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w700,
+                            )))
+                  ],
+                ),
+                width: MediaQuery.of(context).size.width * 0.35,
+                height: MediaQuery.of(context).size.height * 0.2,
+                decoration: ShapeDecoration(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  color: Color(0xff9292b7),
+                  shadows: [
+                    BoxShadow(
+                      color: Color(0x3F000000),
+                      blurRadius: 4,
+                      offset: Offset(0, 3),
+                      spreadRadius: 0,
+                    )
+                  ],
+                )),
+          ],
+        ));
+  }
+}
+
+class CreatedPlaceBox extends StatelessWidget {
+  const CreatedPlaceBox({super.key, required this.resource});
+  final VrResources resource;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        width: MediaQuery.of(context).size.width * 0.3,
+        margin: EdgeInsets.only(right: 15, left: 15),
+        child: Column(
+          children: [
+            Container(
+                padding: EdgeInsets.only(bottom: 10),
+                child: Column(
+                  children: [
+                    Container(
+                        padding: EdgeInsets.only(top: 20, bottom: 10),
+                        child: Image.asset(
+                            width: MediaQuery.of(context).size.width * 0.2,
+                            height: MediaQuery.of(context).size.width * 0.2,
+                            "assets/images/Cathedral.png")), //image
+                    Container(
+                        padding: EdgeInsets.only(left: 20, right: 20),
+                        child: Text(resource.title!,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w700,
+                            )))
+                  ],
+                ),
+                width: MediaQuery.of(context).size.width * 0.35,
+                decoration: ShapeDecoration(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  color: Color(0xff9292b7),
+                  shadows: [
+                    BoxShadow(
+                      color: Color(0x3F000000),
+                      blurRadius: 4,
+                      offset: Offset(0, 3),
+                      spreadRadius: 0,
+                    )
+                  ],
+                )),
+          ],
+        ));
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:remember_me/etc/url.dart';
 import 'package:remember_me/pages/auth/LoginPage.dart';
+import 'package:remember_me/pages/caregiver/CaregiverNavigatonPage.dart';
 import 'package:remember_me/pages/caregiver/home/HomeGiverMainPage.dart';
 import 'package:remember_me/pages/carerecipient/home/HomeRecipientMainPage.dart';
 import 'package:remember_me/services/AuthService.dart';
@@ -43,18 +44,19 @@ class _StartPageWidgetState extends State<StartPageWidget> {
         Future.delayed(Duration(seconds: 2), () {
           if (_isGiver) {
             Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (context) => HomeGiverMainPageWidget()));
+                builder: (context) => CaregiverNavigationWidget()));
           } else {
             Navigator.of(context).pushReplacement(MaterialPageRoute(
                 builder: (context) => HomeRecipientMainPageWidget()));
           }
         });
       } else {
-        Future.delayed(Duration(seconds: 2), () {
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => LoginPageWidget()));
-        });
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => LoginPageWidget()));
       }
+    } else {
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => LoginPageWidget()));
     }
   }
 

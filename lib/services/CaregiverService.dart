@@ -16,6 +16,7 @@ class CaregiverService extends ChangeNotifier {
   List<Queue> queue = [];
   bool isRecipientExist = false;
   BadgeBundle badgeBundle = BadgeBundle();
+  List<VrResources> vrResources = [];
   Future<void> getUserInfo() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
@@ -34,6 +35,41 @@ class CaregiverService extends ChangeNotifier {
       if (response.statusCode == 200) {
         user = UserInfo.fromJson(response.data);
         isRecipientExist = true;
+      } else if (response.statusCode == 401) {
+        print("ACCESS_TOKEN 만료");
+        TokenService().refreshToken();
+        getUserInfo();
+      } else {
+        print('GET 요청 실패');
+        print('Status Code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('GET 요청 에러');
+      print(e.toString());
+    }
+  }
+
+  Future<void> getResources() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    String? token = sharedPreferences.getString("access_token");
+
+    try {
+      Response response = await Dio().get(
+        "${baseUrl}/vr-resource",
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+      if (response.statusCode == 200) {
+        Map<String, dynamic> jsonData = json.decode(response.toString());
+
+        vrResources = (jsonData['vrResources'] as List)
+            .map((item) => VrResources.fromJson(item))
+            .toList();
       } else if (response.statusCode == 401) {
         print("ACCESS_TOKEN 만료");
         TokenService().refreshToken();
