@@ -21,26 +21,77 @@ class Queue {
 }
 
 class VrResources {
+  String? id;
   String? title;
-  String? filePath;
   String? type;
+  List<String>? storageUrls;
   String? createdAt;
 
-  VrResources({this.title, this.filePath, this.type, this.createdAt});
+  VrResources(
+      {this.id, this.title, this.type, this.storageUrls, this.createdAt});
 
   VrResources.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     title = json['title'];
-    filePath = json['filePath'];
     type = json['type'];
+    storageUrls = json['storageUrls'].cast<String>();
     createdAt = json['createdAt'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
     data['title'] = this.title;
-    data['filePath'] = this.filePath;
     data['type'] = this.type;
+    data['storageUrls'] = this.storageUrls;
     data['createdAt'] = this.createdAt;
+    return data;
+  }
+}
+
+class PostVideo {
+  String? video;
+  String? title;
+  String? location;
+
+  PostVideo({this.video, this.title, this.location});
+
+  PostVideo.fromJson(Map<String, dynamic> json) {
+    video = json['video'];
+    title = json['title'];
+    location = json['location'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['video'] = this.video;
+    data['title'] = this.title;
+    data['location'] = this.location;
+    return data;
+  }
+}
+
+class PostAvatar {
+  String? video;
+  String? image;
+  String? title;
+  String? gender;
+
+  PostAvatar({this.video, this.image, this.title, this.gender});
+
+  PostAvatar.fromJson(Map<String, dynamic> json) {
+    video = json['video'];
+    image = json['image'];
+    title = json['title'];
+    gender = json['gender'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['video'] = this.video;
+    data['image'] = this.image;
+    data['title'] = this.title;
+    data['gender'] = this.gender;
     return data;
   }
 }

@@ -49,6 +49,36 @@ class CaregiverService extends ChangeNotifier {
     }
   }
 
+  Future<void> getBadgeList(int year, int month) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    String? token = sharedPreferences.getString("access_token");
+    try {
+      Response response = await Dio().get(
+        "${baseUrl}/badge?year=${year}&month=${month}",
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+      if (response.statusCode == 200) {
+        print('GET 요청 성공');
+        badgeBundle = BadgeBundle.fromJson(response.data);
+      } else if (response.statusCode == 401) {
+        print("ACCESS_TOKEN 만료");
+        TokenService().refreshToken();
+      } else {
+        print('GET 요청 실패');
+        print('Status Code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('GET 요청 에러');
+      print(e.toString());
+    }
+  }
+
   Future<void> getResources() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
@@ -117,32 +147,73 @@ class CaregiverService extends ChangeNotifier {
     }
   }
 
-  Future<void> getBadgeList(int year, int month) async {
+  Future<void> uploadVideo(String videoPath, PostVideo video) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
     String? token = sharedPreferences.getString("access_token");
+    FormData formData = FormData.fromMap({
+      'video':
+          await MultipartFile.fromFile(videoPath, filename: '${video.title}'),
+      'title': video.title,
+      'location': video.location,
+    });
     try {
-      Response response = await Dio().get(
-        "${baseUrl}/badge?year=${year}&month=${month}",
+      Response response = await Dio().post(
+        '${baseUrl}/vr-resource/source/scene',
+        data: formData,
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
-            'Content-Type': 'application/json',
+            'Content-Type': 'multipart/form-data',
           },
         ),
       );
-      if (response.statusCode == 200) {
-        print('GET 요청 성공');
-        badgeBundle = BadgeBundle.fromJson(response.data);
-      } else if (response.statusCode == 401) {
-        print("ACCESS_TOKEN 만료");
-        TokenService().refreshToken();
+
+      if (response.statusCode == 201) {
+        print('POST 성공');
       } else {
-        print('GET 요청 실패');
+        print('POST 실패');
         print('Status Code: ${response.statusCode}');
       }
     } catch (e) {
-      print('GET 요청 에러');
+      print('POST 요청 에러');
+      print(e.toString());
+    }
+  }
+
+  Future<void> uploadAvatar(
+      String videoPath, String imagePath, PostAvatar avatar) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    String? token = sharedPreferences.getString("access_token");
+    FormData formData = FormData.fromMap({
+      'video':
+          await MultipartFile.fromFile(videoPath, filename: '${avatar.title}'),
+      'image':
+          await MultipartFile.fromFile(imagePath, filename: '${avatar.title}'),
+      'title': avatar.title,
+      'gender': avatar.gender,
+    });
+    try {
+      Response response = await Dio().post(
+        '${baseUrl}/vr-resource/source/avatar',
+        data: formData,
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'multipart/form-data',
+          },
+        ),
+      );
+
+      if (response.statusCode == 201) {
+        print('POST 성공');
+      } else {
+        print('POST 실패');
+        print('Status Code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('POST 요청 에러');
       print(e.toString());
     }
   }
