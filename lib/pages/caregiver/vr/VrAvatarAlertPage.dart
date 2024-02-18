@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:remember_me/pages/caregiver/vr/VrAvatarCompletionPage.dart';
 import 'package:remember_me/pages/caregiver/vr/VrEnterNamePage.dart';
 import 'package:remember_me/pages/caregiver/vr/VrAvatarGuidancePage.dart';
@@ -11,9 +12,40 @@ class VrAvatarAlertPageWidget extends StatefulWidget {
 }
 
 class _VrAvatarAlertPageWidgetState extends State<VrAvatarAlertPageWidget> {
+  String videoFilePath = "";
+  String imageFilePath = "";
+  bool isImageSelected = false;
+  bool isVideoSelected = false;
+
   @override
   void initState() {
     super.initState();
+  }
+
+  void selectAvatarImage() async {
+    XFile? file = await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    if (file == null) {
+      return;
+    }
+
+    setState(() {
+      imageFilePath = file.path;
+      isImageSelected = true;
+    });
+  }
+
+  void selectAvatarVideo() async {
+    XFile? file = await ImagePicker().pickVideo(source: ImageSource.gallery);
+
+    if (file == null) {
+      return;
+    }
+
+    setState(() {
+      videoFilePath = file.path;
+      isVideoSelected = true;
+    });
   }
 
   @override
@@ -56,17 +88,24 @@ class _VrAvatarAlertPageWidgetState extends State<VrAvatarAlertPageWidget> {
                         ),
                         InkWell(
                             onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          VrEnterNamePageWidget(type: 0)));
+                              selectAvatarImage();
+                              selectAvatarVideo();
+                              if (isImageSelected && isVideoSelected) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            VrEnterNamePageWidget(
+                                                type: 0,
+                                                videoPath: videoFilePath,
+                                                imagePath: imageFilePath)));
+                              }
                             },
                             child: Container(
                                 padding: EdgeInsets.only(
                                     top: 10, bottom: 10, left: 60, right: 60),
                                 margin: EdgeInsets.only(top: 20),
-                                child: Text("Upload Photos",
+                                child: Text("Upload Photo and Video",
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 20,
@@ -85,7 +124,7 @@ class _VrAvatarAlertPageWidgetState extends State<VrAvatarAlertPageWidget> {
                                       spreadRadius: 0,
                                     )
                                   ],
-                                )))
+                                ))),
                       ]),
                   width: 288,
                   height: 519,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:remember_me/pages/caregiver/vr/VrEnterNamePage.dart';
 import 'package:remember_me/pages/caregiver/vr/VrAvatarGuidancePage.dart';
 import 'package:remember_me/pages/caregiver/vr/VrPlaceCompletionPage.dart';
@@ -11,9 +12,24 @@ class VrPlaceAlertPageWidget extends StatefulWidget {
 }
 
 class _VrPlaceAlertPageWidgetState extends State<VrPlaceAlertPageWidget> {
+  String filePath = "";
+  bool isSelected = false;
   @override
   void initState() {
     super.initState();
+  }
+
+  void selectPlace() async {
+    XFile? file = await ImagePicker().pickVideo(source: ImageSource.gallery);
+
+    if (file == null) {
+      return;
+    }
+
+    setState(() {
+      filePath = file.path;
+      isSelected = true;
+    });
   }
 
   @override
@@ -56,17 +72,23 @@ class _VrPlaceAlertPageWidgetState extends State<VrPlaceAlertPageWidget> {
                           ),
                           InkWell(
                               onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            VrEnterNamePageWidget(type: 1)));
+                                selectPlace();
+                                if (isSelected) {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              VrEnterNamePageWidget(
+                                                  type: 1,
+                                                  isVideo: true,
+                                                  path: filePath)));
+                                }
                               },
                               child: Container(
                                   padding: EdgeInsets.only(
                                       top: 10, bottom: 10, left: 60, right: 60),
                                   margin: EdgeInsets.only(top: 20),
-                                  child: Text("Upload Photos",
+                                  child: Text("Upload Videos",
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 20,

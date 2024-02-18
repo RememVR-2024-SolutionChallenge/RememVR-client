@@ -10,6 +10,7 @@ import 'package:remember_me/model/UserModel.dart';
 import 'package:remember_me/model/VrModel.dart';
 import 'package:remember_me/services/TokenService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:image_picker/image_picker.dart';
 
 class CaregiverService extends ChangeNotifier {
   UserInfo user = UserInfo();
@@ -147,15 +148,16 @@ class CaregiverService extends ChangeNotifier {
     }
   }
 
-  Future<void> uploadVideo(String videoPath, PostVideo video) async {
+  Future<void> uploadSpace(PostSpace space) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
     String? token = sharedPreferences.getString("access_token");
+
     FormData formData = FormData.fromMap({
-      'video':
-          await MultipartFile.fromFile(videoPath, filename: '${video.title}'),
-      'title': video.title,
-      'location': video.location,
+      'video': await MultipartFile.fromFile(space.video!,
+          filename: '${space.title}'),
+      'title': space.title,
+      'location': space.location,
     });
     try {
       Response response = await Dio().post(
@@ -181,16 +183,15 @@ class CaregiverService extends ChangeNotifier {
     }
   }
 
-  Future<void> uploadAvatar(
-      String videoPath, String imagePath, PostAvatar avatar) async {
+  Future<void> uploadAvatar(PostAvatar avatar) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
     String? token = sharedPreferences.getString("access_token");
     FormData formData = FormData.fromMap({
-      'video':
-          await MultipartFile.fromFile(videoPath, filename: '${avatar.title}'),
-      'image':
-          await MultipartFile.fromFile(imagePath, filename: '${avatar.title}'),
+      'video': await MultipartFile.fromFile(avatar.video!,
+          filename: '${avatar.title}'),
+      'image': await MultipartFile.fromFile(avatar.image!,
+          filename: '${avatar.title}'),
       'title': avatar.title,
       'gender': avatar.gender,
     });

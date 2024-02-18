@@ -24,7 +24,7 @@ class VrResources {
   String? id;
   String? title;
   String? type;
-  List<String>? storageUrls;
+  List<String>? storageUrls; // 이 url로가서 직접 다운받으면 됨. 그리고 이 앱에 저장.
   String? createdAt;
 
   VrResources(
@@ -49,14 +49,14 @@ class VrResources {
   }
 }
 
-class PostVideo {
+class PostSpace {
   String? video;
   String? title;
   String? location;
 
-  PostVideo({this.video, this.title, this.location});
+  PostSpace({this.video, this.title, this.location});
 
-  PostVideo.fromJson(Map<String, dynamic> json) {
+  PostSpace.fromJson(Map<String, dynamic> json) {
     video = json['video'];
     title = json['title'];
     location = json['location'];
