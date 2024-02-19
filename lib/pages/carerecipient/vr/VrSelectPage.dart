@@ -74,7 +74,7 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
                           itemCount: _vrVideos.length,
                           itemBuilder: (context, index) {
                             return VrCard(
-                              name: _vrVideos[index].avatars!.title,
+                              avatars: _vrVideos[index].avatars!,
                               space: _vrVideos[index].scene!.title,
                             );
                           },
@@ -88,10 +88,10 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
 class VrCard extends StatelessWidget {
   const VrCard({
     super.key,
-    required this.name,
+    required this.avatars,
     required this.space,
   });
-  final String? name;
+  final List<VrResources> avatars;
   final String? space;
   @override
   Widget build(BuildContext context) {
@@ -229,7 +229,7 @@ class VrCard extends StatelessWidget {
                               fontWeight: FontWeight.w700),
                         ),
                         Text(
-                          name!,
+                          "${avatars[0].title!}, ${avatars.length != 1 ? avatars[1].title! : ""}",
                           style: TextStyle(
                               fontSize: 20,
                               color: Colors.white,

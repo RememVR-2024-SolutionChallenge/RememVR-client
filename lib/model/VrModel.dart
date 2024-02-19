@@ -96,23 +96,25 @@ class PostAvatar {
   }
 }
 
-class VrVideo {
+class GetVrVideo {
   String? title;
   VrResources? scene;
-  VrResources? avatars;
+  List<VrResources>? avatars;
 
-  VrVideo({this.title, this.scene, this.avatars});
-  VrVideo.fromJson(Map<String, dynamic> json) {
+  GetVrVideo({this.title, this.scene, this.avatars});
+  GetVrVideo.fromJson(Map<String, dynamic> json) {
     title = json['title'];
     scene = json['scene'];
-    avatars = json['avatars'];
+    json['avatars'].forEach((v) {
+      avatars!.add(new VrResources.fromJson(v));
+    });
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['title'] = this.title;
-    data['scene'] = this.scene;
-    data['avatars'] = this.avatars;
+    data['scene'] = this.scene!.toJson();
+    data['avatars'] = this.avatars!.map((v) => v.toJson()).toList();
     return data;
   }
 }
