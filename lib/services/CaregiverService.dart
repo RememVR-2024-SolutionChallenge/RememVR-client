@@ -131,9 +131,10 @@ class CaregiverService extends ChangeNotifier {
         ),
       );
       if (response.statusCode == 200) {
-        List<Map<String, dynamic>> jsonList = json.decode(response.toString());
-
-        queue = jsonList.map((json) => Queue.fromJson(json)).toList();
+        for (Map<String, dynamic> item in response.data) {
+          Queue _queue = Queue.fromJson(item);
+          queue.add(_queue);
+        }
       } else if (response.statusCode == 401) {
         print("ACCESS_TOKEN 만료");
         TokenService().refreshToken();

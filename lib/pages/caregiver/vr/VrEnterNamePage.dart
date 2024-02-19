@@ -29,7 +29,8 @@ class _VrEnterNamePageWidgetState extends State<VrEnterNamePageWidget> {
   TextEditingController _locationEditingController = TextEditingController();
   FocusNode _focusNode1 = FocusNode();
   FocusNode _focusNode2 = FocusNode();
-  String _gender = "neutral";
+  String selectedLocation = 'indoor';
+  String selectedGender = "male";
   @override
   void initState() {
     super.initState();
@@ -53,7 +54,7 @@ class _VrEnterNamePageWidgetState extends State<VrEnterNamePageWidget> {
           children: [
             Container(
                 child: Text(
-              "Please enter the \n name of " +
+              "Please enter the \n name of" +
                   (widget.type == 0 ? " your Avatar" : "the space"),
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -92,120 +93,47 @@ class _VrEnterNamePageWidgetState extends State<VrEnterNamePageWidget> {
                     labelStyle: TextStyle(color: Color(0xffB0B8D1)),
                     hintStyle: TextStyle(color: Color(0xffDCDCE8)),
                     border: InputBorder.none,
-                    hintText: 'location'),
+                    hintText: 'name'),
               ),
             ),
             widget.type == 1
-                ? Container(
-                    margin: EdgeInsets.only(top: 15),
-                    alignment: Alignment.center,
-                    width: MediaQuery.of(context).size.width * 0.7,
-                    height: MediaQuery.of(context).size.height * 0.05,
-                    decoration: ShapeDecoration(
-                      shape: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          borderSide:
-                              const BorderSide(color: Colors.transparent)),
-                      color: Color(0xff4769A1),
-                      shadows: [
-                        BoxShadow(
-                          color: Color(0x3F000000),
-                          blurRadius: 4,
-                          offset: Offset(0, 3),
-                          spreadRadius: 0,
-                        )
-                      ],
-                    ),
-                    child: TextField(
-                      focusNode: _focusNode2,
-                      style: TextStyle(color: Colors.white),
-                      textAlign: TextAlign.center,
-                      controller: _locationEditingController,
-                      decoration: InputDecoration(
-                          labelStyle: TextStyle(color: Color(0xffB0B8D1)),
-                          hintStyle: TextStyle(color: Color(0xffDCDCE8)),
-                          border: InputBorder.none,
-                          hintText: 'location'),
-                    ),
+                ? DropdownButton<String>(
+                    dropdownColor: Color(0xff4769A1),
+                    value: selectedLocation,
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        selectedLocation = newValue!;
+                      });
+                    },
+                    items: <String>['indoor', 'outdoor', 'unbound']
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                          value: value,
+                          child: Container(
+                            width: 100,
+                            child: Text(value,
+                                style: TextStyle(color: Colors.white)),
+                          ));
+                    }).toList(),
                   )
-                : Row(
-                    children: [
-                      InkWell(
-                          onTap: () {
-                            setState(() {
-                              _gender = "male";
-                            });
-                          },
+                : DropdownButton<String>(
+                    dropdownColor: Color(0xff4769A1),
+                    value: selectedGender,
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        selectedGender = newValue!;
+                      });
+                    },
+                    items: <String>['male', 'female', 'neutral']
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                          value: value,
                           child: Container(
-                            padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                            height: MediaQuery.of(context).size.height * 0.05,
-                            decoration: ShapeDecoration(
-                              color: Color(0xff4C5893),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              shadows: [
-                                BoxShadow(
-                                  color: Color(0x3F000000),
-                                  blurRadius: 4,
-                                  offset: Offset(0, 3),
-                                  spreadRadius: 0,
-                                )
-                              ],
-                            ),
-                            child: Text('male'),
-                          )),
-                      InkWell(
-                          onTap: () {
-                            setState(() {
-                              _gender = "female";
-                            });
-                          },
-                          child: Container(
-                            padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                            height: MediaQuery.of(context).size.height * 0.05,
-                            decoration: ShapeDecoration(
-                              color: Color(0xff4C5893),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              shadows: [
-                                BoxShadow(
-                                  color: Color(0x3F000000),
-                                  blurRadius: 4,
-                                  offset: Offset(0, 3),
-                                  spreadRadius: 0,
-                                )
-                              ],
-                            ),
-                            child: Text('female'),
-                          )),
-                      InkWell(
-                          onTap: () {
-                            setState(() {
-                              _gender = "neutral";
-                            });
-                          },
-                          child: Container(
-                            padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                            height: MediaQuery.of(context).size.height * 0.05,
-                            decoration: ShapeDecoration(
-                              color: Color(0xff4C5893),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              shadows: [
-                                BoxShadow(
-                                  color: Color(0x3F000000),
-                                  blurRadius: 4,
-                                  offset: Offset(0, 3),
-                                  spreadRadius: 0,
-                                )
-                              ],
-                            ),
-                            child: Text('neutral'),
-                          ))
-                    ],
+                            width: 100,
+                            child: Text(value,
+                                style: TextStyle(color: Colors.white)),
+                          ));
+                    }).toList(),
                   ),
             SimpleButton(
                 type: "Upload",
@@ -215,12 +143,12 @@ class _VrEnterNamePageWidgetState extends State<VrEnterNamePageWidget> {
                         video: widget.videoPath,
                         image: widget.imagePath,
                         title: _textEditingController.text,
-                        gender: _gender));
+                        gender: selectedGender));
                   } else {
                     caregiverService.uploadSpace(PostSpace(
                         video: widget.videoPath,
                         title: _textEditingController.text,
-                        location: _locationEditingController.text));
+                        location: selectedLocation));
                   }
                   //성공적으로 업로드 시
                   Navigator.push(

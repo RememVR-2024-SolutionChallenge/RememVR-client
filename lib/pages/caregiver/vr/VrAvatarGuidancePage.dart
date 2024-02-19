@@ -37,7 +37,7 @@ class _VrAvatarGuidancePageWidgetState
                   margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
                   padding: EdgeInsets.only(top: 20, left: 30, right: 30),
                   child: Text(
-                      "You can create avatars in two types: video and image",
+                      "You should upload resources in two types: video and image",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 24,

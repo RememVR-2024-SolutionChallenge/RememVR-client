@@ -19,7 +19,7 @@ class _VrPlaceAlertPageWidgetState extends State<VrPlaceAlertPageWidget> {
     super.initState();
   }
 
-  void selectPlace() async {
+  Future<void> selectPlace() async {
     XFile? file = await ImagePicker().pickVideo(source: ImageSource.gallery);
 
     if (file == null) {
@@ -71,8 +71,9 @@ class _VrPlaceAlertPageWidgetState extends State<VrPlaceAlertPageWidget> {
                                 )),
                           ),
                           InkWell(
-                              onTap: () {
-                                selectPlace();
+                              onTap: () async {
+                                await selectPlace();
+                                print(isSelected);
                                 if (isSelected) {
                                   Navigator.push(
                                       context,
@@ -80,8 +81,8 @@ class _VrPlaceAlertPageWidgetState extends State<VrPlaceAlertPageWidget> {
                                           builder: (context) =>
                                               VrEnterNamePageWidget(
                                                   type: 1,
-                                                  isVideo: true,
-                                                  path: filePath)));
+                                                  videoPath: filePath,
+                                                  imagePath: "")));
                                 }
                               },
                               child: Container(

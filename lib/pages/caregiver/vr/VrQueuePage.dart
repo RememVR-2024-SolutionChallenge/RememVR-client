@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
+import 'package:remember_me/model/VrModel.dart';
 import 'package:remember_me/services/CaregiverService.dart';
 
 class VrQueuePageWidget extends StatefulWidget {
@@ -11,14 +12,8 @@ class VrQueuePageWidget extends StatefulWidget {
 
 class _VrQueuePageWidgetState extends State<VrQueuePageWidget> {
   bool isEmpty = false;
-  List<Widget> widgetsInQueue = [
-    AvatarSpaceCard(
-        name: "choi jin woo", space: "Korea University", status: "In progress"),
-    AvatarCard(name: "choi jin woo", status: "Failed"),
-    AvatarSpaceCard(
-        name: "choi jin woo", space: "Korea University", status: "Success"),
-    SpaceCard(space: "Korea University", status: "Success"),
-  ];
+  List<Queue> _queue = [];
+
   @override
   void initState() {
     super.initState();
@@ -27,7 +22,9 @@ class _VrQueuePageWidgetState extends State<VrQueuePageWidget> {
 
   Future<void> _loadQueue() async {
     await Provider.of<CaregiverService>(context, listen: false).getQueue();
-    setState(() {});
+    setState(() {
+      _queue = Provider.of<CaregiverService>(context, listen: false).queue;
+    });
   }
 
   @override
@@ -40,7 +37,7 @@ class _VrQueuePageWidgetState extends State<VrQueuePageWidget> {
               fit: BoxFit.cover,
             ),
           ),
-          child: isEmpty
+          child: _queue.isEmpty
               ? Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -66,9 +63,14 @@ class _VrQueuePageWidgetState extends State<VrQueuePageWidget> {
                         child: ListView.builder(
                       shrinkWrap: true,
                       scrollDirection: Axis.vertical,
-                      itemCount: widgetsInQueue.length,
+                      itemCount: _queue.length,
                       itemBuilder: (context, index) {
-                        return widgetsInQueue[index];
+                        return QueueCard(
+                            type: _queue[index].type == "scene"
+                                ? "scene"
+                                : "avatar",
+                            name: _queue[index].title!,
+                            status: _queue[index].status!);
                       },
                     ))
                   ],
@@ -229,8 +231,13 @@ class AvatarSpaceCard extends StatelessWidget {
   }
 }
 
-class AvatarCard extends StatelessWidget {
-  const AvatarCard({super.key, required this.name, required this.status});
+class QueueCard extends StatelessWidget {
+  const QueueCard(
+      {super.key,
+      required this.type,
+      required this.name,
+      required this.status});
+  final String type;
   final String name;
   final String status;
   @override
@@ -252,120 +259,57 @@ class AvatarCard extends StatelessWidget {
           ],
         ),
         margin: EdgeInsets.only(right: 20, left: 20, bottom: 30),
-        child: Row(
+        child: Column(
           children: [
             Container(
-              margin: EdgeInsets.fromLTRB(26, 28, 26, 28),
-              child: Image.asset(
-                "assets/images/unknown_woman.png",
-                width: MediaQuery.of(context).size.width * 0.28,
-                height: MediaQuery.of(context).size.height * 0.15,
-              ),
+              margin: EdgeInsets.only(top: 15),
+              child: Text(type == "avatar" ? "Avatar" : "Place",
+                  style: TextStyle(
+                    fontSize: 25,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
+                  )),
             ),
-            Container(
-                child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text("Avatar",
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w700,
-                    )),
                 Container(
-                    child: Column(
+                  margin: EdgeInsets.fromLTRB(26, 0, 26, 28),
+                  child: Image.asset(
+                    type == "avatar"
+                        ? "assets/images/unknown_man.png"
+                        : "assets/images/space.png",
+                    width: MediaQuery.of(context).size.width * 0.28,
+                    height: MediaQuery.of(context).size.height * 0.15,
+                  ),
+                ),
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Name : ",
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.w700),
+                        ),
+                        Text(
+                          name,
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.w300),
+                        )
+                      ],
+                    ),
                     Text(
-                      "Avatar : ",
+                      "Status : ${status}",
                       style: TextStyle(
                           color: Colors.white, fontWeight: FontWeight.w700),
                     ),
-                    Text(
-                      name,
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.w300),
-                    )
                   ],
-                )),
-                Text(
-                  "Status : ${status}",
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.w300),
-                ),
+                )
               ],
-            ))
-          ],
-        ));
-  }
-}
-
-class SpaceCard extends StatelessWidget {
-  const SpaceCard({super.key, required this.space, required this.status});
-  final String space;
-  final String status;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        width: MediaQuery.of(context).size.width * 0.8,
-        decoration: ShapeDecoration(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          color: Color(0xff5A78AA),
-          shadows: [
-            BoxShadow(
-              color: Color(0x3F000000),
-              blurRadius: 4,
-              offset: Offset(0, 3),
-              spreadRadius: 0,
             )
-          ],
-        ),
-        margin: EdgeInsets.only(right: 20, left: 20, bottom: 30),
-        child: Row(
-          children: [
-            Container(
-              margin: EdgeInsets.fromLTRB(26, 28, 26, 28),
-              child: Image.asset(
-                "assets/images/space.png",
-                width: MediaQuery.of(context).size.width * 0.28,
-                height: MediaQuery.of(context).size.height * 0.15,
-              ),
-            ),
-            Container(
-                child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Place",
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w700,
-                    )),
-                Container(
-                    child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Space : ",
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.w700),
-                    ),
-                    Text(
-                      space,
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.w300),
-                    )
-                  ],
-                )),
-                Text(
-                  "Status : ${status}",
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.w700),
-                ),
-              ],
-            ))
           ],
         ));
   }

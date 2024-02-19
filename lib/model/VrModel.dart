@@ -50,7 +50,7 @@ class VrResources {
 }
 
 class PostSpace {
-  String? video;
+  String? video; //filePath
   String? title;
   String? location;
 
@@ -72,8 +72,8 @@ class PostSpace {
 }
 
 class PostAvatar {
-  String? video;
-  String? image;
+  String? video; //filePath
+  String? image; //filePath
   String? title;
   String? gender;
 

@@ -22,7 +22,7 @@ class _VrAvatarAlertPageWidgetState extends State<VrAvatarAlertPageWidget> {
     super.initState();
   }
 
-  void selectAvatarImage() async {
+  Future<void> selectAvatarImage() async {
     XFile? file = await ImagePicker().pickImage(source: ImageSource.gallery);
 
     if (file == null) {
@@ -35,7 +35,7 @@ class _VrAvatarAlertPageWidgetState extends State<VrAvatarAlertPageWidget> {
     });
   }
 
-  void selectAvatarVideo() async {
+  Future<void> selectAvatarVideo() async {
     XFile? file = await ImagePicker().pickVideo(source: ImageSource.gallery);
 
     if (file == null) {
@@ -79,7 +79,7 @@ class _VrAvatarAlertPageWidgetState extends State<VrAvatarAlertPageWidget> {
                           padding:
                               EdgeInsets.only(top: 20, left: 30, right: 30),
                           child: Text(
-                              "RememVR generates avatars representing the patient's cherished individuals. These avatars, combined with location VR, offer the patient an immersive recollection of memories. RememVR assists in safeguarding the continuity of the patient's memories. Please upload photos of the individuals you wish to transform into avatars, ensuring they are captured from various angles.",
+                              "RememVR generates avatars representing the patient's cherished individuals. These avatars, combined with location VR, offer the patient an immersive recollection of memories. RememVR assists in safeguarding the continuity of the patient's memories. Please upload photos and videos of the individuals you wish to transform into avatars, ensuring they are captured from various angles.",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,
@@ -87,9 +87,9 @@ class _VrAvatarAlertPageWidgetState extends State<VrAvatarAlertPageWidget> {
                               )),
                         ),
                         InkWell(
-                            onTap: () {
-                              selectAvatarImage();
-                              selectAvatarVideo();
+                            onTap: () async {
+                              await selectAvatarImage();
+                              await selectAvatarVideo();
                               if (isImageSelected && isVideoSelected) {
                                 Navigator.push(
                                     context,
@@ -103,12 +103,12 @@ class _VrAvatarAlertPageWidgetState extends State<VrAvatarAlertPageWidget> {
                             },
                             child: Container(
                                 padding: EdgeInsets.only(
-                                    top: 10, bottom: 10, left: 60, right: 60),
+                                    top: 10, bottom: 10, left: 20, right: 20),
                                 margin: EdgeInsets.only(top: 20),
                                 child: Text("Upload Photo and Video",
                                     style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 20,
+                                      fontSize: 15,
                                       fontWeight: FontWeight.w700,
                                     )),
                                 decoration: ShapeDecoration(
