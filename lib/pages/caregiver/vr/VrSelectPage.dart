@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:remember_me/model/VrModel.dart';
@@ -42,8 +44,6 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print(_createdAvatars);
-    print(_createdPlaces);
     return Scaffold(
         body: SingleChildScrollView(
       child: Container(
@@ -323,47 +323,91 @@ class CreatedPlaceBox extends StatelessWidget {
   final VrResources resource;
   @override
   Widget build(BuildContext context) {
-    return Container(
-        width: MediaQuery.of(context).size.width * 0.3,
-        margin: EdgeInsets.only(right: 15, left: 15),
-        child: Column(
-          children: [
-            Container(
-                padding: EdgeInsets.only(bottom: 10),
-                child: Column(
-                  children: [
-                    Container(
-                        padding: EdgeInsets.only(top: 20, bottom: 10),
-                        child: Image.asset(
-                            width: MediaQuery.of(context).size.width * 0.2,
-                            height: MediaQuery.of(context).size.width * 0.2,
-                            "assets/images/play 1.png")), //image
-                    Container(
-                        padding: EdgeInsets.only(left: 20, right: 20),
-                        child: Text(resource.title!,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w700,
-                            )))
+    return GestureDetector(
+      onTap: () async {
+        String _spacePath =
+            await Provider.of<CaregiverService>(context, listen: false)
+                .readAssetFile(resource.id!);
+        print(_spacePath);
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0)),
+                title: Column(
+                  children: <Widget>[
+                    Text("Test"),
                   ],
                 ),
-                width: MediaQuery.of(context).size.width * 0.35,
-                decoration: ShapeDecoration(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  color: Color(0xff9292b7),
-                  shadows: [
-                    BoxShadow(
-                      color: Color(0x3F000000),
-                      blurRadius: 4,
-                      offset: Offset(0, 3),
-                      spreadRadius: 0,
-                    )
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Image.file(
+                        width: MediaQuery.of(context).size.width * 0.2,
+                        height: MediaQuery.of(context).size.width * 0.2,
+                        File(_spacePath)),
                   ],
-                )),
-          ],
-        ));
+                ),
+                actions: <Widget>[
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.all(20.0),
+                      foregroundColor: Colors.blue,
+                      textStyle: const TextStyle(fontSize: 20),
+                    ),
+                    child: Text("Confirm"),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              );
+            });
+      },
+      child: Container(
+          width: MediaQuery.of(context).size.width * 0.3,
+          margin: EdgeInsets.only(right: 15, left: 15),
+          child: Column(
+            children: [
+              Container(
+                  padding: EdgeInsets.only(bottom: 10),
+                  child: Column(
+                    children: [
+                      Container(
+                          padding: EdgeInsets.only(top: 20, bottom: 10),
+                          child: Image.asset(
+                              width: MediaQuery.of(context).size.width * 0.2,
+                              height: MediaQuery.of(context).size.width * 0.2,
+                              "assets/images/play 1.png")),
+                      Container(
+                          padding: EdgeInsets.only(left: 20, right: 20),
+                          child: Text(resource.title!,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w700,
+                              )))
+                    ],
+                  ),
+                  width: MediaQuery.of(context).size.width * 0.35,
+                  decoration: ShapeDecoration(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    color: Color(0xff9292b7),
+                    shadows: [
+                      BoxShadow(
+                        color: Color(0x3F000000),
+                        blurRadius: 4,
+                        offset: Offset(0, 3),
+                        spreadRadius: 0,
+                      )
+                    ],
+                  )),
+            ],
+          )),
+    );
   }
 }

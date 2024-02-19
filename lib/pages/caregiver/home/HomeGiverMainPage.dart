@@ -24,7 +24,7 @@ class _HomeGiverMainPageWidgetState extends State<HomeGiverMainPageWidget> {
     super.initState();
     _loadUserInfo();
     _loadWeekBadgeList();
-    Provider.of<CaregiverService>(context, listen: false).readResources();
+    // Provider.of<CaregiverService>(context, listen: false).readResources();
   }
 
   Future<void> _loadUserInfo() async {

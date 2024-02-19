@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:remember_me/etc/url.dart';
 import 'package:remember_me/model/AuthModel.dart';
@@ -106,16 +107,28 @@ class CaregiverService extends ChangeNotifier {
         Directory(resourcesFolderPath).createSync(recursive: true);
 
         for (var resource in jsonData['vrResources']) {
-          String fileName = '$resourcesFolderPath/${resource['id']}.json';
+          String resourceId = resource['id'].toString();
 
-          if (!File(fileName).existsSync()) {
-            File file = File(fileName);
-            file.writeAsStringSync(json.encode(resource));
+          String resourceFolderPath = '$resourcesFolderPath/$resourceId';
 
-            print('Data saved to file: $fileName');
-          } else {
-            print('File with id ${resource['id']} already exists. Skipping.');
+          Directory(resourceFolderPath).createSync(recursive: true);
+
+          List<String> storageUrls = List<String>.from(resource['storageUrls']);
+          for (int i = 0; i < storageUrls.length; i++) {
+            String storageUrl = storageUrls[i];
+            String fileName = '$resourceFolderPath/file_$i';
+
+            if (!File(fileName).existsSync()) {
+              await downloadAndSaveFile(storageUrl, fileName);
+              print(
+                  'File saved for resource with id: $resourceId at $fileName');
+            } else {
+              print(
+                  'File with id $resourceId and index $i already exists. Skipping.');
+            }
           }
+
+          print('Files saved for resource with id: $resourceId');
         }
 
         vrResources = (jsonData['vrResources'] as List)
@@ -133,6 +146,18 @@ class CaregiverService extends ChangeNotifier {
       print('GET 요청 에러');
       print(e.toString());
     }
+  }
+
+  Future<void> downloadAndSaveFile(String url, String filePath) async {
+    Dio dio = Dio();
+    Response response = await dio.get(
+      url,
+      options: Options(responseType: ResponseType.bytes),
+    );
+
+    File file = File(filePath);
+    await file.writeAsBytes(response.data, flush: true);
+    print('File saved at: $filePath');
   }
 
   Future<void> getQueue() async {
@@ -240,15 +265,14 @@ class CaregiverService extends ChangeNotifier {
     }
   }
 
-  void readResources() async {
+  Future<String> readAssetFile(String id) async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    String resourcesFolderPath = '${documentsDirectory.path}/resources';
-
-    List<FileSystemEntity> files = Directory(resourcesFolderPath).listSync();
-
-    for (var file in files) {
-      String contents = await File(file.path).readAsString();
-      print('File Content of ${file.path}: $contents');
+    String filePath = '${documentsDirectory.path}/resources/$id/file_0';
+    File file = File(filePath);
+    if (await file.exists()) {
+      return filePath;
+    } else {
+      return "";
     }
   }
 }
