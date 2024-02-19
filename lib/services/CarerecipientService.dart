@@ -5,6 +5,7 @@ import 'package:remember_me/model/AuthModel.dart';
 import 'package:remember_me/model/BadgeModel.dart';
 import 'package:remember_me/model/GroupModel.dart';
 import 'package:remember_me/model/UserModel.dart';
+import 'package:remember_me/model/VrModel.dart';
 import 'package:remember_me/services/TokenService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,6 +14,7 @@ class CarerecipientService extends ChangeNotifier {
   late UserInfo user;
   bool isGiverExist = false;
   BadgeBundle badgeBundle = BadgeBundle();
+  List<VrVideo> vrVideos = [];
   Future<void> getCaregiverGroup() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
@@ -127,6 +129,40 @@ class CarerecipientService extends ChangeNotifier {
       if (response.statusCode == 200) {
         print('GET 요청 성공');
         badgeBundle = BadgeBundle.fromJson(response.data);
+      } else if (response.statusCode == 401) {
+        print("ACCESS_TOKEN 만료");
+        TokenService().refreshToken();
+      } else {
+        print('GET 요청 실패');
+        print('Status Code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('GET 요청 에러');
+      print(e.toString());
+    }
+  }
+
+  Future<void> getVrVideos() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    String? token = sharedPreferences.getString("access_token");
+    try {
+      Response response = await Dio().get(
+        "${baseUrl}/vr-video",
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+      if (response.statusCode == 200) {
+        vrVideos.clear();
+        print('GET 요청 성공');
+        for (Map<String, dynamic> item in response.data) {
+          VrVideo _video = VrVideo.fromJson(item);
+          vrVideos.add(_video);
+        }
       } else if (response.statusCode == 401) {
         print("ACCESS_TOKEN 만료");
         TokenService().refreshToken();

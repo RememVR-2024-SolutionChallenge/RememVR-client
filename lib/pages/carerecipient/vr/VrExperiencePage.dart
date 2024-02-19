@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:remember_me/model/VrModel.dart';
 import 'package:remember_me/pages/auth/SetNicknamePage.dart';
 import 'package:remember_me/pages/carerecipient/home/HomeRecipientMainPage.dart';
 import 'package:remember_me/pages/carerecipient/vr/VrEndPage.dart';
 import 'package:remember_me/pages/carerecipient/vr/VrSelectPage.dart';
+import 'package:remember_me/services/CarerecipientService.dart';
 
 class VrExperiencePageWidget extends StatefulWidget {
   const VrExperiencePageWidget({super.key});
@@ -14,6 +17,7 @@ class _VrExperiencePageWidgetState extends State<VrExperiencePageWidget> {
   @override
   bool isPut = false;
   bool isEnd = true;
+  List<VrVideo> _vrVideos = [];
   void initState() {
     super.initState();
   }

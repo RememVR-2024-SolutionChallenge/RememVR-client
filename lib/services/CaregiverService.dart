@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:remember_me/etc/url.dart';
 import 'package:remember_me/model/AuthModel.dart';
 import 'package:remember_me/model/BadgeModel.dart';
@@ -80,7 +82,7 @@ class CaregiverService extends ChangeNotifier {
     }
   }
 
-  Future<void> getResources() async {
+  Future<void> getAndSaveResources() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
     String? token = sharedPreferences.getString("access_token");
@@ -97,6 +99,24 @@ class CaregiverService extends ChangeNotifier {
       );
       if (response.statusCode == 200) {
         Map<String, dynamic> jsonData = json.decode(response.toString());
+
+        Directory documentsDirectory = await getApplicationDocumentsDirectory();
+        String resourcesFolderPath = '${documentsDirectory.path}/resources';
+
+        Directory(resourcesFolderPath).createSync(recursive: true);
+
+        for (var resource in jsonData['vrResources']) {
+          String fileName = '$resourcesFolderPath/${resource['id']}.json';
+
+          if (!File(fileName).existsSync()) {
+            File file = File(fileName);
+            file.writeAsStringSync(json.encode(resource));
+
+            print('Data saved to file: $fileName');
+          } else {
+            print('File with id ${resource['id']} already exists. Skipping.');
+          }
+        }
 
         vrResources = (jsonData['vrResources'] as List)
             .map((item) => VrResources.fromJson(item))
@@ -217,6 +237,18 @@ class CaregiverService extends ChangeNotifier {
     } catch (e) {
       print('POST 요청 에러');
       print(e.toString());
+    }
+  }
+
+  void readResources() async {
+    Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    String resourcesFolderPath = '${documentsDirectory.path}/resources';
+
+    List<FileSystemEntity> files = Directory(resourcesFolderPath).listSync();
+
+    for (var file in files) {
+      String contents = await File(file.path).readAsString();
+      print('File Content of ${file.path}: $contents');
     }
   }
 }

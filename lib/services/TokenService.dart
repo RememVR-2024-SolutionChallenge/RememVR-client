@@ -9,9 +9,12 @@ class TokenService extends ChangeNotifier {
   bool isRefreshed = false;
   Future<void> refreshToken() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
     try {
       Response response = await Dio().post("${baseUrl}/auth/refresh",
           data: {'refreshToken': sharedPreferences.getString("refresh_token")});
+      print(sharedPreferences.getString("refresh_token"));
+
       if (response.statusCode == 201) {
         isRefreshed = true;
         print("POST 요청 성공");

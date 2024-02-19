@@ -33,9 +33,13 @@ class _StartPageWidgetState extends State<StartPageWidget> {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     accessToken = sharedPreferences.getString("access_token");
     refreshToken = sharedPreferences.getString("refresh_token");
+    print("accessToken : $accessToken");
+    print("refreshToken : $refreshToken");
+
     if (accessToken != "" && refreshToken != "") {
-      Future<bool> isLoggedIn = _validateTokens();
-      if (await isLoggedIn) {
+      //첫 로그인이 아니라면
+      bool isLoggedIn = await _validateAccessToken();
+      if (isLoggedIn) {
         await Provider.of<AuthService>(context, listen: false).checkUser();
         setState(() {
           _isGiver = Provider.of<AuthService>(context, listen: false).isGiver;
@@ -51,16 +55,18 @@ class _StartPageWidgetState extends State<StartPageWidget> {
           }
         });
       } else {
+        //accessToken 만료O, refreshToken 만료X
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => LoginPageWidget()));
       }
     } else {
+      //첫 로그인
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => LoginPageWidget()));
     }
   }
 
-  Future<bool> _validateTokens() async {
+  Future<bool> _validateAccessToken() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     accessToken = sharedPreferences.getString("access_token");
     try {
@@ -73,22 +79,28 @@ class _StartPageWidgetState extends State<StartPageWidget> {
           },
         ),
       );
-      if (response.statusCode == 401) {
-        print("ACCESS_TOKEN 만료");
-        await Provider.of<TokenService>(context, listen: false).refreshToken();
-        setState(() {
-          _isRefreshed =
-              Provider.of<TokenService>(context, listen: false).isRefreshed;
-        });
-
-        return _isRefreshed ? true : false;
-      } else if (response.statusCode == 200) {
+      if (response.statusCode == 200) {
         print("자동 로그인 성공");
         return true;
       } else {
         return false;
       }
     } catch (e) {
+      if (e is DioException) {
+        if (e.response!.statusCode == 401) {
+          await Provider.of<TokenService>(context, listen: false)
+              .refreshToken();
+          setState(() {
+            _isRefreshed =
+                Provider.of<TokenService>(context, listen: false).isRefreshed;
+          });
+          print(_isRefreshed);
+          return _isRefreshed ? true : false;
+        }
+      } else {
+        print("bye");
+        return false;
+      }
       return false;
     }
   }

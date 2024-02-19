@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:provider/provider.dart';
+import 'package:remember_me/model/VrModel.dart';
 import 'package:remember_me/pages/carerecipient/vr/VrExperiencePage.dart';
+import 'package:remember_me/services/CarerecipientService.dart';
 
 class VrSelectPageWidget extends StatefulWidget {
   const VrSelectPageWidget({super.key});
@@ -9,17 +12,28 @@ class VrSelectPageWidget extends StatefulWidget {
 }
 
 class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
+  List<VrVideo> _vrVideos = [];
   bool isEmpty = false;
-  List<Widget> widgetsInQueue = [
-    VrCard(name: "choi jin woo", space: "Korea University"),
-    VrCard(name: "choi jin woo", space: "Korea University"),
-    VrCard(name: "choi jin woo", space: "Korea University"),
-    VrCard(name: "choi jin woo", space: "Korea University"),
-    VrCard(name: "choi jin woo", space: "Korea University"),
-  ];
+  // List<Widget> widgetsInQueue = [
+  //   VrCard(name: "choi jin woo", space: "Korea University"),
+  //   VrCard(name: "choi jin woo", space: "Korea University"),
+  //   VrCard(name: "choi jin woo", space: "Korea University"),
+  //   VrCard(name: "choi jin woo", space: "Korea University"),
+  //   VrCard(name: "choi jin woo", space: "Korea University"),
+  // ];
   @override
   void initState() {
     super.initState();
+    _loadVrVideos();
+  }
+
+  Future<void> _loadVrVideos() async {
+    await Provider.of<CarerecipientService>(context, listen: false)
+        .getVrVideos();
+    setState(() {
+      _vrVideos =
+          Provider.of<CarerecipientService>(context, listen: false).vrVideos;
+    });
   }
 
   @override
@@ -46,14 +60,25 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
                         fontWeight: FontWeight.w700,
                       ))),
               Expanded(
-                  child: ListView.builder(
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                itemCount: widgetsInQueue.length,
-                itemBuilder: (context, index) {
-                  return widgetsInQueue[index];
-                },
-              ))
+                  child: _vrVideos.isEmpty
+                      ? Center(
+                          child: Text("There is no video created.",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                              )))
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          itemCount: _vrVideos.length,
+                          itemBuilder: (context, index) {
+                            return VrCard(
+                              name: _vrVideos[index].avatars!.title,
+                              space: _vrVideos[index].scene!.title,
+                            );
+                          },
+                        ))
             ],
           ))),
     );
@@ -66,8 +91,8 @@ class VrCard extends StatelessWidget {
     required this.name,
     required this.space,
   });
-  final String name;
-  final String space;
+  final String? name;
+  final String? space;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -204,7 +229,7 @@ class VrCard extends StatelessWidget {
                               fontWeight: FontWeight.w700),
                         ),
                         Text(
-                          name,
+                          name!,
                           style: TextStyle(
                               fontSize: 20,
                               color: Colors.white,
@@ -224,7 +249,7 @@ class VrCard extends StatelessWidget {
                               fontWeight: FontWeight.w700),
                         ),
                         Text(
-                          space,
+                          space!,
                           style: TextStyle(
                               fontSize: 20,
                               color: Colors.white,

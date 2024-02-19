@@ -136,7 +136,7 @@ class AuthService extends ChangeNotifier {
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
       String? token = sharedPreferences.getString("access_token");
-      print("hhh : ${sharedPreferences.getString("access_token")}");
+
       Response response = await Dio().get(
         "${baseUrl}/user",
         options: Options(

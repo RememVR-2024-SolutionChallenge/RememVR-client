@@ -27,7 +27,8 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
   }
 
   Future<void> _loadCreatedResources() async {
-    await Provider.of<CaregiverService>(context, listen: false).getResources();
+    await Provider.of<CaregiverService>(context, listen: false)
+        .getAndSaveResources();
     _createdResources =
         Provider.of<CaregiverService>(context, listen: false).vrResources;
     setState(() {
@@ -336,7 +337,7 @@ class CreatedPlaceBox extends StatelessWidget {
                         child: Image.asset(
                             width: MediaQuery.of(context).size.width * 0.2,
                             height: MediaQuery.of(context).size.width * 0.2,
-                            "assets/images/Cathedral.png")), //image
+                            "assets/images/play 1.png")), //image
                     Container(
                         padding: EdgeInsets.only(left: 20, right: 20),
                         child: Text(resource.title!,
