@@ -109,7 +109,11 @@ class _VerifyCodePageWidgetState extends State<VerifyCodePageWidget> {
               ),
             ),
           ),
-          SimpleButton(type: "Confirm", destination: LoadingPageWidget()),
+          SimpleButton(
+              type: "Confirm",
+              destination: LoadingPageWidget(
+                isVideo: false,
+              )),
         ],
       )),
     ));

@@ -26,7 +26,7 @@ class _HomeMainPageWidgetState extends State<HomeMainPageWidget> {
             child: Column(
           children: [
             Container(
-                margin: EdgeInsets.only(top: 60, bottom: 40),
+                margin: EdgeInsets.only(top: 120, bottom: 40),
                 width: MediaQuery.of(context).size.width * 0.7,
                 alignment: Alignment.centerLeft,
                 child: Column(
@@ -47,80 +47,77 @@ class _HomeMainPageWidgetState extends State<HomeMainPageWidget> {
             Container(
                 margin: EdgeInsets.only(bottom: 30),
                 child: Image.asset('assets/images/logo_only.png')),
-            Text(
-                "Your Caring Recipient : Anna Waslon\n\nYou’re not alone in this journey.",
+            Text("You’re not alone in this journey",
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    fontSize: 15,
+                    fontSize: 22,
                     fontWeight: FontWeight.w400,
                     color: Colors.white)),
-            Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Color(0xff4C5995),
-                ),
-                margin: EdgeInsets.only(
-                  top: 25,
-                ),
-                padding: EdgeInsets.only(
-                  top: 10,
-                ),
-                width: MediaQuery.of(context).size.width * 0.8,
-                child: Column(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(
-                        bottom: 10,
-                      ),
-                      child: Text("2024.01",
-                          style: TextStyle(
+            InkWell(
+              onTap: () {},
+              child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Color(0xff4C5995),
+                  ),
+                  margin: EdgeInsets.only(
+                    top: 15,
+                  ),
+                  width: MediaQuery.of(context).size.width * 0.85,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                          child: Text("My Caregiver ",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 22,
+                                fontWeight: FontWeight.w700,
+                              )),
+                          margin: EdgeInsets.fromLTRB(15, 15, 15, 15)),
+                      Container(
+                          margin: EdgeInsets.fromLTRB(15, 15, 15, 15),
+                          child: Icon(
+                            Icons.arrow_forward_ios,
                             color: Colors.white,
-                            fontSize: 17,
-                            fontWeight: FontWeight.w700,
-                          )),
-                    ),
-                    Text(
-                        "M          T          W          T           F           S           S",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                        )),
-                    Container(
-                        padding:
-                            EdgeInsets.only(left: 20, right: 20, bottom: 20),
-                        margin: EdgeInsets.only(top: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Container(
-                                child: Image.asset(
-                                    "assets/images/calendar_non_check.png")),
-                            Container(
-                                child: Image.asset(
-                                    "assets/images/calendar_non_check.png")),
-                            Container(
-                                child: Image.asset(
-                                    "assets/images/calendar_non_check.png")),
-                            Container(
-                                child: Image.asset(
-                                    "assets/images/calendar_non_check.png")),
-                            Container(
-                                child: Image.asset(
-                                    "assets/images/calendar_non_check.png")),
-                            Container(
-                                child: Image.asset(
-                                    "assets/images/calendar_non_check.png")),
-                            Container(
-                                child: Image.asset(
-                                    "assets/images/calendar_non_check.png"))
-                          ],
-                        )),
-                  ],
-                )),
+                          ))
+                    ],
+                  )),
+            ),
+            InkWell(
+              onTap: () {},
+              child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Color(0xff4C5995),
+                  ),
+                  margin: EdgeInsets.only(
+                    top: 15,
+                  ),
+                  width: MediaQuery.of(context).size.width * 0.85,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                          child: Text("Badge Tracker ",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 22,
+                                fontWeight: FontWeight.w700,
+                              )),
+                          margin: EdgeInsets.fromLTRB(15, 15, 15, 15)),
+                      Container(
+                          margin: EdgeInsets.fromLTRB(15, 15, 15, 15),
+                          child: Icon(
+                            Icons.arrow_forward_ios,
+                            color: Colors.white,
+                          ))
+                    ],
+                  )),
+            ),
             Container(
                 margin: EdgeInsets.only(top: 20),
-                width: MediaQuery.of(context).size.width * 0.8,
+                width: MediaQuery.of(context).size.width * 0.83,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

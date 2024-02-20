@@ -12,8 +12,32 @@ class VrSelectPageWidget extends StatefulWidget {
 
 class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
   @override
+  List<Color> avatarColors = [
+    Color(0xff9292b7),
+    Color(0xff9292b7),
+    Color(0xff9292b7),
+    Color(0xff9292b7)
+  ];
+  List<Color> sceneColors = [
+    Color(0xff9292b7),
+    Color(0xff9292b7),
+    Color(0xff9292b7),
+    Color(0xff9292b7)
+  ];
   bool isAvatarSelected = false;
   bool isSpaceSelected = false;
+  Map<String, String> avatars = {
+    "Lucy Weasley": "woman",
+    "James Potter": "man",
+    "Severus Snape": "man",
+    "Hermione Granger": "woman"
+  };
+  Map<String, String> scenes = {
+    "Home-town": "Home-town",
+    "St. Paul’s Cathedral": "Cathedral",
+    "London Bridge": "Bridge",
+    "Concert Hall": "Hall"
+  };
   void initState() {
     super.initState();
   }
@@ -54,64 +78,76 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
                       )),
                 ),
                 Container(
-                    height: MediaQuery.of(context).size.height * 0.35,
+                    height: MediaQuery.of(context).size.height * 0.3,
                     child: ListView.builder(
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
-                      itemCount: 3,
+                      itemCount: 4,
                       itemBuilder: (context, index) {
-                        return Container(
-                            width: MediaQuery.of(context).size.width * 0.3,
-                            margin: EdgeInsets.only(right: 15, left: 15),
-                            child: Column(
-                              children: [
-                                Container(
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                            padding: EdgeInsets.only(
-                                                top: 20, bottom: 10),
-                                            child: Image.asset(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.2,
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.2,
-                                                "assets/images/unknown_woman.png")), //image
-                                        Container(
-                                            padding: EdgeInsets.only(
-                                                left: 20, right: 20),
-                                            child: Text("Lucy Weasley",
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w700,
-                                                )))
-                                      ],
-                                    ),
-                                    width: MediaQuery.of(context).size.width *
-                                        0.35,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.25,
-                                    decoration: ShapeDecoration(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
+                        List<String> genders = avatars.values.toList();
+                        List<String> names = avatars.keys.toList();
+                        return InkWell(
+                          onTap: () {
+                            setState(() {
+                              avatarColors[index] = Color(0xff4C5893);
+                              isAvatarSelected = true;
+                            });
+                          },
+                          child: Container(
+                              width: MediaQuery.of(context).size.width * 0.3,
+                              margin: EdgeInsets.only(right: 15, left: 15),
+                              child: Column(
+                                children: [
+                                  Container(
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 20, bottom: 10),
+                                              child: Image.asset(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.2,
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.2,
+                                                  "assets/images/unknown_${genders[index]}.png")), //image
+                                          Container(
+                                              padding: EdgeInsets.only(
+                                                  left: 20, right: 20),
+                                              child: Text(names[index]!,
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.w700,
+                                                  )))
+                                        ],
                                       ),
-                                      color: Color(0xff9292b7),
-                                      shadows: [
-                                        BoxShadow(
-                                          color: Color(0x3F000000),
-                                          blurRadius: 4,
-                                          offset: Offset(0, 3),
-                                          spreadRadius: 0,
-                                        )
-                                      ],
-                                    )),
-                              ],
-                            ));
+                                      width: MediaQuery.of(context).size.width *
+                                          0.35,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.2,
+                                      decoration: ShapeDecoration(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        color: avatarColors[index],
+                                        shadows: [
+                                          BoxShadow(
+                                            color: Color(0x3F000000),
+                                            blurRadius: 4,
+                                            offset: Offset(0, 3),
+                                            spreadRadius: 0,
+                                          )
+                                        ],
+                                      )),
+                                ],
+                              )),
+                        );
                       },
                     )),
                 SimpleButton(
@@ -136,64 +172,76 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
                       )),
                 ),
                 Container(
-                    height: MediaQuery.of(context).size.height * 0.35,
+                    height: MediaQuery.of(context).size.height * 0.3,
                     child: ListView.builder(
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
                       itemCount: 3,
                       itemBuilder: (context, index) {
-                        return Container(
-                            width: MediaQuery.of(context).size.width * 0.3,
-                            margin: EdgeInsets.only(right: 15, left: 15),
-                            child: Column(
-                              children: [
-                                Container(
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                            padding: EdgeInsets.only(
-                                                top: 20, bottom: 10),
-                                            child: Image.asset(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.2,
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.2,
-                                                "assets/images/Cathedral.png")), //image
-                                        Container(
-                                            padding: EdgeInsets.only(
-                                                left: 20, right: 20),
-                                            child: Text("St.Paul's Cathedral",
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w700,
-                                                )))
-                                      ],
-                                    ),
-                                    width: MediaQuery.of(context).size.width *
-                                        0.35,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.25,
-                                    decoration: ShapeDecoration(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
+                        List<String> names = scenes.keys.toList();
+                        List<String> image = scenes.values.toList();
+                        return InkWell(
+                          onTap: () {
+                            setState(() {
+                              sceneColors[index] = Color(0xff4C5893);
+                              isSpaceSelected = true;
+                            });
+                          },
+                          child: Container(
+                              width: MediaQuery.of(context).size.width * 0.3,
+                              margin: EdgeInsets.only(right: 15, left: 15),
+                              child: Column(
+                                children: [
+                                  Container(
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 20, bottom: 10),
+                                              child: Image.asset(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.2,
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.2,
+                                                  "assets/images/${image[index]}.png")), //image
+                                          Container(
+                                              padding: EdgeInsets.only(
+                                                  left: 20, right: 20),
+                                              child: Text("${names[index]}",
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.w700,
+                                                  )))
+                                        ],
                                       ),
-                                      color: Color(0xff9292b7),
-                                      shadows: [
-                                        BoxShadow(
-                                          color: Color(0x3F000000),
-                                          blurRadius: 4,
-                                          offset: Offset(0, 3),
-                                          spreadRadius: 0,
-                                        )
-                                      ],
-                                    )),
-                              ],
-                            ));
+                                      width: MediaQuery.of(context).size.width *
+                                          0.35,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.2,
+                                      decoration: ShapeDecoration(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        color: sceneColors[index],
+                                        shadows: [
+                                          BoxShadow(
+                                            color: Color(0x3F000000),
+                                            blurRadius: 4,
+                                            offset: Offset(0, 3),
+                                            spreadRadius: 0,
+                                          )
+                                        ],
+                                      )),
+                                ],
+                              )),
+                        );
                       },
                     )),
                 SimpleButton(
@@ -283,7 +331,9 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => LoadingPageWidget()));
+                            builder: (context) => LoadingPageWidget(
+                                  isVideo: true,
+                                )));
                   }
                 },
                 child: GestureDetector(

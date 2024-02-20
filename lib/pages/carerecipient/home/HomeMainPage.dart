@@ -50,7 +50,7 @@ class _HomeMainPageWidgetState extends State<HomeMainPageWidget> {
             Container(
                 margin: EdgeInsets.only(bottom: 20),
                 child: Image.asset('assets/images/logo_only.png')),
-            Text("You’re doing great\n with your activites",
+            Text("You’re doing great\n with your activites.",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 30,
@@ -133,25 +133,34 @@ class _HomeMainPageWidgetState extends State<HomeMainPageWidget> {
                           children: [
                             Container(
                                 child: Image.asset(
+                                    width: 30,
+                                    height: 30,
                                     "assets/images/calendar_non_check.png")),
                             Container(
+                                width: 30,
+                                height: 30,
+                                child: Image.asset("assets/images/badge1.png")),
+                            Container(
+                                width: 30,
+                                height: 30,
+                                child: Image.asset("assets/images/badge2.png")),
+                            Container(
+                                width: 30,
+                                height: 30,
+                                child: Image.asset("assets/images/badge3.png")),
+                            Container(
+                                width: 30,
+                                height: 30,
                                 child: Image.asset(
                                     "assets/images/calendar_non_check.png")),
                             Container(
-                                child: Image.asset(
-                                    "assets/images/calendar_non_check.png")),
+                                width: 30,
+                                height: 30,
+                                child: Image.asset("assets/images/badge2.png")),
                             Container(
-                                child: Image.asset(
-                                    "assets/images/calendar_non_check.png")),
-                            Container(
-                                child: Image.asset(
-                                    "assets/images/calendar_non_check.png")),
-                            Container(
-                                child: Image.asset(
-                                    "assets/images/calendar_non_check.png")),
-                            Container(
-                                child: Image.asset(
-                                    "assets/images/calendar_non_check.png"))
+                                width: 30,
+                                height: 30,
+                                child: Image.asset("assets/images/badge1.png"))
                           ],
                         )),
                   ],

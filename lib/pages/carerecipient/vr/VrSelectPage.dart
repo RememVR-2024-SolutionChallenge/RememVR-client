@@ -11,11 +11,10 @@ class VrSelectPageWidget extends StatefulWidget {
 class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
   bool isEmpty = false;
   List<Widget> widgetsInQueue = [
-    VrCard(name: "choi jin woo", space: "Korea University"),
-    VrCard(name: "choi jin woo", space: "Korea University"),
-    VrCard(name: "choi jin woo", space: "Korea University"),
-    VrCard(name: "choi jin woo", space: "Korea University"),
-    VrCard(name: "choi jin woo", space: "Korea University"),
+    VrCard(name: "Jinwoo Choi", space: "Korea Univ"),
+    VrCard(name: "GuiJung Woo", space: "London Bridge"),
+    VrCard(name: "Seoyeon Byeon", space: "Time Square"),
+    VrCard(name: "Seoyoung Kim", space: "Home"),
   ];
   @override
   void initState() {
@@ -163,7 +162,7 @@ class VrCard extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
-              color: Color(0xff5A78AA),
+              color: Color(0xff4C5893),
               shadows: [
                 BoxShadow(
                   color: Color(0x3F000000),

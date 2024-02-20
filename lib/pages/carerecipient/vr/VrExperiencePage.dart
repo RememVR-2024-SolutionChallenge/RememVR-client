@@ -12,8 +12,8 @@ class VrExperiencePageWidget extends StatefulWidget {
 
 class _VrExperiencePageWidgetState extends State<VrExperiencePageWidget> {
   @override
-  bool isPut = false;
-  bool isEnd = true;
+  bool isPut = true;
+  bool isEnd = false;
   void initState() {
     super.initState();
   }
@@ -33,11 +33,11 @@ class _VrExperiencePageWidgetState extends State<VrExperiencePageWidget> {
                   ? Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset(!isPut
+                        Image.asset(isPut
                             ? "assets/images/vr-glass_1.png"
                             : "assets/images/vr-glass_2.png"),
                         Text(
-                            !isPut
+                            isPut
                                 ? "Please put on\nthe VR device."
                                 : "Currently in\nVR experience",
                             style: TextStyle(

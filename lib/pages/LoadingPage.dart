@@ -3,9 +3,12 @@ import 'package:remember_me/pages/auth/FinishRegisterationPage.dart';
 import 'dart:async';
 
 import 'package:remember_me/pages/auth/SelectUserTypePage.dart';
+import 'package:remember_me/pages/caregiver/vr/VrCompletionPage.dart';
 
 class LoadingPageWidget extends StatefulWidget {
-  const LoadingPageWidget({super.key});
+  const LoadingPageWidget({super.key, required this.isVideo});
+  final bool isVideo;
+
   @override
   _LoadingPageWidgetState createState() => _LoadingPageWidgetState();
 }
@@ -27,24 +30,26 @@ class _LoadingPageWidgetState extends State<LoadingPageWidget>
     super.initState();
     _animationController1 = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 2),
+      duration: Duration(seconds: 1),
     );
     _animationController2 = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 2),
+      duration: Duration(seconds: 1),
     );
     _startTimer();
-    Timer(Duration(seconds: 6), () {
+    Timer(Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-            builder: (context) => FinishRegisterationPageWidget()),
+            builder: (context) => widget.isVideo
+                ? VrCompletionPageWidget()
+                : FinishRegisterationPageWidget()),
       );
     });
   }
 
   void _startTimer() {
-    const duration = Duration(seconds: 2);
+    const duration = Duration(seconds: 1);
     _timer = Timer.periodic(duration, (timer) {
       setState(() {
         _currentLogoIndex = (_currentLogoIndex + 1) % _logoImages.length;
