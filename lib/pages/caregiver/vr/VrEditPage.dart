@@ -4,8 +4,10 @@ import 'package:provider/provider.dart';
 import 'package:remember_me/etc/url.dart';
 import 'package:remember_me/model/VrModel.dart';
 import 'package:remember_me/pages/auth/SetNicknamePage.dart';
+import 'package:remember_me/pages/caregiver/CaregiverNavigatonPage.dart';
 import 'package:remember_me/pages/caregiver/vr/VrAlertPage.dart';
 import 'package:remember_me/pages/caregiver/vr/VrQueuePage.dart';
+import 'package:remember_me/pages/carerecipient/home/HomeRecipientMainPage.dart';
 import 'package:remember_me/services/CaregiverService.dart';
 import 'package:remember_me/services/CarerecipientService.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -92,7 +94,7 @@ class _VrEditPageWidgetState extends State<VrEditPageWidget> {
             Container(
               margin: EdgeInsets.only(top: 15, bottom: 15),
               alignment: Alignment.center,
-              width: 1100,
+              width: 150,
               height: 50,
               decoration: ShapeDecoration(
                 shape: OutlineInputBorder(
@@ -122,7 +124,7 @@ class _VrEditPageWidgetState extends State<VrEditPageWidget> {
             ),
             SimpleButton(
                 type: "Upload",
-                func: () {
+                func: () async {
                   caregiverService.uploadVideo(PostVrVideo(
                       title: _textEditingController.text,
                       sceneInfo: SceneInfo(

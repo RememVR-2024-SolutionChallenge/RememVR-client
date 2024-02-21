@@ -21,6 +21,7 @@ class CaregiverService extends ChangeNotifier {
   bool isRecipientExist = false;
   BadgeBundle badgeBundle = BadgeBundle();
   List<VrResources> vrResources = [];
+  bool isPost = false;
   Future<void> getUserInfo() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
@@ -282,7 +283,53 @@ class CaregiverService extends ChangeNotifier {
 
     String? token = sharedPreferences.getString("access_token");
 
-    Map<String, dynamic> data = vrVideo.toJson();
+    Map<String, dynamic> data = {
+      "title": "${vrVideo.title}",
+      "sceneInfo": {
+        "resourceId": "${vrVideo.sceneInfo!.resourceId}",
+        "objectData": {
+          "scale": {
+            "x": vrVideo.sceneInfo!.objectData!.scale!.x,
+            "y": vrVideo.sceneInfo!.objectData!.scale!.y,
+            "z": vrVideo.sceneInfo!.objectData!.scale!.z
+          },
+          "position": {
+            "x": vrVideo.sceneInfo!.objectData!.position!.x,
+            "y": vrVideo.sceneInfo!.objectData!.position!.y,
+            "z": vrVideo.sceneInfo!.objectData!.position!.z
+          },
+          "rotation": {
+            "x": vrVideo.sceneInfo!.objectData!.rotation!.x,
+            "y": vrVideo.sceneInfo!.objectData!.rotation!.y,
+            "z": vrVideo.sceneInfo!.objectData!.rotation!.z,
+            "w": vrVideo.sceneInfo!.objectData!.rotation!.w
+          }
+        }
+      },
+      "avatarsInfo": [
+        {
+          "resourceId": "${vrVideo.avatarsInfo![0].resourceId}",
+          "objectData": {
+            "scale": {
+              "x": vrVideo.avatarsInfo![0].objectData!.scale!.x,
+              "y": vrVideo.avatarsInfo![0].objectData!.scale!.y,
+              "z": vrVideo.avatarsInfo![0].objectData!.scale!.z
+            },
+            "position": {
+              "x": vrVideo.avatarsInfo![0].objectData!.position!.x,
+              "y": vrVideo.avatarsInfo![0].objectData!.position!.y,
+              "z": vrVideo.avatarsInfo![0].objectData!.position!.z
+            },
+            "rotation": {
+              "x": vrVideo.avatarsInfo![0].objectData!.rotation!.x,
+              "y": vrVideo.avatarsInfo![0].objectData!.rotation!.y,
+              "z": vrVideo.avatarsInfo![0].objectData!.rotation!.z,
+              "w": vrVideo.avatarsInfo![0].objectData!.rotation!.w
+            }
+          }
+        },
+      ]
+    };
     try {
       Response response = await Dio().post(
         '${baseUrl}/vr-video',
@@ -290,13 +337,14 @@ class CaregiverService extends ChangeNotifier {
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
-            'Content-Type': 'multipart/form-data',
+            'Content-Type': 'application/json',
           },
         ),
       );
 
       if (response.statusCode == 201) {
         print('POST 성공');
+        isPost = true;
       } else {
         print('POST 실패');
         print('Status Code: ${response.statusCode}');
