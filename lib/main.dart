@@ -4,9 +4,12 @@ import 'package:remember_me/pages/auth/LoginPage.dart';
 import 'package:remember_me/pages/auth/TempLoginPage.dart';
 import 'package:remember_me/pages/auth/WebviewLoginPage.dart';
 import 'package:remember_me/pages/caregiver/home/HomeGiverMainPage.dart';
+import 'package:remember_me/pages/caregiver/vr/VrEditPage.dart';
 import 'package:remember_me/pages/caregiver/vr/VrAvatarAlertPage.dart';
+import 'package:remember_me/pages/caregiver/vr/TempVrEditPage.dart';
 import 'package:remember_me/pages/caregiver/vr/VrPlaceAlertPage.dart';
 import 'package:remember_me/pages/carerecipient/home/HomeRecipientMainPage.dart';
+import 'package:remember_me/pages/carerecipient/vr/VrExperiencePage.dart';
 import 'package:remember_me/pages/start/StartPage.dart';
 import 'package:remember_me/services/AuthService.dart';
 import 'package:remember_me/services/CaregiverService.dart';
@@ -29,7 +32,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: "main",
-      home: StartPageWidget(),
+      home: VrExperiencePageWidget(),
     );
   }
 }

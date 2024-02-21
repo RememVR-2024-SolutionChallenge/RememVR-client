@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:provider/provider.dart';
+import 'package:remember_me/etc/url.dart';
 import 'package:remember_me/model/VrModel.dart';
 import 'package:remember_me/pages/auth/SetNicknamePage.dart';
 import 'package:remember_me/pages/carerecipient/home/HomeRecipientMainPage.dart';
@@ -16,10 +18,43 @@ class VrExperiencePageWidget extends StatefulWidget {
 class _VrExperiencePageWidgetState extends State<VrExperiencePageWidget> {
   @override
   bool isPut = false;
-  bool isEnd = true;
-  List<VrVideo> _vrVideos = [];
+  bool isEnd = false;
+  List<GetVrVideo> _vrVideos = [];
+
+  Future<void> _launchURL() async {
+    try {
+      await launchUrl(
+        Uri.parse(recipientVrUrl),
+        customTabsOptions: CustomTabsOptions(
+          colorSchemes: CustomTabsColorSchemes.defaults(),
+          shareState: CustomTabsShareState.on,
+          urlBarHidingEnabled: true,
+          showTitle: true,
+          closeButton: CustomTabsCloseButton(
+            icon: CustomTabsCloseButtonIcons.back,
+          ),
+        ),
+        safariVCOptions: SafariViewControllerOptions(
+          barCollapsingEnabled: true,
+          dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
+        ),
+      );
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
   void initState() {
     super.initState();
+    Future.delayed(Duration(seconds: 2), () {
+      _launchURL();
+    });
+
+    Future.delayed(Duration(seconds: 4), () {
+      setState(() {
+        isPut = true;
+      });
+    });
   }
 
   @override
@@ -48,7 +83,16 @@ class _VrExperiencePageWidgetState extends State<VrExperiencePageWidget> {
                               color: Colors.white,
                               fontSize: 30,
                               fontWeight: FontWeight.w700,
-                            ))
+                            )),
+                        isPut
+                            ? SimpleButton(
+                                type: "Finished",
+                                func: () {
+                                  setState(() {
+                                    isEnd = true;
+                                  });
+                                })
+                            : Container()
                       ],
                     )
                   : Stack(children: [

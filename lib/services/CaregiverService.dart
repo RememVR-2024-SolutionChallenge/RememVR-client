@@ -101,35 +101,35 @@ class CaregiverService extends ChangeNotifier {
       if (response.statusCode == 200) {
         Map<String, dynamic> jsonData = json.decode(response.toString());
 
-        Directory documentsDirectory = await getApplicationDocumentsDirectory();
-        String resourcesFolderPath = '${documentsDirectory.path}/resources';
+        // Directory documentsDirectory = await getApplicationDocumentsDirectory();
+        // String resourcesFolderPath = '${documentsDirectory.path}/resources';
 
-        Directory(resourcesFolderPath).createSync(recursive: true);
+        // Directory(resourcesFolderPath).createSync(recursive: true);
 
-        for (var resource in jsonData['vrResources']) {
-          String resourceId = resource['id'].toString();
+        // for (var resource in jsonData['vrResources']) {
+        //   String resourceId = resource['id'].toString();
 
-          String resourceFolderPath = '$resourcesFolderPath/$resourceId';
+        //   String resourceFolderPath = '$resourcesFolderPath/$resourceId';
 
-          Directory(resourceFolderPath).createSync(recursive: true);
+        //   Directory(resourceFolderPath).createSync(recursive: true);
 
-          List<String> storageUrls = List<String>.from(resource['storageUrls']);
-          for (int i = 0; i < storageUrls.length; i++) {
-            String storageUrl = storageUrls[i];
-            String fileName = '$resourceFolderPath/file_$i';
+        //   List<String> storageUrls = List<String>.from(resource['storageUrls']);
+        //   for (int i = 0; i < storageUrls.length; i++) {
+        //     String storageUrl = storageUrls[i];
+        //     String fileName = '$resourceFolderPath/file_$i';
 
-            if (!File(fileName).existsSync()) {
-              await downloadAndSaveFile(storageUrl, fileName);
-              print(
-                  'File saved for resource with id: $resourceId at $fileName');
-            } else {
-              print(
-                  'File with id $resourceId and index $i already exists. Skipping.');
-            }
-          }
+        //     if (!File(fileName).existsSync()) {
+        //       await downloadAndSaveFile(storageUrl, fileName);
+        //       print(
+        //           'File saved for resource with id: $resourceId at $fileName');
+        //     } else {
+        //       print(
+        //           'File with id $resourceId and index $i already exists. Skipping.');
+        //     }
+        //   }
 
-          print('Files saved for resource with id: $resourceId');
-        }
+        //   print('Files saved for resource with id: $resourceId');
+        // }
 
         vrResources = (jsonData['vrResources'] as List)
             .map((item) => VrResources.fromJson(item))
@@ -176,6 +176,7 @@ class CaregiverService extends ChangeNotifier {
         ),
       );
       if (response.statusCode == 200) {
+        queue.clear();
         for (Map<String, dynamic> item in response.data) {
           Queue _queue = Queue.fromJson(item);
           queue.add(_queue);
@@ -273,6 +274,36 @@ class CaregiverService extends ChangeNotifier {
       return filePath;
     } else {
       return "";
+    }
+  }
+
+  Future<void> uploadVideo(PostVrVideo vrVideo) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    String? token = sharedPreferences.getString("access_token");
+
+    Map<String, dynamic> data = vrVideo.toJson();
+    try {
+      Response response = await Dio().post(
+        '${baseUrl}/vr-video',
+        data: data,
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'multipart/form-data',
+          },
+        ),
+      );
+
+      if (response.statusCode == 201) {
+        print('POST 성공');
+      } else {
+        print('POST 실패');
+        print('Status Code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('POST 요청 에러');
+      print(e.toString());
     }
   }
 }

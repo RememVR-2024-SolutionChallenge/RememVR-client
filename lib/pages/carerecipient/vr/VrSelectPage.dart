@@ -12,15 +12,8 @@ class VrSelectPageWidget extends StatefulWidget {
 }
 
 class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
-  List<VrVideo> _vrVideos = [];
+  List<GetVrVideo> _vrVideos = [];
   bool isEmpty = false;
-  // List<Widget> widgetsInQueue = [
-  //   VrCard(name: "choi jin woo", space: "Korea University"),
-  //   VrCard(name: "choi jin woo", space: "Korea University"),
-  //   VrCard(name: "choi jin woo", space: "Korea University"),
-  //   VrCard(name: "choi jin woo", space: "Korea University"),
-  //   VrCard(name: "choi jin woo", space: "Korea University"),
-  // ];
   @override
   void initState() {
     super.initState();

@@ -173,7 +173,7 @@ class _HomeGiverMainPageWidgetState extends State<HomeGiverMainPageWidget> {
                       ),
                       Container(
                           margin: EdgeInsets.only(top: 20),
-                          width: MediaQuery.of(context).size.width * 0.8,
+                          width: MediaQuery.of(context).size.width * 0.85,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:remember_me/model/VrModel.dart';
 import 'package:remember_me/pages/caregiver/vr/VrAlertPage.dart';
+import 'package:remember_me/pages/caregiver/vr/TempVrEditPage.dart';
 import 'package:remember_me/pages/caregiver/vr/VrQueuePage.dart';
+import 'package:remember_me/services/CarerecipientService.dart';
 
 class VrMainPageWidget extends StatefulWidget {
   const VrMainPageWidget({super.key});
@@ -9,9 +13,21 @@ class VrMainPageWidget extends StatefulWidget {
 }
 
 class _VrMainPageWidgetState extends State<VrMainPageWidget> {
+  List<GetVrVideo> _vrVideos = [];
+
   @override
   void initState() {
     super.initState();
+    _loadVrVideos();
+  }
+
+  Future<void> _loadVrVideos() async {
+    await Provider.of<CarerecipientService>(context, listen: false)
+        .getVrVideos();
+    setState(() {
+      _vrVideos =
+          Provider.of<CarerecipientService>(context, listen: false).vrVideos;
+    });
   }
 
   @override
@@ -37,42 +53,45 @@ class _VrMainPageWidgetState extends State<VrMainPageWidget> {
                             color: Colors.white))),
                 Container(
                     height: MediaQuery.of(context).size.height * 0.35,
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 3,
-                      itemBuilder: (context, index) {
-                        return Container(
-                            margin: EdgeInsets.only(right: 15, left: 15),
-                            child: Column(
-                              children: [
-                                Container(
-                                    child: Image.asset(
-                                      "assets/images/play 1.png",
-                                      width: 78,
-                                      height: 85,
-                                    ),
-                                    width: MediaQuery.of(context).size.width *
-                                        0.35,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.25,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Color(0x999292b7))),
-                                // Container(
-                                //     padding: EdgeInsets.only(
-                                //       right: 20,
-                                //       top: 10,
-                                //     ),
-                                //     child: Text("Seoyoung Kim,\nHome Town",
-                                //         style: TextStyle(
-                                //             fontSize: 15,
-                                //             fontWeight: FontWeight.w700,
-                                //             color: Colors.white)))
-                              ],
-                            ));
-                      },
-                    )),
+                    child: _vrVideos.isEmpty
+                        ? Center(
+                            child: Text("There is no video created.",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                )))
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            itemCount: 3,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                  margin: EdgeInsets.only(right: 15, left: 15),
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                          child: Image.asset(
+                                            "assets/images/play 1.png",
+                                            width: 78,
+                                            height: 85,
+                                          ),
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.35,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.25,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              color: Color(0x999292b7))),
+                                    ],
+                                  ));
+                            },
+                          )),
                 GestureDetector(
                     onTap: () {
                       Navigator.push(

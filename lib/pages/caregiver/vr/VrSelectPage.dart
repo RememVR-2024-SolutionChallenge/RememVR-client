@@ -5,7 +5,9 @@ import 'package:provider/provider.dart';
 import 'package:remember_me/model/VrModel.dart';
 import 'package:remember_me/pages/LoadingPage.dart';
 import 'package:remember_me/pages/auth/SetNicknamePage.dart';
+import 'package:remember_me/pages/caregiver/vr/VrEditPage.dart';
 import 'package:remember_me/pages/caregiver/vr/VrAvatarAlertPage.dart';
+import 'package:remember_me/pages/caregiver/vr/TempVrEditPage.dart';
 import 'package:remember_me/pages/caregiver/vr/VrPlaceAlertPage.dart';
 import 'package:remember_me/services/CaregiverService.dart';
 
@@ -22,7 +24,8 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
   List<VrResources> _createdAvatars = [];
   List<VrResources> _createdPlaces = [];
   List<VrResources> _createdResources = [];
-
+  VrResources _selectedAvatar = VrResources();
+  VrResources _selectedScene = VrResources();
   void initState() {
     super.initState();
     _loadCreatedResources();
@@ -91,9 +94,15 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
                           scrollDirection: Axis.horizontal,
                           itemCount: _createdAvatars.length,
                           itemBuilder: (context, index) {
-                            return CreatedAvatarBox(
-                              resource: _createdAvatars[index],
-                            );
+                            return GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _selectedAvatar = _createdAvatars[index];
+                                  });
+                                },
+                                child: CreatedAvatarBox(
+                                  resource: _createdAvatars[index],
+                                ));
                           },
                         )),
                 SimpleButton(
@@ -136,8 +145,14 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
                           scrollDirection: Axis.horizontal,
                           itemCount: _createdPlaces.length,
                           itemBuilder: (context, index) {
-                            return CreatedPlaceBox(
-                                resource: _createdPlaces[index]);
+                            return GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _selectedScene = _createdPlaces[index];
+                                  });
+                                },
+                                child: CreatedPlaceBox(
+                                    resource: _createdPlaces[index]));
                           },
                         )),
                 SimpleButton(
@@ -151,89 +166,94 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
               ])),
               GestureDetector(
                 onTap: () {
-                  if (!isAvatarSelected || !isSpaceSelected) {
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return Stack(children: [
-                            AlertDialog(
-                              contentPadding: EdgeInsets.all(10.0),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30.0)),
-                              title: Container(
-                                  padding: EdgeInsets.only(top: 40),
-                                  alignment: Alignment.center,
-                                  child: Text("Warning",
-                                      style: TextStyle(
-                                        color: Color(0xff135297),
-                                        fontSize: 23,
-                                        fontWeight: FontWeight.w700,
-                                      ))),
-                              content: Container(
-                                width: 120, // 원하는 폭으로 조절
-                                height: 100,
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Container(
-                                        padding: EdgeInsets.only(
-                                            left: 30, right: 30),
-                                        child: Text(
-                                            !isAvatarSelected
-                                                ? "Please choose at least 1 avatar generated in the row."
-                                                : "Please choose 1 place generated in the row.",
-                                            style: TextStyle(
-                                              color: Color(0xff135297),
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w400,
-                                            )))
-                                  ],
-                                ),
-                              ),
-                              actions: <Widget>[
-                                Center(
-                                  child: TextButton(
-                                    style: TextButton.styleFrom(
-                                      alignment: Alignment.center,
-                                      fixedSize: Size(150, 60),
-                                      backgroundColor: Color(0xbfae0000),
-                                      padding: const EdgeInsets.all(20.0),
-                                      textStyle: TextStyle(
-                                          fontSize: 20, color: Colors.white),
-                                    ),
-                                    child: Text(
-                                      textAlign: TextAlign.center,
-                                      "Close",
-                                      style: TextStyle(
-                                          fontSize: 20, color: Colors.white),
-                                    ),
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                )
-                              ],
-                            ),
-                            Positioned(
-                              top: MediaQuery.of(context).size.height * 0.25,
-                              left: MediaQuery.of(context).size.width * 0.38,
-                              child: Image.asset(
-                                'assets/images/logo1.png',
-                                width: 100,
-                                height: 100.0,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ]);
-                        });
-                  } else {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => LoadingPageWidget()));
-                  }
+                  // if (!isAvatarSelected || !isSpaceSelected) {
+                  //   showDialog(
+                  //       context: context,
+                  //       builder: (BuildContext context) {
+                  //         return Stack(children: [
+                  //           AlertDialog(
+                  //             contentPadding: EdgeInsets.all(10.0),
+                  //             shape: RoundedRectangleBorder(
+                  //                 borderRadius: BorderRadius.circular(30.0)),
+                  //             title: Container(
+                  //                 padding: EdgeInsets.only(top: 40),
+                  //                 alignment: Alignment.center,
+                  //                 child: Text("Warning",
+                  //                     style: TextStyle(
+                  //                       color: Color(0xff135297),
+                  //                       fontSize: 23,
+                  //                       fontWeight: FontWeight.w700,
+                  //                     ))),
+                  //             content: Container(
+                  //               width: 120, // 원하는 폭으로 조절
+                  //               height: 100,
+                  //               child: Column(
+                  //                 mainAxisSize: MainAxisSize.min,
+                  //                 mainAxisAlignment: MainAxisAlignment.center,
+                  //                 crossAxisAlignment: CrossAxisAlignment.start,
+                  //                 children: <Widget>[
+                  //                   Container(
+                  //                       padding: EdgeInsets.only(
+                  //                           left: 30, right: 30),
+                  //                       child: Text(
+                  //                           !isAvatarSelected
+                  //                               ? "Please choose at least 1 avatar generated in the row."
+                  //                               : "Please choose 1 place generated in the row.",
+                  //                           style: TextStyle(
+                  //                             color: Color(0xff135297),
+                  //                             fontSize: 12,
+                  //                             fontWeight: FontWeight.w400,
+                  //                           )))
+                  //                 ],
+                  //               ),
+                  //             ),
+                  //             actions: <Widget>[
+                  //               Center(
+                  //                 child: TextButton(
+                  //                   style: TextButton.styleFrom(
+                  //                     alignment: Alignment.center,
+                  //                     fixedSize: Size(150, 60),
+                  //                     backgroundColor: Color(0xbfae0000),
+                  //                     padding: const EdgeInsets.all(20.0),
+                  //                     textStyle: TextStyle(
+                  //                         fontSize: 20, color: Colors.white),
+                  //                   ),
+                  //                   child: Text(
+                  //                     textAlign: TextAlign.center,
+                  //                     "Close",
+                  //                     style: TextStyle(
+                  //                         fontSize: 20, color: Colors.white),
+                  //                   ),
+                  //                   onPressed: () {
+                  //                     Navigator.pop(context);
+                  //                   },
+                  //                 ),
+                  //               )
+                  //             ],
+                  //           ),
+                  //           Positioned(
+                  //             top: MediaQuery.of(context).size.height * 0.25,
+                  //             left: MediaQuery.of(context).size.width * 0.38,
+                  //             child: Image.asset(
+                  //               'assets/images/logo1.png',
+                  //               width: 100,
+                  //               height: 100.0,
+                  //               fit: BoxFit.cover,
+                  //             ),
+                  //           ),
+                  //         ]);
+                  //       });
+                  // } else {
+                  //   Navigator.push(
+                  //       context,
+                  //       MaterialPageRoute(
+                  //           builder: (context) => LoadingPageWidget()));
+                  // }
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => VrEditPageWidget(
+                              avatar: _selectedAvatar, scene: _selectedScene)));
                 },
                 child: GestureDetector(
                     child: Container(
@@ -323,91 +343,47 @@ class CreatedPlaceBox extends StatelessWidget {
   final VrResources resource;
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () async {
-        String _spacePath =
-            await Provider.of<CaregiverService>(context, listen: false)
-                .readAssetFile(resource.id!);
-        print(_spacePath);
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0)),
-                title: Column(
-                  children: <Widget>[
-                    Text("Test"),
+    return Container(
+        width: MediaQuery.of(context).size.width * 0.3,
+        margin: EdgeInsets.only(right: 15, left: 15),
+        child: Column(
+          children: [
+            Container(
+                padding: EdgeInsets.only(bottom: 10),
+                child: Column(
+                  children: [
+                    Container(
+                        padding: EdgeInsets.only(top: 20, bottom: 10),
+                        child: Image.asset(
+                            width: MediaQuery.of(context).size.width * 0.2,
+                            height: MediaQuery.of(context).size.width * 0.2,
+                            "assets/images/play 1.png")),
+                    Container(
+                        padding: EdgeInsets.only(left: 20, right: 20),
+                        child: Text(resource.title!,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w700,
+                            )))
                   ],
                 ),
-                content: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Image.file(
-                        width: MediaQuery.of(context).size.width * 0.2,
-                        height: MediaQuery.of(context).size.width * 0.2,
-                        File(_spacePath)),
+                width: MediaQuery.of(context).size.width * 0.35,
+                decoration: ShapeDecoration(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  color: Color(0xff9292b7),
+                  shadows: [
+                    BoxShadow(
+                      color: Color(0x3F000000),
+                      blurRadius: 4,
+                      offset: Offset(0, 3),
+                      spreadRadius: 0,
+                    )
                   ],
-                ),
-                actions: <Widget>[
-                  TextButton(
-                    style: TextButton.styleFrom(
-                      padding: const EdgeInsets.all(20.0),
-                      foregroundColor: Colors.blue,
-                      textStyle: const TextStyle(fontSize: 20),
-                    ),
-                    child: Text("Confirm"),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                ],
-              );
-            });
-      },
-      child: Container(
-          width: MediaQuery.of(context).size.width * 0.3,
-          margin: EdgeInsets.only(right: 15, left: 15),
-          child: Column(
-            children: [
-              Container(
-                  padding: EdgeInsets.only(bottom: 10),
-                  child: Column(
-                    children: [
-                      Container(
-                          padding: EdgeInsets.only(top: 20, bottom: 10),
-                          child: Image.asset(
-                              width: MediaQuery.of(context).size.width * 0.2,
-                              height: MediaQuery.of(context).size.width * 0.2,
-                              "assets/images/play 1.png")),
-                      Container(
-                          padding: EdgeInsets.only(left: 20, right: 20),
-                          child: Text(resource.title!,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w700,
-                              )))
-                    ],
-                  ),
-                  width: MediaQuery.of(context).size.width * 0.35,
-                  decoration: ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    color: Color(0xff9292b7),
-                    shadows: [
-                      BoxShadow(
-                        color: Color(0x3F000000),
-                        blurRadius: 4,
-                        offset: Offset(0, 3),
-                        spreadRadius: 0,
-                      )
-                    ],
-                  )),
-            ],
-          )),
-    );
+                )),
+          ],
+        ));
   }
 }

@@ -14,7 +14,7 @@ class CarerecipientService extends ChangeNotifier {
   late UserInfo user;
   bool isGiverExist = false;
   BadgeBundle badgeBundle = BadgeBundle();
-  List<VrVideo> vrVideos = [];
+  List<GetVrVideo> vrVideos = [];
   Future<void> getCaregiverGroup() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
@@ -160,7 +160,7 @@ class CarerecipientService extends ChangeNotifier {
         vrVideos.clear();
         print('GET 요청 성공');
         for (Map<String, dynamic> item in response.data) {
-          VrVideo _video = VrVideo.fromJson(item);
+          GetVrVideo _video = GetVrVideo.fromJson(item);
           vrVideos.add(_video);
         }
       } else if (response.statusCode == 401) {
