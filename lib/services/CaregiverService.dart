@@ -22,6 +22,41 @@ class CaregiverService extends ChangeNotifier {
   BadgeBundle badgeBundle = BadgeBundle();
   List<VrResources> vrResources = [];
   bool isPost = false;
+  GiverGroup recipient = GiverGroup();
+
+  Future<void> getRecipient() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    String? token = sharedPreferences.getString("access_token");
+
+    try {
+      Response response = await Dio().get(
+        "${baseUrl}/group",
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        print('GET 요청 성공');
+        recipient = GiverGroup.fromJson(response.data);
+      } else if (response.statusCode == 401) {
+        print("ACCESS_TOKEN 만료");
+        TokenService().refreshToken();
+        getRecipient();
+      } else {
+        print('GET 요청 실패');
+        print('Status Code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('GET 요청 에러');
+      print(e.toString());
+    }
+  }
+
   Future<void> getUserInfo() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 

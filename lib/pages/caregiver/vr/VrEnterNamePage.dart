@@ -55,7 +55,7 @@ class _VrEnterNamePageWidgetState extends State<VrEnterNamePageWidget> {
             Container(
                 child: Text(
               "Please enter the \n name of" +
-                  (widget.type == 0 ? " your Avatar" : "the space"),
+                  (widget.type == 0 ? " your Avatar" : "the place"),
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Color(0xFFDCDCE8),

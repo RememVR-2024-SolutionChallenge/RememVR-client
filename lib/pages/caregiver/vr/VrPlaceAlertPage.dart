@@ -63,7 +63,7 @@ class _VrPlaceAlertPageWidgetState extends State<VrPlaceAlertPageWidget> {
                             padding:
                                 EdgeInsets.only(top: 20, left: 30, right: 30),
                             child: Text(
-                                "RememVR creates VR experiences encapsulating the places intertwined with a patient's memories. We all live with our unique sense of places, as visiting specific locations can evoke memories from particular times. Places in VR will make them feel as if they are physically present in the location.Please upload several photos that showcase distinctive features of the location. The more detailed and specific the images of objects and the place, the better.",
+                                "RememVR creates VR experiences encapsulating the places intertwined with a patient's memories. We all live with our unique sense of places, as visiting specific locations can evoke memories from particular times. VR places will make them feel as if they are physically present in the real place. \n\nPlease upload video that showcase distinctive features of the specific place.",
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,

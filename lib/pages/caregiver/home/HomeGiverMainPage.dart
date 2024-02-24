@@ -116,7 +116,7 @@ class _HomeGiverMainPageWidgetState extends State<HomeGiverMainPageWidget> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Container(
-                                    child: Text("My Caregiver ",
+                                    child: Text("My CareRecipient ",
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 22,

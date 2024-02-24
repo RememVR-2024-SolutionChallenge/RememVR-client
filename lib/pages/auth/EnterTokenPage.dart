@@ -47,10 +47,28 @@ class _EnterTokenPageWidgetState extends State<EnterTokenPageWidget> {
               child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextField(
-                controller: _textEditingController,
-                decoration: InputDecoration(
-                  labelText: 'paste your tokens',
+              Container(
+                decoration: ShapeDecoration(
+                  shape: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: const BorderSide(color: Colors.transparent)),
+                  color: Color(0xff49619B),
+                  shadows: [
+                    BoxShadow(
+                      color: Color(0x3F000000),
+                      blurRadius: 4,
+                      offset: Offset(0, 3),
+                      spreadRadius: 0,
+                    )
+                  ],
+                ),
+                width: MediaQuery.of(context).size.width * 0.8,
+                height: MediaQuery.of(context).size.height * 0.07,
+                child: TextField(
+                  controller: _textEditingController,
+                  decoration: InputDecoration(
+                    hintText: 'Just paste json files',
+                  ),
                 ),
               ),
               ElevatedButton(
