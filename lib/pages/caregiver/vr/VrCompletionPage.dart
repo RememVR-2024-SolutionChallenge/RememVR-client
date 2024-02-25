@@ -31,7 +31,7 @@ class _VrCompletionPageWidgetState extends State<VrCompletionPageWidget> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            "Your VR video will be generated soon.\n\nCheck the contents in queue.",
+            "Your VR scene will be generated soon.\n\nCheck the contents in VR video list.",
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Color(0xFFDCDCE8),
