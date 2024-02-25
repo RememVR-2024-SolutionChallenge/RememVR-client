@@ -96,9 +96,10 @@ class _StartPageWidgetState extends State<StartPageWidget> {
           });
           print(_isRefreshed);
           return _isRefreshed ? true : false;
+        } else {
+          return false;
         }
       } else {
-        print("bye");
         return false;
       }
       return false;
