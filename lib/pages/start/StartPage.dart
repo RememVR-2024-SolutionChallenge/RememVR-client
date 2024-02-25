@@ -102,7 +102,6 @@ class _StartPageWidgetState extends State<StartPageWidget> {
       } else {
         return false;
       }
-      return false;
     }
   }
 
