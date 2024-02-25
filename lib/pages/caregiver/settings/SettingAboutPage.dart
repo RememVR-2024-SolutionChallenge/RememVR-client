@@ -106,7 +106,7 @@ class _SettingAboutPageWidgetState extends State<SettingAboutPageWidget> {
                             ),
                             NameCard(
                               role: "AI Engineer",
-                              name: "Seoyeon Byeon",
+                              name: "Seoyeon Byun",
                             ),
                             Container(
                               width: MediaQuery.of(context).size.width * 0.7,

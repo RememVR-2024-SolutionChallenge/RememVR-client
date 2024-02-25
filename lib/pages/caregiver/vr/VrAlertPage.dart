@@ -48,7 +48,7 @@ class _VrAlertPageWidgetState extends State<VrAlertPageWidget> {
                             padding:
                                 EdgeInsets.only(top: 20, left: 30, right: 30),
                             child: Text(
-                                "VR videos can help patients recall past memories. Patients can experience specific periods of an individual's appearance and particular locations in virtual reality. This is based on the effectiveness of reminiscence therapy. Please upload detailed photos of the desired person and specific location photos for implementation in virtual reality.",
+                                "VR experiences can help patients recall past memories. Patients can experience specific periods of an individual's appearance and particular places in virtual reality. This is based on the effectiveness of reminiscence therapy. Please upload detailed photos of the desired person and specific space videos for implementation in virtual reality.",
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,

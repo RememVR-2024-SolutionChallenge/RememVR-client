@@ -79,7 +79,7 @@ class _VrAvatarAlertPageWidgetState extends State<VrAvatarAlertPageWidget> {
                           padding:
                               EdgeInsets.only(top: 20, left: 30, right: 30),
                           child: Text(
-                              "RememVR generates avatars representing the patient's cherished individuals. These avatars, combined with location VR, offer the patient an immersive recollection of memories. RememVR assists in safeguarding the continuity of the patient's memories. Please upload photos and videos of the individuals you wish to transform into avatars, ensuring they are captured from various angles.",
+                              "RememVR generates avatars representing the patient's cherished individuals. These avatars, combined with place VR, offer the patient an immersive recollection of memories. RememVR assists in safeguarding the continuity of the patient's memories. Please upload photos and videos of the individuals you wish to transform into avatars, ensuring they are captured from various angles.",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,

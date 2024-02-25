@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:remember_me/pages/caregiver/records/RecordsViewDetailPage.dart';
+import 'package:remember_me/services/CaregiverService.dart';
 
 class RecordsMainPageWidget extends StatefulWidget {
   const RecordsMainPageWidget({super.key});
@@ -8,9 +10,18 @@ class RecordsMainPageWidget extends StatefulWidget {
 }
 
 class _RecordsMainPageWidgetState extends State<RecordsMainPageWidget> {
+  bool _isRecipientExist = false;
   @override
   void initState() {
     super.initState();
+  }
+
+  Future<void> _loadUserInfo() async {
+    await Provider.of<CaregiverService>(context, listen: false).getUserInfo();
+    setState(() {
+      _isRecipientExist = Provider.of<CaregiverService>(context, listen: false)
+          .isRecipientExist;
+    });
   }
 
   @override
@@ -23,37 +34,87 @@ class _RecordsMainPageWidgetState extends State<RecordsMainPageWidget> {
             fit: BoxFit.cover,
           ),
         ),
-        child: Center(
-            child: Container(
-          padding: EdgeInsets.fromLTRB(20, 80, 20, 0),
-          child: Column(children: [
-            Container(
-                margin: EdgeInsets.only(bottom: 20),
-                child: Text("Records",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 30,
-                      fontWeight: FontWeight.w700,
-                    ))),
-            Expanded(
-              child: ListView.builder(
-                itemCount: 10,
-                itemBuilder: (BuildContext context, int index) {
-                  return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    RecordsViewDetailPageWidget(
-                                        outline: RecordCard())));
+        child: _isRecipientExist
+            ? Center(
+                child: Container(
+                padding: EdgeInsets.fromLTRB(20, 80, 20, 0),
+                child: Column(children: [
+                  Container(
+                      margin: EdgeInsets.only(bottom: 20),
+                      child: Text("Records",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 30,
+                            fontWeight: FontWeight.w700,
+                          ))),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: 10,
+                      itemBuilder: (BuildContext context, int index) {
+                        return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          RecordsViewDetailPageWidget(
+                                              outline: RecordCard())));
+                            },
+                            child: RecordCard());
                       },
-                      child: RecordCard());
-                },
-              ),
-            )
-          ]),
-        )),
+                    ),
+                  )
+                ]),
+              ))
+            : Stack(children: [
+                AlertDialog(
+                  contentPadding: EdgeInsets.all(10.0),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0)),
+                  title: Container(
+                      padding: EdgeInsets.only(top: 40),
+                      alignment: Alignment.center,
+                      child: Text("Notice !",
+                          style: TextStyle(
+                            color: Color(0xff135297),
+                            fontSize: 40,
+                            fontWeight: FontWeight.w700,
+                          ))),
+                  content: Container(
+                    width: 120,
+                    height: 240,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                            padding: EdgeInsets.only(left: 30, right: 30),
+                            child: Text(
+                              "Access to the service is available upon completion of the care recipient's registration.",
+                              style: TextStyle(
+                                fontSize: 24,
+                                color: Color(0xff212C77),
+                                fontWeight: FontWeight.w700,
+                              ),
+                              textAlign: TextAlign.center,
+                            ))
+                      ],
+                    ),
+                  ),
+                  actionsPadding: EdgeInsets.fromLTRB(10, 10, 10, 20),
+                ),
+                Positioned(
+                  top: MediaQuery.of(context).size.height * 0.2,
+                  left: MediaQuery.of(context).size.width * 0.38,
+                  child: Image.asset(
+                    'assets/images/logo1.png',
+                    width: 100,
+                    height: 100.0,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ]),
       ),
     );
   }

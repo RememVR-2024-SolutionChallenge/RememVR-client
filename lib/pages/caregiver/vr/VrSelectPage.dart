@@ -66,7 +66,7 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
               Container(
                   margin: EdgeInsets.fromLTRB(50, 140, 40, 40),
                   child: const Text(
-                      "Please choose an avatar and a space. If you want to create a new avatar or space, please click on the 'Create New' button below each item.",
+                      "Please choose an avatar and a place VR. If you want to create a new avatar or place VR, please click on the 'Create New' button below each item.",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,
@@ -168,7 +168,7 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
                           },
                         )),
                 SimpleButton(
-                    type: "Create New Space",
+                    type: "Create New Place VR",
                     func: () {
                       Navigator.push(
                           context,

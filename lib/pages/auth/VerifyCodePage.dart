@@ -20,6 +20,7 @@ class _VerifyCodePageWidgetState extends State<VerifyCodePageWidget> {
   List<TextEditingController> _controllers =
       List.generate(4, (index) => TextEditingController());
   List<FocusNode> _focusNodes = List.generate(4, (index) => FocusNode());
+  bool _isVerified = false;
   @override
   void initState() {
     super.initState();
@@ -117,17 +118,56 @@ class _VerifyCodePageWidgetState extends State<VerifyCodePageWidget> {
             ),
             SimpleButton(
               type: "Confirm",
-              func: () {
-                authService.verifyCode(CodeInfo(
+              func: () async {
+                await authService.verifyCode(CodeInfo(
                     email: widget.email,
                     certificate: _controllers
                         .map((controller) => controller.text)
                         .join()));
-                if (authService.isVerified) {
+                setState(() {
+                  _isVerified = authService.isVerified;
+                });
+                if (_isVerified) {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => HomeGiverMainPageWidget()));
+                } else {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0)),
+                          title: Column(
+                            children: <Widget>[
+                              Text("Wrong code"),
+                            ],
+                          ),
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                "The code is wrong",
+                              ),
+                            ],
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                padding: const EdgeInsets.all(20.0),
+                                foregroundColor: Colors.blue,
+                                textStyle: const TextStyle(fontSize: 20),
+                              ),
+                              child: Text("Confirm"),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ],
+                        );
+                      });
                 }
               },
             ),
