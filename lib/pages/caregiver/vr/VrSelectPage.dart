@@ -41,7 +41,7 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
     await Provider.of<CaregiverService>(context, listen: false).getUserInfo();
     _uid = Provider.of<CaregiverService>(context, listen: false).user.name!;
     bool _isSampleLogin =
-        Provider.of<AuthService>(context, listen: false).isSampleLogin;
+        Provider.of<CaregiverService>(context, listen: false).isSampleLogin;
     if (!_isSampleLogin) {
       await Provider.of<CaregiverService>(context, listen: false)
           .getAndSaveResources(_uid);

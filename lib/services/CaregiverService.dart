@@ -23,6 +23,7 @@ class CaregiverService extends ChangeNotifier {
   BadgeBundle badgeBundle = BadgeBundle();
   List<VrResources> vrResources = [];
   List<VrResources> vrSampleResources = [];
+  bool isSampleLogin = false;
 
   bool isPost = false;
   GiverGroup recipient = GiverGroup();
@@ -77,6 +78,9 @@ class CaregiverService extends ChangeNotifier {
       );
       if (response.statusCode == 200) {
         user = UserInfo.fromJson(response.data);
+        if (user.name == "sample_giver") {
+          isSampleLogin = true;
+        }
         isRecipientExist = true;
       } else if (response.statusCode == 401) {
         print("ACCESS_TOKEN 만료");
