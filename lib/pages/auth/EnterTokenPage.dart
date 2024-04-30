@@ -1,7 +1,8 @@
 import 'dart:convert';
-
+import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:remember_me/etc/url.dart';
 import 'package:remember_me/pages/auth/LoginPage.dart';
@@ -28,6 +29,18 @@ class _EnterTokenPageWidgetState extends State<EnterTokenPageWidget> {
   @override
   void initState() {
     super.initState();
+  }
+
+  Future<void> removeResourcesExceptSample() async {
+    final directory =
+        await getApplicationDocumentsDirectory(); // 앱의 문서 디렉토리 경로를 가져옵니다.
+    final sampleDir = '${directory.path}/sample';
+    directory.listSync().forEach((entity) {
+      if (entity is Directory && entity.path != sampleDir) {
+        // 'sample' 폴더가 아닌 모든 폴더를 삭제합니다.
+        entity.deleteSync(recursive: true);
+      }
+    });
   }
 
   @override
@@ -100,6 +113,7 @@ class _EnterTokenPageWidgetState extends State<EnterTokenPageWidget> {
                       setState(() {
                         _isGiver = authService.isGiver;
                       });
+                      removeResourcesExceptSample();
                       if (_isGiver) {
                         Navigator.push(
                             context,
