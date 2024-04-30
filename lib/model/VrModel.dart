@@ -72,24 +72,24 @@ class PostSpace {
 }
 
 class PostAvatar {
-  String? video; //filePath
-  String? image; //filePath
+  String? body; //filePath
+  String? face; //filePath
   String? title;
   String? gender;
 
-  PostAvatar({this.video, this.image, this.title, this.gender});
+  PostAvatar({this.body, this.face, this.title, this.gender});
 
   PostAvatar.fromJson(Map<String, dynamic> json) {
-    video = json['video'];
-    image = json['image'];
+    body = json['body'];
+    face = json['face'];
     title = json['title'];
     gender = json['gender'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['video'] = this.video;
-    data['image'] = this.image;
+    data['body'] = this.body;
+    data['face'] = this.face;
     data['title'] = this.title;
     data['gender'] = this.gender;
     return data;

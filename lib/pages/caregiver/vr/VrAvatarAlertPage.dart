@@ -13,7 +13,8 @@ class VrAvatarAlertPageWidget extends StatefulWidget {
 
 class _VrAvatarAlertPageWidgetState extends State<VrAvatarAlertPageWidget> {
   String videoFilePath = "";
-  String imageFilePath = "";
+  String bodyImageFilePath = "";
+  String faceImageFilePath = "";
   bool isImageSelected = false;
   bool isVideoSelected = false;
 
@@ -22,7 +23,7 @@ class _VrAvatarAlertPageWidgetState extends State<VrAvatarAlertPageWidget> {
     super.initState();
   }
 
-  Future<void> selectAvatarImage() async {
+  Future<void> selectAvatarBodyImage() async {
     XFile? file = await ImagePicker().pickImage(source: ImageSource.gallery);
 
     if (file == null) {
@@ -30,21 +31,21 @@ class _VrAvatarAlertPageWidgetState extends State<VrAvatarAlertPageWidget> {
     }
 
     setState(() {
-      imageFilePath = file.path;
+      bodyImageFilePath = file.path;
       isImageSelected = true;
     });
   }
 
-  Future<void> selectAvatarVideo() async {
-    XFile? file = await ImagePicker().pickVideo(source: ImageSource.gallery);
+  Future<void> selectAvatarFaceImage() async {
+    XFile? file = await ImagePicker().pickImage(source: ImageSource.gallery);
 
     if (file == null) {
       return;
     }
 
     setState(() {
-      videoFilePath = file.path;
-      isVideoSelected = true;
+      faceImageFilePath = file.path;
+      isImageSelected = true;
     });
   }
 
@@ -88,8 +89,8 @@ class _VrAvatarAlertPageWidgetState extends State<VrAvatarAlertPageWidget> {
                         ),
                         InkWell(
                             onTap: () async {
-                              await selectAvatarImage();
-                              await selectAvatarVideo();
+                              await selectAvatarBodyImage();
+                              await selectAvatarFaceImage();
                               if (isImageSelected && isVideoSelected) {
                                 Navigator.push(
                                     context,
@@ -97,8 +98,9 @@ class _VrAvatarAlertPageWidgetState extends State<VrAvatarAlertPageWidget> {
                                         builder: (context) =>
                                             VrEnterNamePageWidget(
                                                 type: 0,
-                                                videoPath: videoFilePath,
-                                                imagePath: imageFilePath)));
+                                                videoPath: "",
+                                                bodyPath: bodyImageFilePath,
+                                                facePath: faceImageFilePath)));
                               }
                             },
                             child: Container(

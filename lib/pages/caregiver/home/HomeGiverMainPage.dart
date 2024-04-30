@@ -24,7 +24,6 @@ class _HomeGiverMainPageWidgetState extends State<HomeGiverMainPageWidget> {
     super.initState();
     _loadUserInfo();
     _loadWeekBadgeList();
-    // Provider.of<CaregiverService>(context, listen: false).readResources();
   }
 
   Future<void> _loadUserInfo() async {
@@ -71,118 +70,125 @@ class _HomeGiverMainPageWidgetState extends State<HomeGiverMainPageWidget> {
         ),
         child: Center(
             child: _isRecipientExist
-                ? Column(
-                    children: [
-                      Container(
-                          margin: EdgeInsets.only(top: 120, bottom: 40),
-                          width: MediaQuery.of(context).size.width * 0.7,
-                          alignment: Alignment.centerLeft,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Hi,",
-                                  style: TextStyle(
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.white)),
-                              Text(_userName,
-                                  style: TextStyle(
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.white))
-                            ],
-                          )),
-                      Container(
-                          margin: EdgeInsets.only(bottom: 30),
-                          child: Image.asset('assets/images/logo_only.png')),
-                      Text("You’re not alone in this journey",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.white)),
-                      InkWell(
-                        onTap: () {},
-                        child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Color(0xff4C5995),
-                            ),
-                            margin: EdgeInsets.only(
-                              top: 15,
-                            ),
+                ? SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Container(
+                            margin: EdgeInsets.only(top: 120, bottom: 40),
+                            width: MediaQuery.of(context).size.width * 0.7,
+                            alignment: Alignment.centerLeft,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Hi,",
+                                    style: TextStyle(
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.white)),
+                                Text(_userName,
+                                    style: TextStyle(
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.white))
+                              ],
+                            )),
+                        Container(
+                            margin: EdgeInsets.only(bottom: 30),
+                            child: Image.asset('assets/images/logo_only.png')),
+                        Text("You’re not alone in this journey",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white)),
+                        InkWell(
+                          onTap: () {},
+                          child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Color(0xff4C5995),
+                              ),
+                              margin: EdgeInsets.only(
+                                top: 15,
+                              ),
+                              width: MediaQuery.of(context).size.width * 0.85,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                      child: Text("My CareRecipient ",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 22,
+                                            fontWeight: FontWeight.w700,
+                                          )),
+                                      margin:
+                                          EdgeInsets.fromLTRB(15, 15, 15, 15)),
+                                  Container(
+                                      margin:
+                                          EdgeInsets.fromLTRB(15, 15, 15, 15),
+                                      child: Icon(
+                                        Icons.arrow_forward_ios,
+                                        color: Colors.white,
+                                      ))
+                                ],
+                              )),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        BadgeCalendarPageWidget(
+                                            badges: _badgeList!)));
+                          },
+                          child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Color(0xff4C5995),
+                              ),
+                              margin: EdgeInsets.only(
+                                top: 15,
+                              ),
+                              width: MediaQuery.of(context).size.width * 0.85,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                      child: Text("Badge Tracker ",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 22,
+                                            fontWeight: FontWeight.w700,
+                                          )),
+                                      margin:
+                                          EdgeInsets.fromLTRB(15, 15, 15, 15)),
+                                  Container(
+                                      margin:
+                                          EdgeInsets.fromLTRB(15, 15, 15, 15),
+                                      child: Icon(
+                                        Icons.arrow_forward_ios,
+                                        color: Colors.white,
+                                      ))
+                                ],
+                              )),
+                        ),
+                        Container(
+                            margin: EdgeInsets.only(top: 20),
                             width: MediaQuery.of(context).size.width * 0.85,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Container(
-                                    child: Text("My CareRecipient ",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.w700,
-                                        )),
-                                    margin:
-                                        EdgeInsets.fromLTRB(15, 15, 15, 15)),
-                                Container(
-                                    margin: EdgeInsets.fromLTRB(15, 15, 15, 15),
-                                    child: Icon(
-                                      Icons.arrow_forward_ios,
-                                      color: Colors.white,
-                                    ))
+                                ScoreCard(title: "VR", num: 6),
+                                ScoreCard(title: "Records", num: 10),
+                                ScoreCard(title: "Days with R.M.", num: 237)
                               ],
-                            )),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => BadgeCalendarPageWidget(
-                                      badges: _badgeList!)));
-                        },
-                        child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Color(0xff4C5995),
-                            ),
-                            margin: EdgeInsets.only(
-                              top: 15,
-                            ),
-                            width: MediaQuery.of(context).size.width * 0.85,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                    child: Text("Badge Tracker ",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.w700,
-                                        )),
-                                    margin:
-                                        EdgeInsets.fromLTRB(15, 15, 15, 15)),
-                                Container(
-                                    margin: EdgeInsets.fromLTRB(15, 15, 15, 15),
-                                    child: Icon(
-                                      Icons.arrow_forward_ios,
-                                      color: Colors.white,
-                                    ))
-                              ],
-                            )),
-                      ),
-                      Container(
-                          margin: EdgeInsets.only(top: 20),
-                          width: MediaQuery.of(context).size.width * 0.85,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              ScoreCard(title: "VR", num: 6),
-                              ScoreCard(title: "Records", num: 10),
-                              ScoreCard(title: "Days with R.M.", num: 237)
-                            ],
-                          ))
-                    ],
+                            ))
+                      ],
+                    ),
                   )
                 : Stack(children: [
                     AlertDialog(

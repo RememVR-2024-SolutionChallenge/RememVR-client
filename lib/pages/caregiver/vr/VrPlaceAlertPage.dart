@@ -82,7 +82,8 @@ class _VrPlaceAlertPageWidgetState extends State<VrPlaceAlertPageWidget> {
                                               VrEnterNamePageWidget(
                                                   type: 1,
                                                   videoPath: filePath,
-                                                  imagePath: "")));
+                                                  bodyPath: "",
+                                                  facePath: "")));
                                 }
                               },
                               child: Container(

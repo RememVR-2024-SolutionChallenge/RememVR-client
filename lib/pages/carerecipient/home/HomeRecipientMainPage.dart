@@ -80,7 +80,6 @@ class _HomeRecipientMainPageWidgetState
 
   @override
   Widget build(BuildContext context) {
-    print(thisWeekTypes);
     startOfWeek = today.subtract(Duration(days: today.weekday - 1));
     return Scaffold(
       body: Container(
@@ -92,163 +91,168 @@ class _HomeRecipientMainPageWidgetState
         ),
         child: Center(
             child: _isGiverExist
-                ? Column(
-                    children: [
-                      Container(
-                          margin: EdgeInsets.only(top: 60, bottom: 20),
-                          width: MediaQuery.of(context).size.width * 0.7,
-                          alignment: Alignment.centerLeft,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Hi,",
-                                  style: TextStyle(
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.white)),
-                              Text(_userName,
-                                  style: TextStyle(
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.white))
-                            ],
-                          )),
-                      Container(
-                          margin: EdgeInsets.only(bottom: 20),
-                          child: Image.asset('assets/images/logo_only.png')),
-                      Text("You’re doing great\n with your activites",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.white)),
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      CaregiversPageWidget(givers: _givers)));
-                        },
-                        child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Color(0xff4C5995),
-                            ),
-                            margin: EdgeInsets.only(
-                              top: 15,
-                            ),
-                            width: MediaQuery.of(context).size.width * 0.85,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                ? SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Container(
+                            margin: EdgeInsets.only(top: 60, bottom: 20),
+                            width: MediaQuery.of(context).size.width * 0.7,
+                            alignment: Alignment.centerLeft,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Container(
-                                    child: Text("My Caregiver ",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.w700,
-                                        )),
-                                    margin:
-                                        EdgeInsets.fromLTRB(15, 15, 15, 15)),
-                                Container(
-                                    margin: EdgeInsets.fromLTRB(15, 15, 15, 15),
-                                    child: Icon(
-                                      Icons.arrow_forward_ios,
-                                      color: Colors.white,
-                                    ))
+                                Text("Hi,",
+                                    style: TextStyle(
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.white)),
+                                Text(_userName,
+                                    style: TextStyle(
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.white))
                               ],
                             )),
-                      ),
-                      InkWell(
+                        Container(
+                            margin: EdgeInsets.only(bottom: 20),
+                            child: Image.asset('assets/images/logo_only.png')),
+                        Text("You’re doing great\n with your activites",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white)),
+                        InkWell(
                           onTap: () {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        BadgeCalendarPageWidget(
-                                            badges: _badgeList!)));
+                                        CaregiversPageWidget(givers: _givers)));
                           },
                           child: Container(
-                              width: MediaQuery.of(context).size.width * 0.85,
-                              margin: EdgeInsets.only(
-                                top: 15,
-                              ),
-                              padding: EdgeInsets.only(
-                                top: 10,
-                              ),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 color: Color(0xff4C5995),
                               ),
-                              child: Column(
-                                children: [
-                                  Container(
-                                    child: Text(
-                                        "${today.year.toString()}.0${today.month.toString()}",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20)),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: List.generate(
-                                      7,
-                                      (index) {
-                                        DateTime day = startOfWeek
-                                            .add(Duration(days: index));
-                                        return DayTile(
-                                            date: day,
-                                            badgeType: thisWeekTypes[index]);
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ))),
-                      Container(
-                        margin: EdgeInsets.only(top: 20),
-                        width: MediaQuery.of(context).size.width * 0.85,
-                      ),
-                      InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => VrStartPageWidget(
-                                          type: "Start",
-                                          destination: VrStartPageWidget(
-                                              type: "Continue",
-                                              destination:
-                                                  VrSelectPageWidget()),
-                                        )));
-                          },
-                          child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Color(0xff544B88),
+                              margin: EdgeInsets.only(
+                                top: 15,
                               ),
                               width: MediaQuery.of(context).size.width * 0.85,
                               child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
-                                    padding: EdgeInsets.all(10),
-                                    child: Image.asset(
-                                        "assets/images/brainy.png",
-                                        width: 150,
-                                        height: 150),
-                                  ),
-                                  Container(
-                                      child: Text(
-                                          "Start VR\nExperience\nwith\nBrainy",
+                                      child: Text("My Caregiver ",
                                           style: TextStyle(
                                             color: Colors.white,
-                                            fontSize: 23,
+                                            fontSize: 22,
                                             fontWeight: FontWeight.w700,
-                                          )))
+                                          )),
+                                      margin:
+                                          EdgeInsets.fromLTRB(15, 15, 15, 15)),
+                                  Container(
+                                      margin:
+                                          EdgeInsets.fromLTRB(15, 15, 15, 15),
+                                      child: Icon(
+                                        Icons.arrow_forward_ios,
+                                        color: Colors.white,
+                                      ))
                                 ],
-                              )))
-                    ],
+                              )),
+                        ),
+                        InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          BadgeCalendarPageWidget(
+                                              badges: _badgeList!)));
+                            },
+                            child: Container(
+                                width: MediaQuery.of(context).size.width * 0.85,
+                                margin: EdgeInsets.only(
+                                  top: 15,
+                                ),
+                                padding: EdgeInsets.only(
+                                  top: 10,
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Color(0xff4C5995),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      child: Text(
+                                          "${today.year.toString()}.0${today.month.toString()}",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20)),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: List.generate(
+                                        7,
+                                        (index) {
+                                          DateTime day = startOfWeek
+                                              .add(Duration(days: index));
+                                          return DayTile(
+                                              date: day,
+                                              badgeType: thisWeekTypes[index]);
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ))),
+                        Container(
+                          margin: EdgeInsets.only(top: 20),
+                          width: MediaQuery.of(context).size.width * 0.85,
+                        ),
+                        InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => VrStartPageWidget(
+                                            type: "Start",
+                                            destination: VrStartPageWidget(
+                                                type: "Continue",
+                                                destination:
+                                                    VrSelectPageWidget()),
+                                          )));
+                            },
+                            child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Color(0xff544B88),
+                                ),
+                                width: MediaQuery.of(context).size.width * 0.85,
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.all(10),
+                                      child: Image.asset(
+                                          "assets/images/brainy.png",
+                                          width: 150,
+                                          height: 150),
+                                    ),
+                                    Container(
+                                        child: Text(
+                                            "Start VR\nExperience\nwith\nBrainy",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 23,
+                                              fontWeight: FontWeight.w700,
+                                            )))
+                                  ],
+                                )))
+                      ],
+                    ),
                   )
                 : Stack(children: [
                     AlertDialog(

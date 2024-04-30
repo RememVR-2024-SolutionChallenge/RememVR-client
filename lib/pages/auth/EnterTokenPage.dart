@@ -77,7 +77,6 @@ class _EnterTokenPageWidgetState extends State<EnterTokenPageWidget> {
                   String accessToken = jsonMap['accessToken'];
                   String refreshToken = jsonMap['refreshToken'];
                   bool isEnrolled = jsonMap['isEnrolled'];
-                  print(isEnrolled);
 
                   if (accessToken == "null") {
                     Navigator.push(
@@ -91,14 +90,12 @@ class _EnterTokenPageWidgetState extends State<EnterTokenPageWidget> {
                     sharedPreferences.setString("refresh_token", refreshToken!);
 
                     if (!isEnrolled) {
-                      print("hello");
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
                                   CompleteSignUpPageWidget()));
                     } else {
-                      print("bye");
                       await authService.checkUser();
                       setState(() {
                         _isGiver = authService.isGiver;

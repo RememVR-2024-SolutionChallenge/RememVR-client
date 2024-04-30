@@ -15,11 +15,13 @@ class VrEnterNamePageWidget extends StatefulWidget {
   const VrEnterNamePageWidget(
       {super.key,
       required this.type,
-      required this.videoPath,
-      required this.imagePath});
+      required this.bodyPath,
+      required this.facePath,
+      required this.videoPath});
   final int type;
+  final String bodyPath;
+  final String facePath;
   final String videoPath;
-  final String imagePath;
   @override
   _VrEnterNamePageWidgetState createState() => _VrEnterNamePageWidgetState();
 }
@@ -140,8 +142,8 @@ class _VrEnterNamePageWidgetState extends State<VrEnterNamePageWidget> {
                 func: () {
                   if (widget.type == 0) {
                     caregiverService.uploadAvatar(PostAvatar(
-                        video: widget.videoPath,
-                        image: widget.imagePath,
+                        body: widget.bodyPath,
+                        face: widget.facePath,
                         title: _textEditingController.text,
                         gender: selectedGender));
                   } else {
