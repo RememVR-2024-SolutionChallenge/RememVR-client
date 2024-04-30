@@ -10,6 +10,7 @@ import 'package:remember_me/pages/caregiver/vr/VrAvatarAlertPage.dart';
 import 'package:remember_me/pages/caregiver/vr/TempVrEditPage.dart';
 import 'package:remember_me/pages/caregiver/vr/VrPlaceAlertPage.dart';
 import 'package:remember_me/services/CaregiverService.dart';
+import 'package:remember_me/services/ServerService.dart';
 
 class VrSelectPageWidget extends StatefulWidget {
   const VrSelectPageWidget({super.key});
@@ -28,9 +29,11 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
   VrResources _selectedScene = VrResources();
   List<bool> isAvatarClicked = [];
   List<bool> isSceneClicked = [];
+  bool _isServerConnected = false;
   void initState() {
     super.initState();
     _loadCreatedResources();
+    _aiServerHealthCheck();
   }
 
   Future<void> _loadCreatedResources() async {
@@ -47,6 +50,88 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
           _createdResources.where((resource) => resource.type != 'avatar'));
       isSceneClicked = List.generate(_createdPlaces.length, (index) => false);
     });
+  }
+
+  Future<void> _aiServerHealthCheck() async {
+    await Provider.of<ServerService>(context, listen: false).aiServerCheck();
+    setState(() {
+      _isServerConnected =
+          Provider.of<ServerService>(context, listen: false).isConnected;
+    });
+  }
+
+  void _serverError(BuildContext con) {
+    showDialog(
+        context: con,
+        builder: (BuildContext context) {
+          return Stack(children: [
+            AlertDialog(
+              contentPadding: EdgeInsets.all(10.0),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0)),
+              title: Container(
+                  padding: EdgeInsets.only(top: 40),
+                  alignment: Alignment.center,
+                  child: Text("Error",
+                      style: TextStyle(
+                        color: Color(0xff135297),
+                        fontSize: 23,
+                        fontWeight: FontWeight.w700,
+                      ))),
+              content: Container(
+                width: 120, // 원하는 폭으로 조절
+                height: 100,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                        padding: EdgeInsets.only(left: 30, right: 30),
+                        child: Text(
+                            "Connection error: Our AI server cannot be reached at the moment as our Google Cloud Credits have expired. We appreciate your patience as we resolve this issue.",
+                            style: TextStyle(
+                              color: Color(0xff135297),
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                            )))
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                Center(
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      alignment: Alignment.center,
+                      fixedSize: Size(150, 60),
+                      backgroundColor: Color(0xbfae0000),
+                      padding: const EdgeInsets.all(20.0),
+                      textStyle: TextStyle(fontSize: 20, color: Colors.white),
+                    ),
+                    child: Text(
+                      textAlign: TextAlign.center,
+                      "Close",
+                      style: TextStyle(fontSize: 20, color: Colors.white),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                )
+              ],
+            ),
+            Positioned(
+              top: MediaQuery.of(context).size.height * 0.25,
+              left: MediaQuery.of(context).size.width * 0.38,
+              child: Image.asset(
+                'assets/images/logo1.png',
+                width: 100,
+                height: 100.0,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ]);
+        });
   }
 
   @override
@@ -116,10 +201,15 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
                 SimpleButton(
                     type: "Create New Avatar",
                     func: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => VrAvatarAlertPageWidget()));
+                      if (_isServerConnected) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    VrAvatarAlertPageWidget()));
+                      } else {
+                        _serverError(context);
+                      }
                     }),
               ])),
               Container(
@@ -170,127 +260,141 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
                 SimpleButton(
                     type: "Create New Place VR",
                     func: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => VrPlaceAlertPageWidget()));
+                      if (_isServerConnected) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    VrPlaceAlertPageWidget()));
+                      } else {
+                        _serverError(context);
+                      }
                     }),
               ])),
               GestureDetector(
-                onTap: () {
-                  if (!isAvatarSelected || !isSpaceSelected) {
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return Stack(children: [
-                            AlertDialog(
-                              contentPadding: EdgeInsets.all(10.0),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30.0)),
-                              title: Container(
-                                  padding: EdgeInsets.only(top: 40),
-                                  alignment: Alignment.center,
-                                  child: Text("Warning",
-                                      style: TextStyle(
-                                        color: Color(0xff135297),
-                                        fontSize: 23,
-                                        fontWeight: FontWeight.w700,
-                                      ))),
-                              content: Container(
-                                width: 120, // 원하는 폭으로 조절
-                                height: 100,
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Container(
-                                        padding: EdgeInsets.only(
-                                            left: 30, right: 30),
+                  onTap: () {
+                    if (_isServerConnected) {
+                      if (!isAvatarSelected || !isSpaceSelected) {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Stack(children: [
+                                AlertDialog(
+                                  contentPadding: EdgeInsets.all(10.0),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(30.0)),
+                                  title: Container(
+                                      padding: EdgeInsets.only(top: 40),
+                                      alignment: Alignment.center,
+                                      child: Text("Warning",
+                                          style: TextStyle(
+                                            color: Color(0xff135297),
+                                            fontSize: 23,
+                                            fontWeight: FontWeight.w700,
+                                          ))),
+                                  content: Container(
+                                    width: 120, // 원하는 폭으로 조절
+                                    height: 100,
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Container(
+                                            padding: EdgeInsets.only(
+                                                left: 30, right: 30),
+                                            child: Text(
+                                                !isAvatarSelected
+                                                    ? "Please choose at least 1 avatar generated in the row."
+                                                    : "Please choose 1 place generated in the row.",
+                                                style: TextStyle(
+                                                  color: Color(0xff135297),
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w400,
+                                                )))
+                                      ],
+                                    ),
+                                  ),
+                                  actions: <Widget>[
+                                    Center(
+                                      child: TextButton(
+                                        style: TextButton.styleFrom(
+                                          alignment: Alignment.center,
+                                          fixedSize: Size(150, 60),
+                                          backgroundColor: Color(0xbfae0000),
+                                          padding: const EdgeInsets.all(20.0),
+                                          textStyle: TextStyle(
+                                              fontSize: 20,
+                                              color: Colors.white),
+                                        ),
                                         child: Text(
-                                            !isAvatarSelected
-                                                ? "Please choose at least 1 avatar generated in the row."
-                                                : "Please choose 1 place generated in the row.",
-                                            style: TextStyle(
-                                              color: Color(0xff135297),
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w400,
-                                            )))
+                                          textAlign: TextAlign.center,
+                                          "Close",
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              color: Colors.white),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                    )
                                   ],
                                 ),
-                              ),
-                              actions: <Widget>[
-                                Center(
-                                  child: TextButton(
-                                    style: TextButton.styleFrom(
-                                      alignment: Alignment.center,
-                                      fixedSize: Size(150, 60),
-                                      backgroundColor: Color(0xbfae0000),
-                                      padding: const EdgeInsets.all(20.0),
-                                      textStyle: TextStyle(
-                                          fontSize: 20, color: Colors.white),
-                                    ),
-                                    child: Text(
-                                      textAlign: TextAlign.center,
-                                      "Close",
-                                      style: TextStyle(
-                                          fontSize: 20, color: Colors.white),
-                                    ),
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
+                                Positioned(
+                                  top:
+                                      MediaQuery.of(context).size.height * 0.25,
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.38,
+                                  child: Image.asset(
+                                    'assets/images/logo1.png',
+                                    width: 100,
+                                    height: 100.0,
+                                    fit: BoxFit.cover,
                                   ),
-                                )
-                              ],
-                            ),
-                            Positioned(
-                              top: MediaQuery.of(context).size.height * 0.25,
-                              left: MediaQuery.of(context).size.width * 0.38,
-                              child: Image.asset(
-                                'assets/images/logo1.png',
-                                width: 100,
-                                height: 100.0,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ]);
-                        });
-                  } else {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => VrEditPageWidget(
-                                avatar: _selectedAvatar,
-                                scene: _selectedScene)));
-                  }
-                },
-                child: GestureDetector(
-                    child: Container(
-                        margin: EdgeInsets.only(top: 40, bottom: 40),
-                        alignment: Alignment.center,
-                        child: Text("Generate New VR",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700,
-                            )),
-                        width: 209,
-                        height: 49,
-                        decoration: ShapeDecoration(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(40),
-                          ),
-                          color: Color(0xff76749F),
-                          shadows: [
-                            BoxShadow(
-                              color: Color(0x3F000000),
-                              blurRadius: 4,
-                              offset: Offset(0, 3),
-                              spreadRadius: 0,
-                            )
-                          ],
-                        ))),
-              )
+                                ),
+                              ]);
+                            });
+                      } else {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => VrEditPageWidget(
+                                    avatar: _selectedAvatar,
+                                    scene: _selectedScene)));
+                      }
+                    } else {
+                      _serverError(context);
+                    }
+                  },
+                  child: Container(
+                      margin: EdgeInsets.only(top: 40, bottom: 40),
+                      alignment: Alignment.center,
+                      child: Text("Generate New VR",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                          )),
+                      width: 209,
+                      height: 49,
+                      decoration: ShapeDecoration(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(40),
+                        ),
+                        color: Color(0xff76749F),
+                        shadows: [
+                          BoxShadow(
+                            color: Color(0x3F000000),
+                            blurRadius: 4,
+                            offset: Offset(0, 3),
+                            spreadRadius: 0,
+                          )
+                        ],
+                      )))
             ],
           )),
     ));

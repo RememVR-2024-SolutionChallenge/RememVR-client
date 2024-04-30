@@ -10,6 +10,7 @@ import 'package:remember_me/pages/caregiver/vr/VrAvatarCompletionPage.dart';
 import 'package:remember_me/pages/caregiver/vr/VrMainPage.dart';
 import 'package:remember_me/pages/caregiver/vr/VrPlaceCompletionPage.dart';
 import 'package:remember_me/services/CaregiverService.dart';
+import 'package:remember_me/services/ServerService.dart';
 
 class VrEnterNamePageWidget extends StatefulWidget {
   const VrEnterNamePageWidget(
@@ -33,6 +34,8 @@ class _VrEnterNamePageWidgetState extends State<VrEnterNamePageWidget> {
   FocusNode _focusNode2 = FocusNode();
   String selectedLocation = 'indoor';
   String selectedGender = "male";
+  bool _isServerConnected = false;
+
   @override
   void initState() {
     super.initState();
