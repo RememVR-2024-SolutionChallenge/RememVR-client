@@ -6,6 +6,7 @@ import 'package:remember_me/model/VrModel.dart';
 import 'package:remember_me/pages/auth/SetNicknamePage.dart';
 import 'package:remember_me/pages/caregiver/CaregiverNavigatonPage.dart';
 import 'package:remember_me/pages/caregiver/vr/VrAlertPage.dart';
+import 'package:remember_me/pages/caregiver/vr/VrCompletionPage.dart';
 import 'package:remember_me/pages/caregiver/vr/VrQueuePage.dart';
 import 'package:remember_me/pages/carerecipient/home/HomeRecipientMainPage.dart';
 import 'package:remember_me/services/CaregiverService.dart';
@@ -14,8 +15,8 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 class VrEditPageWidget extends StatefulWidget {
   const VrEditPageWidget(
-      {super.key, required this.avatar, required this.scene});
-  final VrResources avatar;
+      {super.key, required this.avatars, required this.scene});
+  final List<VrResources> avatars;
   final VrResources scene;
   @override
   _VrEditPageWidgetState createState() => _VrEditPageWidgetState();
@@ -48,6 +49,79 @@ class _VrEditPageWidgetState extends State<VrEditPageWidget> {
     }
   }
 
+  void _postVideoError(BuildContext con) {
+    showDialog(
+        context: con,
+        builder: (BuildContext context) {
+          return Stack(children: [
+            AlertDialog(
+              contentPadding: EdgeInsets.all(10.0),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0)),
+              title: Container(
+                  padding: EdgeInsets.only(top: 40),
+                  alignment: Alignment.center,
+                  child: Text("Error",
+                      style: TextStyle(
+                        color: Color(0xff135297),
+                        fontSize: 23,
+                        fontWeight: FontWeight.w700,
+                      ))),
+              content: Container(
+                width: 120, // 원하는 폭으로 조절
+                height: 100,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                        padding: EdgeInsets.only(left: 30, right: 30),
+                        child: Text("Error: cannot build Vr Video",
+                            style: TextStyle(
+                              color: Color(0xff135297),
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                            )))
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                Center(
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      alignment: Alignment.center,
+                      fixedSize: Size(150, 60),
+                      backgroundColor: Color(0xbfae0000),
+                      padding: const EdgeInsets.all(20.0),
+                      textStyle: TextStyle(fontSize: 20, color: Colors.white),
+                    ),
+                    child: Text(
+                      textAlign: TextAlign.center,
+                      "Close",
+                      style: TextStyle(fontSize: 20, color: Colors.white),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                )
+              ],
+            ),
+            Positioned(
+              top: MediaQuery.of(context).size.height * 0.25,
+              left: MediaQuery.of(context).size.width * 0.38,
+              child: Image.asset(
+                'assets/images/logo1.png',
+                width: 100,
+                height: 100.0,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ]);
+        });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -56,7 +130,7 @@ class _VrEditPageWidgetState extends State<VrEditPageWidget> {
   @override
   Widget build(BuildContext context) {
     return Consumer<CaregiverService>(
-        builder: (child, caregiverService, context) {
+        builder: (context, caregiverService, child) {
       return Scaffold(
           body: Container(
         decoration: BoxDecoration(
@@ -72,8 +146,6 @@ class _VrEditPageWidgetState extends State<VrEditPageWidget> {
             SimpleButton(
                 type: "Edit",
                 func: () {
-                  print(widget.avatar.id);
-                  print(widget.scene.id);
                   _launchURL();
                 }),
             Container(
@@ -125,6 +197,15 @@ class _VrEditPageWidgetState extends State<VrEditPageWidget> {
             SimpleButton(
                 type: "Upload",
                 func: () async {
+                  List<AvatarsInfo> _avatars = [];
+                  _avatars = widget.avatars
+                      .map((avatar) => AvatarsInfo(
+                          resourceId: avatar.id,
+                          objectData: ObjectData(
+                              scale: Scale(x: 0, y: 0, z: 0),
+                              position: Scale(x: 0, y: 0, z: 0),
+                              rotation: Rotation(w: 0, x: 0, y: 0, z: 0))))
+                      .toList();
                   caregiverService.uploadVideo(PostVrVideo(
                       title: _textEditingController.text,
                       sceneInfo: SceneInfo(
@@ -141,22 +222,15 @@ class _VrEditPageWidgetState extends State<VrEditPageWidget> {
                                 z: 0,
                               ),
                               rotation: Rotation(w: 0, x: 0, y: 0, z: 0))),
-                      avatarsInfo: [
-                        AvatarsInfo(
-                            resourceId: widget.avatar.id,
-                            objectData: ObjectData(
-                                scale: Scale(
-                                  x: 0,
-                                  y: 0,
-                                  z: 0,
-                                ),
-                                position: Scale(
-                                  x: 0,
-                                  y: 0,
-                                  z: 0,
-                                ),
-                                rotation: Rotation(w: 0, x: 0, y: 0, z: 0)))
-                      ]));
+                      avatarsInfo: _avatars));
+                  if (caregiverService.isPost) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => VrCompletionPageWidget()));
+                  } else {
+                    _postVideoError(context);
+                  }
                 }),
           ],
         )),

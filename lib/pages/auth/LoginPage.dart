@@ -54,7 +54,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<TokenService>(builder: (context, tokenService, child) {
+    return Consumer2<TokenService, AuthService>(
+        builder: (context, tokenService, authService, child) {
       return Scaffold(
         body: Container(
           decoration: BoxDecoration(
@@ -149,6 +150,79 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                           Container(
                               margin: EdgeInsets.only(left: 15),
                               child: Text("Continue with Google",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                      fontFamily: 'Inter')))
+                        ],
+                      ))),
+              SizedBox(
+                height: 20,
+              ),
+              GestureDetector(
+                  onTap: () async {
+                    authService.isSampleLogin = true;
+                    if (_isChecked) {
+                      _launchURL(context);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => EnterTokenPageWidget()));
+                    } else {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0)),
+                              title: Column(
+                                children: <Widget>[
+                                  Text("Confirm Agreement"),
+                                ],
+                              ),
+                              content: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    "You should confirm a following agreement to start the service",
+                                  ),
+                                ],
+                              ),
+                              actions: <Widget>[
+                                TextButton(
+                                  style: TextButton.styleFrom(
+                                    padding: const EdgeInsets.all(20.0),
+                                    foregroundColor: Colors.blue,
+                                    textStyle: const TextStyle(fontSize: 20),
+                                  ),
+                                  child: Text("Confirm"),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            );
+                          });
+                    }
+                  },
+                  child: Container(
+                      width: MediaQuery.of(context).size.width * 0.7,
+                      height: MediaQuery.of(context).size.height * 0.08,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            "assets/images/Google__G__logo.png",
+                            width: 39,
+                            height: 39,
+                          ),
+                          Container(
+                              margin: EdgeInsets.only(left: 15),
+                              child: Text("Sign in with sample Google account",
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w400,

@@ -9,6 +9,7 @@ import 'package:remember_me/pages/caregiver/vr/VrEditPage.dart';
 import 'package:remember_me/pages/caregiver/vr/VrAvatarAlertPage.dart';
 import 'package:remember_me/pages/caregiver/vr/TempVrEditPage.dart';
 import 'package:remember_me/pages/caregiver/vr/VrPlaceAlertPage.dart';
+import 'package:remember_me/services/AuthService.dart';
 import 'package:remember_me/services/CaregiverService.dart';
 import 'package:remember_me/services/ServerService.dart';
 
@@ -20,16 +21,16 @@ class VrSelectPageWidget extends StatefulWidget {
 
 class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
   @override
-  bool isAvatarSelected = false;
   bool isSpaceSelected = false;
   List<VrResources> _createdAvatars = [];
   List<VrResources> _createdPlaces = [];
   List<VrResources> _createdResources = [];
-  VrResources _selectedAvatar = VrResources();
+  List<VrResources> _selectedAvatars = [];
   VrResources _selectedScene = VrResources();
   List<bool> isAvatarClicked = [];
   List<bool> isSceneClicked = [];
   bool _isServerConnected = false;
+  String _uid = "";
   void initState() {
     super.initState();
     _loadCreatedResources();
@@ -37,10 +38,21 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
   }
 
   Future<void> _loadCreatedResources() async {
-    await Provider.of<CaregiverService>(context, listen: false)
-        .getAndSaveResources();
-    _createdResources =
-        Provider.of<CaregiverService>(context, listen: false).vrResources;
+    await Provider.of<CaregiverService>(context, listen: false).getUserInfo();
+    _uid = Provider.of<CaregiverService>(context, listen: false).user.name!;
+    bool _isSampleLogin =
+        Provider.of<AuthService>(context, listen: false).isSampleLogin;
+    if (!_isSampleLogin) {
+      await Provider.of<CaregiverService>(context, listen: false)
+          .getAndSaveResources(_uid);
+      _createdResources =
+          Provider.of<CaregiverService>(context, listen: false).vrResources;
+    } else {
+      await Provider.of<CaregiverService>(context, listen: false)
+          .getAndSaveSampleResources();
+      _createdResources = Provider.of<CaregiverService>(context, listen: false)
+          .vrSampleResources;
+    }
     setState(() {
       _createdAvatars.addAll(
           _createdResources.where((resource) => resource.type == 'avatar'));
@@ -188,8 +200,14 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
                                   setState(() {
                                     isAvatarClicked[index] =
                                         !isAvatarClicked[index];
-                                    isAvatarSelected = !isAvatarSelected;
-                                    _selectedAvatar = _createdAvatars[index];
+                                    if (_selectedAvatars
+                                        .contains(_createdAvatars[index])) {
+                                      _selectedAvatars
+                                          .remove(_createdAvatars[index]);
+                                    } else {
+                                      _selectedAvatars
+                                          .add(_createdAvatars[index]);
+                                    }
                                   });
                                 },
                                 child: CreatedAvatarBox(
@@ -274,7 +292,7 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
               GestureDetector(
                   onTap: () {
                     if (_isServerConnected) {
-                      if (!isAvatarSelected || !isSpaceSelected) {
+                      if (_selectedAvatars.length == 0 || !isSpaceSelected) {
                         showDialog(
                             context: context,
                             builder: (BuildContext context) {
@@ -307,9 +325,12 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
                                             padding: EdgeInsets.only(
                                                 left: 30, right: 30),
                                             child: Text(
-                                                !isAvatarSelected
+                                                _selectedAvatars.length == 0
                                                     ? "Please choose at least 1 avatar generated in the row."
-                                                    : "Please choose 1 place generated in the row.",
+                                                    : _selectedAvatars.length >
+                                                            4
+                                                        ? "Please choose at most 4 avatars generated in the row."
+                                                        : "Please choose 1 place generated in the row.",
                                                 style: TextStyle(
                                                   color: Color(0xff135297),
                                                   fontSize: 12,
@@ -363,7 +384,7 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => VrEditPageWidget(
-                                    avatar: _selectedAvatar,
+                                    avatars: _selectedAvatars,
                                     scene: _selectedScene)));
                       }
                     } else {

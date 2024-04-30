@@ -13,7 +13,7 @@ class VrPlaceAlertPageWidget extends StatefulWidget {
 
 class _VrPlaceAlertPageWidgetState extends State<VrPlaceAlertPageWidget> {
   String filePath = "";
-  bool isSelected = false;
+  bool isVideoSelected = false;
   @override
   void initState() {
     super.initState();
@@ -28,7 +28,7 @@ class _VrPlaceAlertPageWidgetState extends State<VrPlaceAlertPageWidget> {
 
     setState(() {
       filePath = file.path;
-      isSelected = true;
+      isVideoSelected = true;
     });
   }
 
@@ -73,8 +73,7 @@ class _VrPlaceAlertPageWidgetState extends State<VrPlaceAlertPageWidget> {
                           InkWell(
                               onTap: () async {
                                 await selectPlace();
-                                print(isSelected);
-                                if (isSelected) {
+                                if (isVideoSelected) {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(

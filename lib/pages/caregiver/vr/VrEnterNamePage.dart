@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:remember_me/model/VrModel.dart';
+import 'package:remember_me/model/VrSampleModel.dart';
 import 'dart:async';
 
 import 'package:remember_me/pages/auth/SelectUserTypePage.dart';
@@ -9,6 +10,7 @@ import 'package:remember_me/pages/auth/VerifyCodePage.dart';
 import 'package:remember_me/pages/caregiver/vr/VrAvatarCompletionPage.dart';
 import 'package:remember_me/pages/caregiver/vr/VrMainPage.dart';
 import 'package:remember_me/pages/caregiver/vr/VrPlaceCompletionPage.dart';
+import 'package:remember_me/services/AuthService.dart';
 import 'package:remember_me/services/CaregiverService.dart';
 import 'package:remember_me/services/ServerService.dart';
 
@@ -43,8 +45,8 @@ class _VrEnterNamePageWidgetState extends State<VrEnterNamePageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<CaregiverService>(
-        builder: (context, caregiverService, child) {
+    return Consumer2<CaregiverService, AuthService>(
+        builder: (context, caregiverService, authService, child) {
       return Scaffold(
           body: Container(
         decoration: BoxDecoration(
@@ -143,17 +145,34 @@ class _VrEnterNamePageWidgetState extends State<VrEnterNamePageWidget> {
             SimpleButton(
                 type: "Upload",
                 func: () {
-                  if (widget.type == 0) {
-                    caregiverService.uploadAvatar(PostAvatar(
+                  if (!authService.isSampleLogin) {
+                    if (widget.type == 0) {
+                      caregiverService.uploadAvatar(PostAvatar(
+                          body: widget.bodyPath,
+                          face: widget.facePath,
+                          title: _textEditingController.text,
+                          gender: selectedGender));
+                    } else {
+                      caregiverService.uploadSpace(PostSpace(
+                          video: widget.videoPath,
+                          title: _textEditingController.text,
+                          location: selectedLocation));
+                    }
+                  } else {
+                    if (widget.type == 0) {
+                      caregiverService.uploadSampleAvatar(PostSampleAvatar(
                         body: widget.bodyPath,
                         face: widget.facePath,
                         title: _textEditingController.text,
-                        gender: selectedGender));
-                  } else {
-                    caregiverService.uploadSpace(PostSpace(
+                        gender: selectedGender,
+                      ));
+                    } else {
+                      caregiverService.uploadSampleSpace(PostSampleSpace(
                         video: widget.videoPath,
                         title: _textEditingController.text,
-                        location: selectedLocation));
+                        location: selectedLocation,
+                      ));
+                    }
                   }
                   //성공적으로 업로드 시
                   Navigator.push(

@@ -122,7 +122,8 @@ class CaregiverService extends ChangeNotifier {
     }
   }
 
-  Future<void> getAndSaveResources() async {
+  Future<void> getAndSaveResources(String uid) async {
+    final directory = await getApplicationDocumentsDirectory();
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
     String? token = sharedPreferences.getString("access_token");
@@ -143,6 +144,31 @@ class CaregiverService extends ChangeNotifier {
         vrResources = (jsonData['vrResources'] as List)
             .map((item) => VrResources.fromJson(item))
             .toList();
+        vrSampleResources = (jsonData['vrSampleResources'] as List)
+            .map((item) => VrResources.fromJson(item))
+            .toList();
+        for (int i = 0; i < vrResources.length; i++) {
+          String folderName = '${uid}/vr${vrResources[i].id}';
+          Directory vrDirectory = Directory('${directory.path}/$folderName');
+
+          if (!vrDirectory.existsSync()) {
+            vrDirectory.createSync();
+          }
+
+          File file = File('${vrDirectory.path}/data.json');
+          file.writeAsStringSync(json.encode(vrResources[i]));
+        }
+        for (int i = 0; i < vrSampleResources.length; i++) {
+          String folderName = 'sample/vr${vrSampleResources[i].id}';
+          Directory vrDirectory = Directory('${directory.path}/$folderName');
+
+          if (!vrDirectory.existsSync()) {
+            vrDirectory.createSync();
+          }
+
+          File file = File('${vrDirectory.path}/data.json');
+          file.writeAsStringSync(json.encode(vrSampleResources[i]));
+        }
       } else if (response.statusCode == 401) {
         print("ACCESS_TOKEN 만료");
         TokenService().refreshToken();
@@ -158,6 +184,8 @@ class CaregiverService extends ChangeNotifier {
   }
 
   Future<void> getAndSaveSampleResources() async {
+    final directory = await getApplicationDocumentsDirectory();
+
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
     String? token = sharedPreferences.getString("access_token");
@@ -176,9 +204,20 @@ class CaregiverService extends ChangeNotifier {
       if (response.statusCode == 200) {
         Map<String, dynamic> jsonData = json.decode(response.toString());
 
-        vrSampleResources = (jsonData['vrResources'] as List)
+        vrSampleResources = (jsonData['vrSampleResources'] as List)
             .map((item) => VrResources.fromJson(item))
             .toList();
+        for (int i = 0; i < vrSampleResources.length; i++) {
+          String folderName = 'sample/${vrSampleResources[i].id}';
+          Directory vrDirectory = Directory('${directory.path}/$folderName');
+
+          if (!vrDirectory.existsSync()) {
+            vrDirectory.createSync();
+          }
+
+          File file = File('${vrDirectory.path}/data.json');
+          file.writeAsStringSync(json.encode(vrSampleResources[i]));
+        }
       } else if (response.statusCode == 401) {
         print("ACCESS_TOKEN 만료");
         TokenService().refreshToken();
@@ -191,18 +230,6 @@ class CaregiverService extends ChangeNotifier {
       print('GET 요청 에러');
       print(e.toString());
     }
-  }
-
-  Future<void> downloadAndSaveFile(String url, String filePath) async {
-    Dio dio = Dio();
-    Response response = await dio.get(
-      url,
-      options: Options(responseType: ResponseType.bytes),
-    );
-
-    File file = File(filePath);
-    await file.writeAsBytes(response.data, flush: true);
-    print('File saved at: $filePath');
   }
 
   Future<void> getQueue() async {

@@ -14,6 +14,7 @@ import 'package:remember_me/pages/start/StartPage.dart';
 import 'package:remember_me/services/AuthService.dart';
 import 'package:remember_me/services/CaregiverService.dart';
 import 'package:remember_me/services/CarerecipientService.dart';
+import 'package:remember_me/services/ServerService.dart';
 import 'package:remember_me/services/TokenService.dart';
 
 void main() {
@@ -22,6 +23,7 @@ void main() {
     ChangeNotifierProvider(create: (context) => CaregiverService()),
     ChangeNotifierProvider(create: (context) => CarerecipientService()),
     ChangeNotifierProvider(create: (context) => TokenService()),
+    ChangeNotifierProvider(create: (context) => ServerService()),
   ], child: const MainApp()));
 }
 
