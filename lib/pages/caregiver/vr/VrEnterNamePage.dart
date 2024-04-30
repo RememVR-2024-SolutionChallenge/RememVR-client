@@ -144,7 +144,8 @@ class _VrEnterNamePageWidgetState extends State<VrEnterNamePageWidget> {
                   ),
             SimpleButton(
                 type: "Upload",
-                func: () {
+                func: () async {
+                  await caregiverService.getUserInfo();
                   if (!caregiverService.isSampleLogin) {
                     if (widget.type == 0) {
                       caregiverService.uploadAvatar(PostAvatar(

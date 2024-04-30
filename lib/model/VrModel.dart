@@ -26,9 +26,15 @@ class VrResources {
   String? type;
   List<String>? storageUrls; // 이 url로가서 직접 다운받으면 됨. 그리고 이 앱에 저장.
   String? createdAt;
+  String? inVideoPositionFile;
 
   VrResources(
-      {this.id, this.title, this.type, this.storageUrls, this.createdAt});
+      {this.id,
+      this.title,
+      this.type,
+      this.storageUrls,
+      this.createdAt,
+      this.inVideoPositionFile});
 
   VrResources.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -36,6 +42,7 @@ class VrResources {
     type = json['type'];
     storageUrls = json['storageUrls'].cast<String>();
     createdAt = json['createdAt'];
+    inVideoPositionFile = json['inVideoPositionFile'];
   }
 
   Map<String, dynamic> toJson() {
@@ -45,6 +52,7 @@ class VrResources {
     data['type'] = this.type;
     data['storageUrls'] = this.storageUrls;
     data['createdAt'] = this.createdAt;
+    data['inVideoPositionFile'] = this.inVideoPositionFile;
     return data;
   }
 }

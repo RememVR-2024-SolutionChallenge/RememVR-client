@@ -11,6 +11,8 @@ import 'package:remember_me/pages/caregiver/CaregiverNavigatonPage.dart';
 import 'package:remember_me/pages/caregiver/home/HomeGiverMainPage.dart';
 import 'package:remember_me/pages/carerecipient/home/HomeRecipientMainPage.dart';
 import 'package:remember_me/services/AuthService.dart';
+import 'package:remember_me/services/CaregiverService.dart';
+import 'package:remember_me/services/CarerecipientService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class EnterTokenPageWidget extends StatefulWidget {
@@ -31,16 +33,44 @@ class _EnterTokenPageWidgetState extends State<EnterTokenPageWidget> {
     super.initState();
   }
 
-  Future<void> removeResourcesExceptSample() async {
-    final directory =
-        await getApplicationDocumentsDirectory(); // 앱의 문서 디렉토리 경로를 가져옵니다.
+  Future<void> removeResourcesExceptSample(bool isGiver) async {
+    String _uid = "";
+    List<String> _uids = [];
+    final directory = await getApplicationDocumentsDirectory();
     final sampleDir = '${directory.path}/sample';
-    directory.listSync().forEach((entity) {
-      if (entity is Directory && entity.path != sampleDir) {
-        // 'sample' 폴더가 아닌 모든 폴더를 삭제합니다.
-        entity.deleteSync(recursive: true);
+    if (isGiver) {
+      await Provider.of<CaregiverService>(context, listen: false).getUserInfo();
+      _uid = Provider.of<CaregiverService>(context, listen: false).user.name!;
+      final myDir = '${directory.path}/${_uid}';
+      directory.listSync().forEach((entity) {
+        if (entity is Directory &&
+            entity.path != sampleDir &&
+            entity.path != myDir) {
+          entity.deleteSync(recursive: true);
+        }
+      });
+    } else {
+      await Provider.of<CarerecipientService>(context, listen: false)
+          .getCaregiverGroup();
+      var givers = Provider.of<CarerecipientService>(context, listen: false)
+          .givergroup
+          .givers;
+
+      if (givers != null) {
+        _uids.addAll(givers.map((giver) => giver.name!).toList());
       }
-    });
+      final directory = await getApplicationDocumentsDirectory();
+      final Set<String> keepDirectories =
+          _uids.map((uid) => '${directory.path}/$uid').toSet();
+
+      directory.listSync().forEach((entity) {
+        if (entity is Directory &&
+            entity.path != sampleDir &&
+            !keepDirectories.contains(entity.path)) {
+          entity.deleteSync(recursive: true);
+        }
+      });
+    }
   }
 
   @override
@@ -113,14 +143,16 @@ class _EnterTokenPageWidgetState extends State<EnterTokenPageWidget> {
                       setState(() {
                         _isGiver = authService.isGiver;
                       });
-                      removeResourcesExceptSample();
+
                       if (_isGiver) {
+                        removeResourcesExceptSample(true);
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
                                     CaregiverNavigationWidget()));
                       } else {
+                        removeResourcesExceptSample(false);
                         Navigator.push(
                             context,
                             MaterialPageRoute(

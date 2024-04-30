@@ -15,6 +15,7 @@ class CarerecipientService extends ChangeNotifier {
   bool isGiverExist = false;
   BadgeBundle badgeBundle = BadgeBundle();
   List<GetVrVideo> vrVideos = [];
+  List<VrResources> vrResources = [];
   Future<void> getCaregiverGroup() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
@@ -142,7 +143,7 @@ class CarerecipientService extends ChangeNotifier {
     }
   }
 
-  Future<void> getVrVideos() async {
+  Future<void> getAllVrVideos() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
     String? token = sharedPreferences.getString("access_token");

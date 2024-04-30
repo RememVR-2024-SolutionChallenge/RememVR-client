@@ -15,8 +15,8 @@ class _VrAvatarAlertPageWidgetState extends State<VrAvatarAlertPageWidget> {
   String videoFilePath = "";
   String bodyImageFilePath = "";
   String faceImageFilePath = "";
-  bool isImageSelected = false;
-  bool isVideoSelected = false;
+  bool isBodyImageSelected = false;
+  bool isFaceImageSelected = false;
 
   @override
   void initState() {
@@ -32,7 +32,7 @@ class _VrAvatarAlertPageWidgetState extends State<VrAvatarAlertPageWidget> {
 
     setState(() {
       bodyImageFilePath = file.path;
-      isImageSelected = true;
+      isBodyImageSelected = true;
     });
   }
 
@@ -45,7 +45,7 @@ class _VrAvatarAlertPageWidgetState extends State<VrAvatarAlertPageWidget> {
 
     setState(() {
       faceImageFilePath = file.path;
-      isImageSelected = true;
+      isFaceImageSelected = true;
     });
   }
 
@@ -91,7 +91,7 @@ class _VrAvatarAlertPageWidgetState extends State<VrAvatarAlertPageWidget> {
                             onTap: () async {
                               await selectAvatarBodyImage();
                               await selectAvatarFaceImage();
-                              if (isImageSelected && isVideoSelected) {
+                              if (isBodyImageSelected && isFaceImageSelected) {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
