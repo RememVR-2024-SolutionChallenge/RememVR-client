@@ -24,6 +24,7 @@ class VrResources {
   String? id;
   String? title;
   String? type;
+  bool? isSample;
   List<String>? storageUrls; // 이 url로가서 직접 다운받으면 됨. 그리고 이 앱에 저장.
   String? createdAt;
   String? inVideoPositionFile;
@@ -32,6 +33,7 @@ class VrResources {
       {this.id,
       this.title,
       this.type,
+      this.isSample,
       this.storageUrls,
       this.createdAt,
       this.inVideoPositionFile});
@@ -40,6 +42,7 @@ class VrResources {
     id = json['id'];
     title = json['title'];
     type = json['type'];
+    isSample = json['isSample'];
     storageUrls = json['storageUrls'].cast<String>();
     createdAt = json['createdAt'];
     inVideoPositionFile = json['inVideoPositionFile'];
@@ -50,6 +53,7 @@ class VrResources {
     data['id'] = this.id;
     data['title'] = this.title;
     data['type'] = this.type;
+    data['isSample'] = this.isSample;
     data['storageUrls'] = this.storageUrls;
     data['createdAt'] = this.createdAt;
     data['inVideoPositionFile'] = this.inVideoPositionFile;
@@ -131,8 +135,9 @@ class PostVrVideo {
   String? title;
   SceneInfo? sceneInfo;
   List<AvatarsInfo>? avatarsInfo;
+  String? key;
 
-  PostVrVideo({this.title, this.sceneInfo, this.avatarsInfo});
+  PostVrVideo({this.title, this.sceneInfo, this.avatarsInfo, this.key});
 
   PostVrVideo.fromJson(Map<String, dynamic> json) {
     title = json['title'];
@@ -145,6 +150,7 @@ class PostVrVideo {
         avatarsInfo!.add(new AvatarsInfo.fromJson(v));
       });
     }
+    key = json['key'];
   }
 
   Map<String, dynamic> toJson() {
@@ -156,6 +162,7 @@ class PostVrVideo {
     if (this.avatarsInfo != null) {
       data['avatarsInfo'] = this.avatarsInfo!.map((v) => v.toJson()).toList();
     }
+    data['key'] = this.key;
     return data;
   }
 }
