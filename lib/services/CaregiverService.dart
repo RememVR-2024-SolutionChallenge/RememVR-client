@@ -129,6 +129,7 @@ class CaregiverService extends ChangeNotifier {
   }
 
   Future<void> getAndSaveResources(String uid) async {
+    //샘플 포함 전체 VR 자원 불러오기
     final directory = await getApplicationDocumentsDirectory();
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
@@ -150,30 +151,35 @@ class CaregiverService extends ChangeNotifier {
         vrResources = (jsonData['vrResources'] as List)
             .map((item) => VrResources.fromJson(item))
             .toList();
-        vrSampleResources = (jsonData['vrSampleResources'] as List)
-            .map((item) => VrResources.fromJson(item))
-            .toList();
+
         for (int i = 0; i < vrResources.length; i++) {
-          String folderName = '${uid}/vr${vrResources[i].id}';
-          Directory vrDirectory = Directory('${directory.path}/$folderName');
+          String folderName = '';
+          Directory vrDirectory = Directory('');
+          if (vrResources[i].isSample!) {
+            folderName = '${uid}/vr${vrResources[i].id}';
+            vrDirectory = Directory('${directory.path}/$folderName');
+          } else {
+            folderName = 'sample/vr${vrResources[i].id}';
+            vrDirectory = Directory('${directory.path}/$folderName');
+          }
 
           if (!vrDirectory.existsSync()) {
             vrDirectory.createSync();
           }
 
-          File file = File('${vrDirectory.path}/data.json');
-          file.writeAsStringSync(json.encode(vrResources[i]));
-        }
-        for (int i = 0; i < vrSampleResources.length; i++) {
-          String folderName = 'sample/vr${vrSampleResources[i].id}';
-          Directory vrDirectory = Directory('${directory.path}/$folderName');
-
-          if (!vrDirectory.existsSync()) {
-            vrDirectory.createSync();
+          if (vrResources[i].storageUrls != null) {
+            for (var url
+                in vrResources[i].storageUrls!.where((url) => url != null)) {
+              final response = await http.get(Uri.parse(url!));
+              if (response.statusCode == 200) {
+                File file =
+                    File(path.join(vrDirectory.path, path.basename(url)));
+                await file.writeAsBytes(response.bodyBytes);
+              } else {
+                print('Failed to download file from $url');
+              }
+            }
           }
-
-          File file = File('${vrDirectory.path}/data.json');
-          file.writeAsStringSync(json.encode(vrSampleResources[i]));
         }
       } else if (response.statusCode == 401) {
         print("ACCESS_TOKEN 만료");
@@ -198,7 +204,7 @@ class CaregiverService extends ChangeNotifier {
     Map<String, dynamic> data = {"key": "dnrnlwjdghkdlxld"};
     try {
       Response response = await Dio().get(
-        "${baseUrl}/sample",
+        "${baseUrl}/sample/vr-resource",
         data: data,
         options: Options(
           headers: {
@@ -210,7 +216,7 @@ class CaregiverService extends ChangeNotifier {
       if (response.statusCode == 200) {
         Map<String, dynamic> jsonData = json.decode(response.toString());
 
-        vrSampleResources = (jsonData['vrSampleResources'] as List)
+        vrSampleResources = (jsonData['vrResources'] as List)
             .map((item) => VrResources.fromJson(item))
             .toList();
         for (int i = 0; i < vrSampleResources.length; i++) {
@@ -491,6 +497,84 @@ class CaregiverService extends ChangeNotifier {
           }
         },
       ]
+    };
+    try {
+      Response response = await Dio().post(
+        '${baseUrl}/vr-video',
+        data: data,
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+
+      if (response.statusCode == 201) {
+        print('POST 성공');
+        isPost = true;
+      } else {
+        print('POST 실패');
+        print('Status Code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('POST 요청 에러');
+      print(e.toString());
+    }
+  }
+
+  Future<void> uploadSampleVideo(PostVrVideo vrVideo) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    String? token = sharedPreferences.getString("access_token");
+
+    Map<String, dynamic> data = {
+      "title": "${vrVideo.title}",
+      "sceneInfo": {
+        "resourceId": "${vrVideo.sceneInfo!.resourceId}",
+        "objectData": {
+          "scale": {
+            "x": vrVideo.sceneInfo!.objectData!.scale!.x,
+            "y": vrVideo.sceneInfo!.objectData!.scale!.y,
+            "z": vrVideo.sceneInfo!.objectData!.scale!.z
+          },
+          "position": {
+            "x": vrVideo.sceneInfo!.objectData!.position!.x,
+            "y": vrVideo.sceneInfo!.objectData!.position!.y,
+            "z": vrVideo.sceneInfo!.objectData!.position!.z
+          },
+          "rotation": {
+            "x": vrVideo.sceneInfo!.objectData!.rotation!.x,
+            "y": vrVideo.sceneInfo!.objectData!.rotation!.y,
+            "z": vrVideo.sceneInfo!.objectData!.rotation!.z,
+            "w": vrVideo.sceneInfo!.objectData!.rotation!.w
+          }
+        }
+      },
+      "avatarsInfo": [
+        {
+          "resourceId": "${vrVideo.avatarsInfo![0].resourceId}",
+          "objectData": {
+            "scale": {
+              "x": vrVideo.avatarsInfo![0].objectData!.scale!.x,
+              "y": vrVideo.avatarsInfo![0].objectData!.scale!.y,
+              "z": vrVideo.avatarsInfo![0].objectData!.scale!.z
+            },
+            "position": {
+              "x": vrVideo.avatarsInfo![0].objectData!.position!.x,
+              "y": vrVideo.avatarsInfo![0].objectData!.position!.y,
+              "z": vrVideo.avatarsInfo![0].objectData!.position!.z
+            },
+            "rotation": {
+              "x": vrVideo.avatarsInfo![0].objectData!.rotation!.x,
+              "y": vrVideo.avatarsInfo![0].objectData!.rotation!.y,
+              "z": vrVideo.avatarsInfo![0].objectData!.rotation!.z,
+              "w": vrVideo.avatarsInfo![0].objectData!.rotation!.w
+            }
+          }
+        },
+      ],
+      "key": "dnrnlwjdghkdlxld"
     };
     try {
       Response response = await Dio().post(

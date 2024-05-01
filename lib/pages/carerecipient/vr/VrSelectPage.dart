@@ -20,10 +20,17 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
   List<GetVrVideo> _vrVideos = [];
   bool isEmpty = false;
   List<String?> _giverNames = [];
+  bool _isSampleLogin = false;
+
   @override
   void initState() {
     super.initState();
-    _loadVrVideos();
+    checkSampleLogin();
+    if (_isSampleLogin) {
+      _loadSampleVrVideos();
+    } else {
+      _loadVrVideos();
+    }
   }
 
   Future _getGivers() async {
@@ -38,12 +45,28 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
     });
   }
 
+  Future<void> checkSampleLogin() async {
+    await Provider.of<CarerecipientService>(context, listen: false)
+        .getUserInfo();
+    _isSampleLogin =
+        Provider.of<CarerecipientService>(context, listen: false).isSampleLogin;
+  }
+
   Future<void> _loadVrVideos() async {
     await Provider.of<CarerecipientService>(context, listen: false)
         .getAllVrVideos();
     setState(() {
       _vrVideos =
           Provider.of<CarerecipientService>(context, listen: false).vrVideos;
+    });
+  }
+
+  Future<void> _loadSampleVrVideos() async {
+    await Provider.of<CarerecipientService>(context, listen: false)
+        .getSampleVrVideos();
+    setState(() {
+      _vrVideos = Provider.of<CarerecipientService>(context, listen: false)
+          .vrSampleVideos;
     });
   }
 

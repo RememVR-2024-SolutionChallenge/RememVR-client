@@ -15,7 +15,9 @@ class CarerecipientService extends ChangeNotifier {
   bool isGiverExist = false;
   BadgeBundle badgeBundle = BadgeBundle();
   List<GetVrVideo> vrVideos = [];
+  List<GetVrVideo> vrSampleVideos = [];
   List<VrResources> vrResources = [];
+  bool isSampleLogin = false;
   Future<void> getCaregiverGroup() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
@@ -67,6 +69,11 @@ class CarerecipientService extends ChangeNotifier {
         print('GET 요청 성공');
         isGiverExist = true;
         user = UserInfo.fromJson(response.data);
+        if (user.name == "sample_recipient") {
+          isSampleLogin = true;
+        } else {
+          isSampleLogin = false;
+        }
       } else if (response.statusCode == 401) {
         print("ACCESS_TOKEN 만료");
         TokenService().refreshToken();
@@ -163,6 +170,40 @@ class CarerecipientService extends ChangeNotifier {
         for (Map<String, dynamic> item in response.data) {
           GetVrVideo _video = GetVrVideo.fromJson(item);
           vrVideos.add(_video);
+        }
+      } else if (response.statusCode == 401) {
+        print("ACCESS_TOKEN 만료");
+        TokenService().refreshToken();
+      } else {
+        print('GET 요청 실패');
+        print('Status Code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('GET 요청 에러');
+      print(e.toString());
+    }
+  }
+
+  Future<void> getSampleVrVideos() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    String? token = sharedPreferences.getString("access_token");
+    try {
+      Response response = await Dio().get(
+        "${baseUrl}/sample/vr-video",
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+      if (response.statusCode == 200) {
+        vrSampleVideos.clear();
+        print('GET 요청 성공');
+        for (Map<String, dynamic> item in response.data) {
+          GetVrVideo _video = GetVrVideo.fromJson(item);
+          vrSampleVideos.add(_video);
         }
       } else if (response.statusCode == 401) {
         print("ACCESS_TOKEN 만료");

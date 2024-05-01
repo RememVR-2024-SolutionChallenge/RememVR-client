@@ -25,6 +25,7 @@ class VrEditPageWidget extends StatefulWidget {
 class _VrEditPageWidgetState extends State<VrEditPageWidget> {
   FocusNode _focusNode1 = FocusNode();
   TextEditingController _textEditingController = TextEditingController();
+  bool _isSampleLogin = false;
 
   Future<void> _launchURL() async {
     try {
@@ -47,6 +48,12 @@ class _VrEditPageWidgetState extends State<VrEditPageWidget> {
     } catch (e) {
       debugPrint(e.toString());
     }
+  }
+
+  Future<void> checkSampleLogin() async {
+    await Provider.of<CaregiverService>(context, listen: false).getUserInfo();
+    _isSampleLogin =
+        Provider.of<CaregiverService>(context, listen: false).isSampleLogin;
   }
 
   void _postVideoError(BuildContext con) {
@@ -206,23 +213,43 @@ class _VrEditPageWidgetState extends State<VrEditPageWidget> {
                               position: Scale(x: 0, y: 0, z: 0),
                               rotation: Rotation(w: 0, x: 0, y: 0, z: 0))))
                       .toList();
-                  caregiverService.uploadVideo(PostVrVideo(
-                      title: _textEditingController.text,
-                      sceneInfo: SceneInfo(
-                          resourceId: widget.scene.id,
-                          objectData: ObjectData(
-                              scale: Scale(
-                                x: 0,
-                                y: 0,
-                                z: 0,
-                              ),
-                              position: Scale(
-                                x: 0,
-                                y: 0,
-                                z: 0,
-                              ),
-                              rotation: Rotation(w: 0, x: 0, y: 0, z: 0))),
-                      avatarsInfo: _avatars));
+                  if (_isSampleLogin) {
+                    caregiverService.uploadSampleVideo(PostVrVideo(
+                        title: _textEditingController.text,
+                        sceneInfo: SceneInfo(
+                            resourceId: widget.scene.id,
+                            objectData: ObjectData(
+                                scale: Scale(
+                                  x: 0,
+                                  y: 0,
+                                  z: 0,
+                                ),
+                                position: Scale(
+                                  x: 0,
+                                  y: 0,
+                                  z: 0,
+                                ),
+                                rotation: Rotation(w: 0, x: 0, y: 0, z: 0))),
+                        avatarsInfo: _avatars));
+                  } else {
+                    caregiverService.uploadVideo(PostVrVideo(
+                        title: _textEditingController.text,
+                        sceneInfo: SceneInfo(
+                            resourceId: widget.scene.id,
+                            objectData: ObjectData(
+                                scale: Scale(
+                                  x: 0,
+                                  y: 0,
+                                  z: 0,
+                                ),
+                                position: Scale(
+                                  x: 0,
+                                  y: 0,
+                                  z: 0,
+                                ),
+                                rotation: Rotation(w: 0, x: 0, y: 0, z: 0))),
+                        avatarsInfo: _avatars));
+                  }
                   if (caregiverService.isPost) {
                     Navigator.push(
                         context,
