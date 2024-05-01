@@ -80,7 +80,7 @@ class CaregiverService extends ChangeNotifier {
       );
       if (response.statusCode == 200) {
         user = UserInfo.fromJson(response.data);
-        if (user.name == "sample_giver") {
+        if (user.name == "test_giver") {
           isSampleLogin = true;
         }
         isRecipientExist = true;
@@ -164,7 +164,7 @@ class CaregiverService extends ChangeNotifier {
           }
 
           if (!vrDirectory.existsSync()) {
-            vrDirectory.createSync();
+            vrDirectory.createSync(recursive: true);
           }
 
           if (vrResources[i].storageUrls != null) {
@@ -172,8 +172,8 @@ class CaregiverService extends ChangeNotifier {
                 in vrResources[i].storageUrls!.where((url) => url != null)) {
               final response = await http.get(Uri.parse(url!));
               if (response.statusCode == 200) {
-                File file =
-                    File(path.join(vrDirectory.path, path.basename(url)));
+                File file = File(path.join(
+                    vrDirectory.path, path.basename(url).substring(0, 9)));
                 await file.writeAsBytes(response.bodyBytes);
               } else {
                 print('Failed to download file from $url');
@@ -201,11 +201,9 @@ class CaregiverService extends ChangeNotifier {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
     String? token = sharedPreferences.getString("access_token");
-    Map<String, dynamic> data = {"key": "dnrnlwjdghkdlxld"};
     try {
       Response response = await Dio().get(
-        "${baseUrl}/sample/vr-resource",
-        data: data,
+        "${baseUrl}/sample/vr-resource?key=dnrnlwjdghkdlxld",
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
@@ -222,10 +220,9 @@ class CaregiverService extends ChangeNotifier {
         for (int i = 0; i < vrSampleResources.length; i++) {
           String folderName = 'sample/${vrSampleResources[i].id}';
           Directory vrDirectory = Directory('${directory.path}/$folderName');
-
           if (!vrDirectory.existsSync()) {
-            vrDirectory.createSync();
-          }
+            vrDirectory.createSync(recursive: true);
+          } else {}
 
           if (vrSampleResources[i].storageUrls != null) {
             for (var url in vrSampleResources[i]
@@ -233,14 +230,14 @@ class CaregiverService extends ChangeNotifier {
                 .where((url) => url != null)) {
               final response = await http.get(Uri.parse(url!));
               if (response.statusCode == 200) {
-                File file =
-                    File(path.join(vrDirectory.path, path.basename(url)));
+                File file = File(path.join(
+                    vrDirectory.path, path.basename(url).substring(0, 9)));
                 await file.writeAsBytes(response.bodyBytes);
               } else {
                 print('Failed to download file from $url');
               }
             }
-          }
+          } else {}
         }
       } else if (response.statusCode == 401) {
         print("ACCESS_TOKEN 만료");

@@ -154,8 +154,8 @@ class VrCard extends StatelessWidget {
                     in resource.storageUrls!.where((url) => url != null)) {
                   final response = await http.get(Uri.parse(url!));
                   if (response.statusCode == 200) {
-                    File file = File(
-                        path.join(resourceDirectory.path, path.basename(url)));
+                    File file = File(path.join(resourceDirectory.path,
+                        path.basename(url).substring(0, 9)));
                     await file.writeAsBytes(response.bodyBytes);
                   } else {
                     print('Failed to download file from $url');

@@ -69,7 +69,7 @@ class CarerecipientService extends ChangeNotifier {
         print('GET 요청 성공');
         isGiverExist = true;
         user = UserInfo.fromJson(response.data);
-        if (user.name == "sample_recipient") {
+        if (user.name == "test_recipient") {
           isSampleLogin = true;
         } else {
           isSampleLogin = false;
@@ -190,7 +190,7 @@ class CarerecipientService extends ChangeNotifier {
     String? token = sharedPreferences.getString("access_token");
     try {
       Response response = await Dio().get(
-        "${baseUrl}/sample/vr-video",
+        "${baseUrl}/sample/vr-video?key=dnrnlwjdghkdlxld",
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
