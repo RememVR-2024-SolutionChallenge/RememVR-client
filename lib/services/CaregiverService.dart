@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
@@ -15,6 +16,7 @@ import 'package:remember_me/model/VrSampleModel.dart';
 import 'package:remember_me/services/TokenService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart' as path;
 
 class CaregiverService extends ChangeNotifier {
   UserInfo user = UserInfo();
@@ -219,8 +221,20 @@ class CaregiverService extends ChangeNotifier {
             vrDirectory.createSync();
           }
 
-          File file = File('${vrDirectory.path}/data.json');
-          file.writeAsStringSync(json.encode(vrSampleResources[i]));
+          if (vrSampleResources[i].storageUrls != null) {
+            for (var url in vrSampleResources[i]
+                .storageUrls!
+                .where((url) => url != null)) {
+              final response = await http.get(Uri.parse(url!));
+              if (response.statusCode == 200) {
+                File file =
+                    File(path.join(vrDirectory.path, path.basename(url)));
+                await file.writeAsBytes(response.bodyBytes);
+              } else {
+                print('Failed to download file from $url');
+              }
+            }
+          }
         }
       } else if (response.statusCode == 401) {
         print("ACCESS_TOKEN 만료");

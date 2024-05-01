@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:remember_me/etc/url.dart';
 import 'package:remember_me/pages/auth/LoginPage.dart';
@@ -30,6 +31,9 @@ class _StartPageWidgetState extends State<StartPageWidget> {
   }
 
   void _checkLoginStatus() async {
+    final directory = await getApplicationDocumentsDirectory();
+    String path = directory.path;
+    print(path);
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     accessToken = sharedPreferences.getString("access_token");
     refreshToken = sharedPreferences.getString("refresh_token");
