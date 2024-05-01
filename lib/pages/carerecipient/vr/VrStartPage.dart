@@ -61,7 +61,7 @@ class _VrStartPageWidgetState extends State<VrStartPageWidget> {
                             ? VrStartPageWidget(
                                 type: "Continue",
                                 destination: VrExperiencePageWidget())
-                            : VrExperiencePageWidget()));
+                            : VrSelectPageWidget()));
               },
             ),
             GestureDetector(

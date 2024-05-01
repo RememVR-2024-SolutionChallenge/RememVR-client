@@ -33,8 +33,8 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
   String _uid = "";
   void initState() {
     super.initState();
-    _loadCreatedResources();
     _aiServerHealthCheck();
+    _loadCreatedResources();
   }
 
   Future<void> _loadCreatedResources() async {
@@ -182,7 +182,7 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
                       )),
                 ),
                 _createdAvatars.isEmpty
-                    ? Text("There is no avatar created.",
+                    ? Text("Loading avatar",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,

@@ -175,6 +175,7 @@ class CaregiverService extends ChangeNotifier {
                 File file = File(path.join(
                     vrDirectory.path, path.basename(url).substring(0, 9)));
                 await file.writeAsBytes(response.bodyBytes);
+                print(file.path);
               } else {
                 print('Failed to download file from $url');
               }
@@ -233,6 +234,7 @@ class CaregiverService extends ChangeNotifier {
                 File file = File(path.join(
                     vrDirectory.path, path.basename(url).substring(0, 9)));
                 await file.writeAsBytes(response.bodyBytes);
+                print(file.path);
               } else {
                 print('Failed to download file from $url');
               }
