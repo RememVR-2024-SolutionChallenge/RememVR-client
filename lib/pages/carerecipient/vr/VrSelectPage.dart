@@ -197,6 +197,7 @@ class VrCard extends StatelessWidget {
                 builder: (BuildContext context) {
                   return Stack(children: [
                     AlertDialog(
+                      //디렉토리를 생성하는 방식을 함수로 빼고, 삭제하는 로직을 함수로 만들어서 비교 + 둘다 똑같이 만들어지고 삭제되는지 확인
                       contentPadding: EdgeInsets.all(10.0),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0)),
