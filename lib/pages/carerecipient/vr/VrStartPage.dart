@@ -43,7 +43,7 @@ class _VrStartPageWidgetState extends State<VrStartPageWidget> {
                 child: Text(
                     textAlign: TextAlign.center,
                     widget.type == "Start"
-                        ? "Hi, Anna Waslon.\nWelcome back to \nRemember Me.n\nClick the below ‘Start’ \nbutton to see your \nbeloved ones."
+                        ? "Hi, Anna Waslon.\nWelcome back to \nRememVR.n\nClick the below ‘Start’ \nbutton to see your \nbeloved ones."
                         : "Please choose\nVR experience\nfrom your \ngenerated list.",
                     style: TextStyle(
                       color: Colors.white,

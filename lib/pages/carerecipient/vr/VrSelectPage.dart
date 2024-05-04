@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:remember_me/pages/carerecipient/vr/VrExperiencePage.dart';
+import 'package:remember_me/pages/carerecipient/vr/VrdownloadPage.dart';
 
 class VrSelectPageWidget extends StatefulWidget {
   const VrSelectPageWidget({super.key});
@@ -10,12 +11,24 @@ class VrSelectPageWidget extends StatefulWidget {
 
 class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
   bool isEmpty = false;
+
   List<Widget> widgetsInQueue = [
-    VrCard(name: "Jinwoo Choi", space: "Korea Univ"),
-    VrCard(name: "GuiJung Woo", space: "London Bridge"),
-    VrCard(name: "Seoyeon Byeon", space: "Time Square"),
-    VrCard(name: "Seoyoung Kim", space: "Home"),
+    VrCard(
+        image: "assets/images/korea_univ.jpeg",
+        name: "GuiJung Woo, JinWoo Choi,\n Seoyeon Byeon, Seoyoung Kim",
+        space: "Korea Univ"),
+    VrCard(
+        image: "assets/images/london_bridge.jpeg",
+        name: "GuiJung Woo",
+        space: "London Bridge"),
+    VrCard(
+        image: "assets/images/time_square.jpg",
+        name: "Seoyeon Byeon",
+        space: "Time Square"),
+    VrCard(
+        image: "assets/images/home.jpeg", name: "Seoyoung Kim", space: "Home"),
   ];
+
   @override
   void initState() {
     super.initState();
@@ -62,9 +75,11 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
 class VrCard extends StatelessWidget {
   const VrCard({
     super.key,
+    required this.image,
     required this.name,
     required this.space,
   });
+  final String image;
   final String name;
   final String space;
   @override
@@ -99,7 +114,7 @@ class VrCard extends StatelessWidget {
                           Container(
                               padding: EdgeInsets.only(left: 30, right: 30),
                               child: Text(
-                                  "The VR video viewing will last for 15 minutes. \n\nPlease follow the instructions provided by Brainy to wear your VR device. \n\nWhen the video viewing time is complete, a termination notification message will appear on the UNITY screen.",
+                                  "Not all models required for VR images have been downloaded yet. You can proceed with additional downloads and watch VR videos.",
                                   style: TextStyle(
                                     fontSize: 15,
                                     color: Color(0xff212C77),
@@ -136,7 +151,9 @@ class VrCard extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          VrExperiencePageWidget()));
+                                          VrDownloadPageWidget(
+                                            isVideo: false,
+                                          )));
                             },
                           ),
                         ],
@@ -178,7 +195,7 @@ class VrCard extends StatelessWidget {
                 Container(
                     margin: EdgeInsets.fromLTRB(26, 28, 26, 28),
                     child: Image.asset(
-                      "assets/images/play 1.png",
+                      image,
                       width: 78,
                       height: 85,
                     ),
@@ -205,7 +222,7 @@ class VrCard extends StatelessWidget {
                         Text(
                           name,
                           style: TextStyle(
-                              fontSize: 20,
+                              fontSize: name.length > 20 ? 10 : 20,
                               color: Colors.white,
                               fontWeight: FontWeight.w300),
                         )
