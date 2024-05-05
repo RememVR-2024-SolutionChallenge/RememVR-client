@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:remember_me/pages/auth/SelectUserTypePage.dart';
 import 'package:remember_me/pages/auth/SendMailPage.dart';
+import 'package:remember_me/pages/caregiver/CaregiverNavigatonPage.dart';
 
 class VrCompletionPageWidget extends StatefulWidget {
   const VrCompletionPageWidget({super.key});
@@ -43,10 +44,7 @@ class _VrCompletionPageWidgetState extends State<VrCompletionPageWidget> {
           ),
           GestureDetector(
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => SendMailPageWidget()));
+                Navigator.pop(context);
               },
               child: Container(
                   margin: EdgeInsets.only(top: 15),
