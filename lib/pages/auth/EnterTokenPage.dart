@@ -33,11 +33,11 @@ class _EnterTokenPageWidgetState extends State<EnterTokenPageWidget> {
     super.initState();
   }
 
-  Future<void> removeResourcesExceptSample(bool isGiver) async {
+  Future<void> removeResourcesAndVideos(bool isGiver) async {
     String _uid = "";
     List<String> _uids = [];
     final directory = await getApplicationDocumentsDirectory();
-    final sampleDir = '${directory.path}/sample';
+    final sampleDir = '${directory.path}';
     if (isGiver) {
       await Provider.of<CaregiverService>(context, listen: false).getUserInfo();
       _uid = Provider.of<CaregiverService>(context, listen: false).user.name!;
@@ -145,14 +145,14 @@ class _EnterTokenPageWidgetState extends State<EnterTokenPageWidget> {
                       });
 
                       if (_isGiver) {
-                        removeResourcesExceptSample(true);
+                        removeResourcesAndVideos(true);
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
                                     CaregiverNavigationWidget()));
                       } else {
-                        removeResourcesExceptSample(false);
+                        removeResourcesAndVideos(true);
                         Navigator.push(
                             context,
                             MaterialPageRoute(

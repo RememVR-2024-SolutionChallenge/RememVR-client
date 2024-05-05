@@ -18,9 +18,8 @@ class _SettingPageWidgetState extends State<SettingPageWidget> {
   @override
   void initState() {
     super.initState();
-    print("k");
     printAllFilesInSubfolders(
-        '/data/user/0/com.example.remember_me/app_flutter/sample');
+        '/data/user/0/com.example.remember_me/app_flutter');
   }
 
   @override

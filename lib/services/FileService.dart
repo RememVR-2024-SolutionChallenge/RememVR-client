@@ -36,7 +36,7 @@ Future<void> readAllMetaDataFiles() async {
   try {
     // 앱의 문서 디렉토리를 가져옵니다.
     final Directory appDir = await getApplicationDocumentsDirectory();
-    final String sampleDirPath = '${appDir.path}/sample';
+    final String sampleDirPath = '${appDir.path}';
     final Directory sampleDir = Directory(sampleDirPath);
 
     // sample 디렉토리의 모든 하위 폴더를 가져옵니다.
@@ -71,7 +71,7 @@ Future<void> readMetaData() async {
 
     // `meta-data.json` 파일로의 전체 경로를 작성합니다.
     final String filePath =
-        '${appDir.path}/sample/2bb7e001f1871e3ee22e705cd8223b3124ce7829275b42e6cdeb3260be961c95/meta-data.json';
+        '${appDir.path}/2bb7e001f1871e3ee22e705cd8223b3124ce7829275b42e6cdeb3260be961c95/meta-data.json';
 
     // 파일 내용을 문자열로 읽어옵니다.
     final File file = File(filePath);

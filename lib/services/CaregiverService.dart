@@ -159,7 +159,7 @@ class CaregiverService extends ChangeNotifier {
             folderName = '${uid}/vr${vrResources[i].id}';
             vrDirectory = Directory('${directory.path}/$folderName');
           } else {
-            folderName = 'general/vr${vrResources[i].id}';
+            folderName = 'vr${vrResources[i].id}';
             vrDirectory = Directory('${directory.path}/$folderName');
           }
 
@@ -173,7 +173,10 @@ class CaregiverService extends ChangeNotifier {
               final response = await http.get(Uri.parse(url!));
               if (response.statusCode == 200) {
                 File file = File(path.join(
-                    vrDirectory.path, path.basename(url).substring(0, 9)));
+                    vrDirectory.path,
+                    vrResources[i].type == "avatar"
+                        ? "model.fbx"
+                        : "scene.ply"));
                 await file.writeAsBytes(response.bodyBytes);
                 print(file.path);
               } else {
@@ -219,7 +222,7 @@ class CaregiverService extends ChangeNotifier {
             .map((item) => VrResources.fromJson(item))
             .toList();
         for (int i = 0; i < vrSampleResources.length; i++) {
-          String folderName = 'sample/${vrSampleResources[i].id}';
+          String folderName = '${vrSampleResources[i].id}';
           Directory vrDirectory = Directory('${directory.path}/$folderName');
           if (!vrDirectory.existsSync()) {
             vrDirectory.createSync(recursive: true);
@@ -232,7 +235,10 @@ class CaregiverService extends ChangeNotifier {
               final response = await http.get(Uri.parse(url!));
               if (response.statusCode == 200) {
                 File file = File(path.join(
-                    vrDirectory.path, path.basename(url).substring(0, 9)));
+                    vrDirectory.path,
+                    vrSampleResources[i].type == "avatar"
+                        ? "model.fbx"
+                        : "scene.ply"));
                 await file.writeAsBytes(response.bodyBytes);
                 print(file.path);
               } else {
