@@ -159,7 +159,7 @@ class CaregiverService extends ChangeNotifier {
             folderName = '${uid}/vr${vrResources[i].id}';
             vrDirectory = Directory('${directory.path}/$folderName');
           } else {
-            folderName = 'sample/vr${vrResources[i].id}';
+            folderName = 'general/vr${vrResources[i].id}';
             vrDirectory = Directory('${directory.path}/$folderName');
           }
 

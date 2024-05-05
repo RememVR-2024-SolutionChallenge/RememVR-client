@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -155,6 +156,8 @@ class CarerecipientService extends ChangeNotifier {
   }
 
   Future<void> getAndSaveAllVrVideos() async {
+    final directory = await getApplicationDocumentsDirectory();
+
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
     String? token = sharedPreferences.getString("access_token");
@@ -173,6 +176,14 @@ class CarerecipientService extends ChangeNotifier {
         print('GET 요청 성공');
         for (Map<String, dynamic> item in response.data) {
           GetVrVideo _video = GetVrVideo.fromJson(item);
+          String folderName = 'general/${item['id']}';
+          Directory videoDirectory = Directory('${directory.path}/$folderName');
+          if (!videoDirectory.existsSync()) {
+            videoDirectory.createSync(recursive: true);
+          } else {}
+          String fileName = 'meta-data.json';
+          File file = File(path.join(videoDirectory.path, fileName));
+          await file.writeAsString(jsonEncode(item), flush: true);
           vrVideos.add(_video);
         }
       } else if (response.statusCode == 401) {
@@ -205,7 +216,6 @@ class CarerecipientService extends ChangeNotifier {
       );
       if (response.statusCode == 200) {
         vrSampleVideos.clear();
-        print('hello');
         print('GET 요청 성공');
         for (Map<String, dynamic> item in response.data) {
           GetVrVideo _video = GetVrVideo.fromJson(item);
@@ -216,8 +226,7 @@ class CarerecipientService extends ChangeNotifier {
           } else {}
           String fileName = 'meta-data.json';
           File file = File(path.join(videoDirectory.path, fileName));
-          await file.writeAsString(item['id'], flush: true);
-          print(file.path);
+          await file.writeAsString(jsonEncode(item), flush: true);
 
           vrSampleVideos.add(_video);
         }

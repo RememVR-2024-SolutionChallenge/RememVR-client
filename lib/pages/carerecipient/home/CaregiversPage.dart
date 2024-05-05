@@ -20,8 +20,6 @@ class _CaregiversPageWidgetState extends State<CaregiversPageWidget> {
   @override
   void initState() {
     super.initState();
-    printAllFilesInSubfolders(
-        "/data/user/0/com.example.remember_me/app_flutter/sample");
   }
 
   @override

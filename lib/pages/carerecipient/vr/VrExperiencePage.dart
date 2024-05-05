@@ -56,8 +56,8 @@ class _VrExperiencePageWidgetState extends State<VrExperiencePageWidget> {
         isPut = true;
       });
     });
-    printAllFilesInSubfolders(
-        "/data/user/0/com.example.remember_me/app_flutter/sample");
+    readAllMetaDataFiles();
+    // readMetaData();
   }
 
   @override
