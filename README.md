@@ -32,31 +32,31 @@ Care-givers can **make VR scenes** and care-recipients can **experience VR scene
 
 <img src="https://github.com/RememVR-2024-SolutionChallenge/.github/blob/main/profile/assets/care_main.png?raw=true" style="width: 80%;">
 
-#### 👨‍⚕️Care-giver
+### 👨‍⚕️Care-giver
 
-##### (1) Creating VR Avatar
+#### (1) Creating VR Avatar
 RememVR **generates avatars** representing the patient's cherished individuals. These avatars, combined with place VR scene, offer the patient an immersive recollection of memories. RememVR assists in safeguarding the continuity of the patient's memories. Caregivers can upload a video featuring the person whom they like to transform into an avatar.
 
 <img src="https://github.com/RememVR-2024-SolutionChallenge/.github/blob/main/profile/assets/caregiver%20-%201.png?raw=true" style="width: 80%;">
 
-##### (2) Creating VR Scene
+#### (2) Creating VR Scene
 RememVR creates VR experiences encapsulating the **places intertwined with a patient's memories**. We all live with our unique sense of places, as visiting specific locations can evoke memories from particular times. Places in VR will make them feel as if they are physically present in that space. Care-givers can **upload videos that showcase distinctive features of the location.** 
 
 <img src="https://github.com/RememVR-2024-SolutionChallenge/.github/blob/main/profile/assets/caregiver%20-%202.png?raw=true" style="width: 80%;">
 
-##### (3) Creating VR Scene (Avatar + Place)
+#### (3) Creating VR Scene (Avatar + Place)
 Caregivers can select **one or several VR avatars, and one place VR scene** to build a completed VR video. After VR video is generated, care-recipient can find out that videos in his/her VR experience list.
 
 <img src="https://github.com/RememVR-2024-SolutionChallenge/.github/blob/main/profile/assets/caregiver%20-%203.png?raw=true" style="width: 80%;">
 
-#### 🤝Care-recipient
+### 🤝Care-recipient
 
-##### (1) VR Experience
+#### (1) VR Experience
 Care-recipients can **participate in VR video.** Our character ‘Brainy’ helps care recipient to follow the steps for VR experience which is a part of the **reminiscence therapy.**
 
 <img src="https://github.com/RememVR-2024-SolutionChallenge/.github/blob/main/profile/assets/brainy%20w4.png?raw=true" style="width: 80%;">
 
-##### (2) Badge Tracker
+#### (2) Badge Tracker
 After the care-recipient completes the VR experience, badges are awarded as part of **gamification.** These badges can be viewed not only on the care-recipient's home-page but also on the care-giver's home. There are a total of three badge designs, and one of them is randomly assigned.
 
 <img src="https://github.com/RememVR-2024-SolutionChallenge/.github/blob/main/profile/assets/care%20recipient%20-%202.png?raw=true" style="width: 80%;">
