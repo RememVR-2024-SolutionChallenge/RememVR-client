@@ -61,8 +61,6 @@ After the care-recipient completes the VR experience, badges are awarded as part
 
 <img src="https://github.com/RememVR-2024-SolutionChallenge/.github/blob/main/profile/assets/care%20recipient%20-%202.png?raw=true" style="width: 80%;">
 
-## 📋Architecture
-<img src="https://github.com/RememberMe-2024-SolutionChallenge/RememVR-client/assets/101000358/5fc52680-0759-47b9-9a0a-b46761ea27cc" width='70%'>
 
 ## 🌌 VR Management
 ### 🎥 How do we make VR videos?
@@ -78,6 +76,9 @@ After the image generation process, the care-recipient can **select and view the
 - The storage path of the selected VR models is **accessed and edited on the vr-viewer page**.
 - Metadata of all generated VR images is stored in *{directoryPath}/sample/vr-video-id/meta-data.json*. The image selected by the care-recipient is viewed on the vr-viewer page.
 - The corresponding web page may **access the metadata storage path** of the selected image and the user can view the image on the vr-viewer page.
+
+## 📋Architecture
+<img src="https://github.com/RememberMe-2024-SolutionChallenge/RememVR-client/assets/101000358/5fc52680-0759-47b9-9a0a-b46761ea27cc" width='70%'>
 
 ## 👩‍💻Tool & Packages
 - Design : [Figma](https://www.figma.com/)
