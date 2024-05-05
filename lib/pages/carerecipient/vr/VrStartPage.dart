@@ -5,10 +5,9 @@ import 'package:remember_me/pages/carerecipient/vr/VrExperiencePage.dart';
 import 'package:remember_me/pages/carerecipient/vr/VrSelectPage.dart';
 
 class VrStartPageWidget extends StatefulWidget {
-  const VrStartPageWidget(
-      {super.key, required this.type, required this.destination});
-  final String type;
-  final Widget destination;
+  const VrStartPageWidget({
+    super.key,
+  });
   @override
   _VrStartPageWidgetState createState() => _VrStartPageWidgetState();
 }
@@ -43,25 +42,19 @@ class _VrStartPageWidgetState extends State<VrStartPageWidget> {
             Container(
                 child: Text(
                     textAlign: TextAlign.center,
-                    widget.type == "Start"
-                        ? "Hi, Anna Waslon.\nWelcome back to \nRememVR.n\nClick the below ‘Start’ \nbutton to see your \nbeloved ones."
-                        : "Please choose\nVR experience\nfrom your \ngenerated list.",
+                    "Please choose\nVR experience\nfrom your \ngenerated list.",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 30,
                       fontWeight: FontWeight.w700,
                     ))),
             SimpleButton(
-              type: widget.type,
+              type: "start",
               func: () {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => widget.type == "Start"
-                            ? VrStartPageWidget(
-                                type: "Continue",
-                                destination: VrExperiencePageWidget())
-                            : VrSelectPageWidget()));
+                        builder: (context) => VrSelectPageWidget()));
               },
             ),
             GestureDetector(

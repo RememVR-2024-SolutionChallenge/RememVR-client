@@ -11,6 +11,7 @@ import 'package:remember_me/pages/caregiver/vr/TempVrEditPage.dart';
 import 'package:remember_me/pages/caregiver/vr/VrPlaceAlertPage.dart';
 import 'package:remember_me/services/AuthService.dart';
 import 'package:remember_me/services/CaregiverService.dart';
+import 'package:remember_me/services/FileService.dart';
 import 'package:remember_me/services/ServerService.dart';
 
 class VrSelectPageWidget extends StatefulWidget {
@@ -483,6 +484,7 @@ class CreatedPlaceBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         width: MediaQuery.of(context).size.width * 0.3,
+        height: MediaQuery.of(context).size.height * 0.1,
         margin: EdgeInsets.only(right: 15, left: 15),
         child: Column(
           children: [

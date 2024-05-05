@@ -10,7 +10,8 @@ import 'package:remember_me/pages/carerecipient/vr/VrSelectPage.dart';
 import 'package:remember_me/services/CarerecipientService.dart';
 
 class VrExperiencePageWidget extends StatefulWidget {
-  const VrExperiencePageWidget({super.key});
+  const VrExperiencePageWidget({super.key, required this.videoId});
+  final String videoId;
   @override
   _VrExperiencePageWidgetState createState() => _VrExperiencePageWidgetState();
 }
@@ -19,12 +20,11 @@ class _VrExperiencePageWidgetState extends State<VrExperiencePageWidget> {
   @override
   bool isPut = false;
   bool isEnd = false;
-  List<GetVrVideo> _vrVideos = [];
 
   Future<void> _launchURL() async {
     try {
       await launchUrl(
-        Uri.parse(recipientVrUrl),
+        Uri.parse(recipientVrUrl + '?id=${widget.videoId}'),
         customTabsOptions: CustomTabsOptions(
           colorSchemes: CustomTabsColorSchemes.defaults(),
           shareState: CustomTabsShareState.on,

@@ -4,6 +4,7 @@ import 'package:remember_me/model/BadgeModel.dart';
 import 'package:remember_me/pages/carerecipient/badge/BadgeCalendarPage.dart';
 import 'package:remember_me/services/AuthService.dart';
 import 'package:remember_me/services/CaregiverService.dart';
+import 'package:remember_me/services/FileService.dart';
 
 class HomeGiverMainPageWidget extends StatefulWidget {
   const HomeGiverMainPageWidget({super.key});

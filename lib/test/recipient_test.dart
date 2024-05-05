@@ -62,7 +62,6 @@ void main() {
           create: (_) => MockCarerecipientService(),
           child: VrCard(
             uid: 'uid',
-            id: 'id',
             video: GetVrVideo(
               title: 'title',
               avatars: [

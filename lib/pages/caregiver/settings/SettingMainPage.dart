@@ -6,6 +6,7 @@ import 'package:remember_me/pages/caregiver/settings/SettingHelpAndSupportsPage.
 import 'package:remember_me/pages/caregiver/settings/SettingNotificationPrefPage.dart';
 import 'package:remember_me/pages/caregiver/settings/SettingPrivacyPolicyPage.dart';
 import 'package:remember_me/pages/caregiver/settings/SettingTermOfServicePage.dart';
+import 'package:remember_me/services/FileService.dart';
 
 class SettingPageWidget extends StatefulWidget {
   const SettingPageWidget({super.key});
@@ -17,6 +18,9 @@ class _SettingPageWidgetState extends State<SettingPageWidget> {
   @override
   void initState() {
     super.initState();
+    print("k");
+    printAllFilesInSubfolders(
+        '/data/user/0/com.example.remember_me/app_flutter/sample');
   }
 
   @override

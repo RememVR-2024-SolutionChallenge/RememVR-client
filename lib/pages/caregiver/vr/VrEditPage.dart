@@ -30,7 +30,8 @@ class _VrEditPageWidgetState extends State<VrEditPageWidget> {
   Future<void> _launchURL() async {
     try {
       await launchUrl(
-        Uri.parse(giverVrUrl),
+        Uri.parse(giverVrUrl +
+            '?scene-id=${widget.scene.id}&avatar-id=${widget.avatars.map((avatar) => avatar.id).join(',')}'),
         customTabsOptions: CustomTabsOptions(
           colorSchemes: CustomTabsColorSchemes.defaults(),
           shareState: CustomTabsShareState.on,

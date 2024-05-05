@@ -9,6 +9,7 @@ import 'package:remember_me/pages/carerecipient/vr/VrExperiencePage.dart';
 import 'package:remember_me/services/CarerecipientService.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as path;
+import 'package:remember_me/services/FileService.dart';
 
 class VrSelectPageWidget extends StatefulWidget {
   const VrSelectPageWidget({super.key});
@@ -20,7 +21,7 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
   List<GetVrVideo> _vrVideos = [];
   bool isEmpty = false;
   List<String?> _giverNames = [];
-  bool _isSampleLogin = false;
+  bool _isSampleLogin = true;
 
   @override
   void initState() {
@@ -31,6 +32,8 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
     } else {
       _loadVrVideos();
     }
+    printAllFilesInSubfolders(
+        '/data/user/0/com.example.remember_me/app_flutter/sample');
   }
 
   Future _getGivers() async {
@@ -108,8 +111,9 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
                           itemCount: _vrVideos.length,
                           itemBuilder: (context, index) {
                             return VrCard(
-                              uid: _giverNames[0],
-                              id: "testId", //하나의 VrVideos의 id로 바뀌어야 함.
+                              // uid: _giverNames[0],
+                              uid: 'aa',
+                              //하나의 VrVideos의 id로 바뀌어야 함.
                               video: _vrVideos[index],
                             );
                           },
@@ -124,11 +128,9 @@ class VrCard extends StatelessWidget {
   const VrCard({
     super.key,
     required this.uid,
-    required this.id,
     required this.video,
   });
   final String? uid;
-  final String? id;
   final GetVrVideo video;
 
   @override
@@ -258,7 +260,9 @@ class VrCard extends StatelessWidget {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            VrExperiencePageWidget()));
+                                            VrExperiencePageWidget(
+                                              videoId: video.id!,
+                                            )));
                               },
                             ),
                           ],
@@ -325,9 +329,14 @@ class VrCard extends StatelessWidget {
                                 fontWeight: FontWeight.w700),
                           ),
                           Text(
-                            "${video.avatars![0].title!}, ${video.avatars!.length != 1 ? video.avatars![1].title! : ""}",
+                            video.avatars!.length == 1
+                                ? video.avatars![0].title!
+                                : video.avatars![0].title! +
+                                    ", " +
+                                    video.avatars![1].title! +
+                                    "...",
                             style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 15,
                                 color: Colors.white,
                                 fontWeight: FontWeight.w300),
                           )

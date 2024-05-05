@@ -218,13 +218,8 @@ class _HomeRecipientMainPageWidgetState
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => VrStartPageWidget(
-                                            type: "Start",
-                                            destination: VrStartPageWidget(
-                                                type: "Continue",
-                                                destination:
-                                                    VrSelectPageWidget()),
-                                          )));
+                                      builder: (context) =>
+                                          VrStartPageWidget()));
                             },
                             child: Container(
                                 decoration: BoxDecoration(

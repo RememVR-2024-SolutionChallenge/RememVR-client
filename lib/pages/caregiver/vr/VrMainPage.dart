@@ -76,7 +76,7 @@ class _VrMainPageWidgetState extends State<VrMainPageWidget> {
                               : ListView.builder(
                                   shrinkWrap: true,
                                   scrollDirection: Axis.horizontal,
-                                  itemCount: 3,
+                                  itemCount: _vrVideos.length,
                                   itemBuilder: (context, index) {
                                     return Container(
                                         margin: EdgeInsets.only(

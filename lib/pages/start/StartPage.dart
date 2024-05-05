@@ -31,9 +31,6 @@ class _StartPageWidgetState extends State<StartPageWidget> {
   }
 
   void _checkLoginStatus() async {
-    final directory = await getApplicationDocumentsDirectory();
-    String path = directory.path;
-    print(path);
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     accessToken = sharedPreferences.getString("access_token");
     refreshToken = sharedPreferences.getString("refresh_token");
@@ -98,7 +95,6 @@ class _StartPageWidgetState extends State<StartPageWidget> {
             _isRefreshed =
                 Provider.of<TokenService>(context, listen: false).isRefreshed;
           });
-          print(_isRefreshed);
           return _isRefreshed ? true : false;
         } else {
           return false;
