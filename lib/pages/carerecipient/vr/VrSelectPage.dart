@@ -32,8 +32,8 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
     } else {
       _loadVrVideos();
     }
-    printAllFilesInSubfolders(
-        '/data/user/0/com.example.remember_me/app_flutter/sample');
+    // printAllFilesInSubfolders(
+    //     '/data/user/0/com.example.remember_me/app_flutter/sample');
   }
 
   Future _getGivers() async {
@@ -57,7 +57,7 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
 
   Future<void> _loadVrVideos() async {
     await Provider.of<CarerecipientService>(context, listen: false)
-        .getAllVrVideos();
+        .getAndSaveAllVrVideos();
     setState(() {
       _vrVideos =
           Provider.of<CarerecipientService>(context, listen: false).vrVideos;
@@ -66,7 +66,7 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
 
   Future<void> _loadSampleVrVideos() async {
     await Provider.of<CarerecipientService>(context, listen: false)
-        .getSampleVrVideos();
+        .getAndSaveSampleVrVideos();
     setState(() {
       _vrVideos = Provider.of<CarerecipientService>(context, listen: false)
           .vrSampleVideos;

@@ -34,7 +34,7 @@ class _VrMainPageWidgetState extends State<VrMainPageWidget> {
 
   Future<void> _loadVrVideos() async {
     await Provider.of<CarerecipientService>(context, listen: false)
-        .getAllVrVideos();
+        .getAndSaveAllVrVideos();
     setState(() {
       _vrVideos =
           Provider.of<CarerecipientService>(context, listen: false).vrVideos;

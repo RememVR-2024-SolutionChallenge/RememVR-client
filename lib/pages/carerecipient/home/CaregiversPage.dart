@@ -6,6 +6,7 @@ import 'package:remember_me/pages/caregiver/settings/SettingAboutPage.dart';
 import 'package:remember_me/pages/caregiver/vr/VrQueuePage.dart';
 import 'package:remember_me/pages/caregiver/settings/SettingMainPage.dart';
 import 'package:remember_me/services/CarerecipientService.dart';
+import 'package:remember_me/services/FileService.dart';
 
 class CaregiversPageWidget extends StatefulWidget {
   const CaregiversPageWidget({super.key, required this.givers});
@@ -19,6 +20,8 @@ class _CaregiversPageWidgetState extends State<CaregiversPageWidget> {
   @override
   void initState() {
     super.initState();
+    printAllFilesInSubfolders(
+        "/data/user/0/com.example.remember_me/app_flutter/sample");
   }
 
   @override

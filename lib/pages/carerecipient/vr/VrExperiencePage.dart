@@ -8,6 +8,7 @@ import 'package:remember_me/pages/carerecipient/home/HomeRecipientMainPage.dart'
 import 'package:remember_me/pages/carerecipient/vr/VrEndPage.dart';
 import 'package:remember_me/pages/carerecipient/vr/VrSelectPage.dart';
 import 'package:remember_me/services/CarerecipientService.dart';
+import 'package:remember_me/services/FileService.dart';
 
 class VrExperiencePageWidget extends StatefulWidget {
   const VrExperiencePageWidget({super.key, required this.videoId});
@@ -55,6 +56,8 @@ class _VrExperiencePageWidgetState extends State<VrExperiencePageWidget> {
         isPut = true;
       });
     });
+    printAllFilesInSubfolders(
+        "/data/user/0/com.example.remember_me/app_flutter/sample");
   }
 
   @override

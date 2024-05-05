@@ -589,6 +589,7 @@ class CaregiverService extends ChangeNotifier {
 
       if (response.statusCode == 201) {
         print('POST 성공');
+        print('kd');
         isPost = true;
       } else {
         print('POST 실패');

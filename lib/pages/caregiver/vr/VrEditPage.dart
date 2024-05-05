@@ -251,14 +251,10 @@ class _VrEditPageWidgetState extends State<VrEditPageWidget> {
                                 rotation: Rotation(w: 0, x: 0, y: 0, z: 0))),
                         avatarsInfo: _avatars));
                   }
-                  if (caregiverService.isPost) {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => VrCompletionPageWidget()));
-                  } else {
-                    _postVideoError(context);
-                  }
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => VrCompletionPageWidget()));
                 }),
           ],
         )),
