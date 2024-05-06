@@ -99,7 +99,7 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
               Expanded(
                   child: _vrVideos.isEmpty
                       ? Center(
-                          child: Text("There is no video created.",
+                          child: Text("Loading videos.",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:provider/provider.dart';
@@ -7,8 +9,10 @@ import 'package:remember_me/pages/auth/SetNicknamePage.dart';
 import 'package:remember_me/pages/carerecipient/home/HomeRecipientMainPage.dart';
 import 'package:remember_me/pages/carerecipient/vr/VrEndPage.dart';
 import 'package:remember_me/pages/carerecipient/vr/VrSelectPage.dart';
+import 'package:remember_me/pages/carerecipient/vr/VrTestWebViewPage.dart';
 import 'package:remember_me/services/CarerecipientService.dart';
 import 'package:remember_me/services/FileService.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class VrExperiencePageWidget extends StatefulWidget {
   const VrExperiencePageWidget({super.key, required this.videoId});
@@ -25,7 +29,7 @@ class _VrExperiencePageWidgetState extends State<VrExperiencePageWidget> {
   Future<void> _launchURL() async {
     try {
       await launchUrl(
-        Uri.parse(recipientVrUrl + '?id=${widget.videoId}'),
+        Uri.parse(recipientVrUrl + '?video-id=${widget.videoId}'),
         customTabsOptions: CustomTabsOptions(
           colorSchemes: CustomTabsColorSchemes.defaults(),
           shareState: CustomTabsShareState.on,
@@ -48,7 +52,12 @@ class _VrExperiencePageWidgetState extends State<VrExperiencePageWidget> {
   void initState() {
     super.initState();
     Future.delayed(Duration(seconds: 2), () {
-      _launchURL();
+      // _launchURL();
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  VrTestWebViewPage(video_id: widget.videoId)));
     });
 
     Future.delayed(Duration(seconds: 4), () {

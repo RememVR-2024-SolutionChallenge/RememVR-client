@@ -90,3 +90,14 @@ Future<void> readMetaData() async {
     print('파일 읽기 오류: $e');
   }
 }
+
+Future<String?> readFileAsBase64(String filePath) async {
+  try {
+    File file = File(filePath);
+    List<int> fileBytes = await file.readAsBytes();
+    return base64Encode(fileBytes);
+  } catch (e) {
+    print('Error reading file: $e');
+    return null;
+  }
+}
