@@ -76,9 +76,17 @@ Page resource error:
       ..addJavaScriptChannel(
         'FileRequest',
         onMessageReceived: (JavaScriptMessage message) async {
-          String filePath = message.message;
+          String jsonString = message.message;
+          Map<String, dynamic> msgs = jsonDecode(jsonString);
+          print("==========================");
+          print(jsonString);
+          String filePath = msgs['filePath'];
+          String type = msgs['type'];
+          print(filePath); //filePath 바뀌기 전
+          print(type);
+          filePath = await getPath(filePath);
+          print(filePath); //filePath 바뀐 후
           File requestedFile = File(filePath);
-
           if (await requestedFile.exists()) {
             try {
               String fileContent = await requestedFile.readAsString();
@@ -86,7 +94,7 @@ Page resource error:
               String base64Encoded = base64Encode(utf8.encode(fileContent));
               String uriEncoded = Uri.encodeComponent(base64Encoded);
               // JavaScript에 데이터 전송
-              _controller.runJavaScript('onFileReceived("$uriEncoded")');
+              _controller.runJavaScript('onFileReceived($uriEncoded,$type)');
             } catch (e) {
               print("Error sending file content: $e");
             }
@@ -106,6 +114,11 @@ Page resource error:
     }
 
     _controller = controller;
+  }
+
+  Future<String> getPath(String partialPath) async {
+    final directory = await getApplicationDocumentsDirectory();
+    return '${directory.path}/$partialPath';
   }
 
   Future<File> _retrieveFile(String path) async {
