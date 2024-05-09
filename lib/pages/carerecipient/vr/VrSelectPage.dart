@@ -26,14 +26,7 @@ class _VrSelectPageWidgetState extends State<VrSelectPageWidget> {
   @override
   void initState() {
     super.initState();
-    checkSampleLogin();
-    if (_isSampleLogin) {
-      _loadSampleVrVideos();
-    } else {
-      _loadVrVideos();
-    }
-    // printAllFilesInSubfolders(
-    //     '/data/user/0/com.example.remember_me/app_flutter/sample');
+    _loadSampleVrVideos();
   }
 
   Future _getGivers() async {

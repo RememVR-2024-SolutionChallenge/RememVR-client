@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -76,25 +77,22 @@ Page resource error:
         'FileRequest',
         onMessageReceived: (JavaScriptMessage message) async {
           String filePath = message.message;
-          File requestedFile = await _retrieveFile(filePath);
+          File requestedFile = File(filePath);
 
-          String fileContent = await requestedFile.readAsString();
-          String searchString = ",\"storageUrls\"";
-
-          // 기준 문자열의 위치를 찾기
-          int searchIndex = fileContent.indexOf(searchString);
-
-          // 기준 문자열이 발견되었을 때만 앞부분을 잘라내기
-          String parsedString;
-          if (searchIndex != -1) {
-            parsedString = fileContent.substring(0, searchIndex);
+          if (await requestedFile.exists()) {
+            try {
+              String fileContent = await requestedFile.readAsString();
+              // 데이터를 Base64로 인코딩하고 URI로 인코딩
+              String base64Encoded = base64Encode(utf8.encode(fileContent));
+              String uriEncoded = Uri.encodeComponent(base64Encoded);
+              // JavaScript에 데이터 전송
+              _controller.runJavaScript('onFileReceived("$uriEncoded")');
+            } catch (e) {
+              print("Error sending file content: $e");
+            }
           } else {
-            // 기준 문자열이 없으면 원본 문자열 그대로 반환
-            parsedString = fileContent;
+            print("File does not exist.");
           }
-          print(parsedString);
-          _controller.runJavaScript(
-              'onFileReceived(${Uri.encodeComponent(parsedString)})');
         },
       )
       ..loadRequest(Uri.parse(

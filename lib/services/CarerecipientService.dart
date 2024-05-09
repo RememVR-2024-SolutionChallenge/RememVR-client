@@ -218,13 +218,12 @@ class CarerecipientService extends ChangeNotifier {
     final directory = await getApplicationDocumentsDirectory();
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
-    String? token = sharedPreferences.getString("access_token");
+    // String? token = sharedPreferences.getString("access_token");
     try {
       Response response = await Dio().get(
         "${baseUrl}/sample/vr-video?key=dnrnlwjdghkdlxld",
         options: Options(
           headers: {
-            'Authorization': 'Bearer $token',
             'Content-Type': 'application/json',
           },
         ),
