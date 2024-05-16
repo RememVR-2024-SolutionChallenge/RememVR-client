@@ -175,31 +175,31 @@ class CarerecipientService extends ChangeNotifier {
       if (response.statusCode == 200) {
         vrVideos.clear();
         print('GET 요청 성공');
-        for (Map<String, dynamic> item in response.data) {
-          GetVrVideo _video = GetVrVideo.fromJson(item);
-          String folderName = '${item['id']}';
-          Directory videoDirectory = Directory('${directory.path}/$folderName');
-          if (!videoDirectory.existsSync()) {
-            videoDirectory.createSync(recursive: true);
-          } else {}
-          String fileName = 'meta-data.json';
-          File file = File(path.join(videoDirectory.path, fileName));
-          await file.writeAsString(jsonEncode(item), flush: true);
-          Dio dio = Dio();
-          final String sceneUrl = item['scene']['inVideoPositionFile'];
-          String fileName2 = "${item['scene']['id']}.json";
-          String filePath = "${videoDirectory.path}/${fileName2}";
-          await dio.download(sceneUrl, filePath);
-          final List<dynamic> avatars = item['avatars'];
-          for (final avatar in avatars) {
-            String fileName3 = "${avatar['id']}.json";
-            final String avatarUrl = avatar['inVideoPositionFile'];
-            final String avatarFilePath = "${videoDirectory.path}/${fileName3}";
-            await dio.download(avatarUrl, avatarFilePath);
-          }
-          print('파일이 성공적으로 다운로드되었습니다: $filePath');
-          vrVideos.add(_video);
-        }
+        // for (Map<String, dynamic> item in response.data) {
+        //   GetVrVideo _video = GetVrVideo.fromJson(item);
+        //   String folderName = '${item['id']}';
+        //   Directory videoDirectory = Directory('${directory.path}/$folderName');
+        //   if (!videoDirectory.existsSync()) {
+        //     videoDirectory.createSync(recursive: true);
+        //   } else {}
+        //   String fileName = 'meta-data.json';
+        //   File file = File(path.join(videoDirectory.path, fileName));
+        //   await file.writeAsString(jsonEncode(item), flush: true);
+        //   Dio dio = Dio();
+        //   final String sceneUrl = item['scene']['inVideoPositionFile'];
+        //   String fileName2 = "${item['scene']['id']}.json";
+        //   String filePath = "${videoDirectory.path}/${fileName2}";
+        //   await dio.download(sceneUrl, filePath);
+        //   final List<dynamic> avatars = item['avatars'];
+        //   for (final avatar in avatars) {
+        //     String fileName3 = "${avatar['id']}.json";
+        //     final String avatarUrl = avatar['inVideoPositionFile'];
+        //     final String avatarFilePath = "${videoDirectory.path}/${fileName3}";
+        //     await dio.download(avatarUrl, avatarFilePath);
+        //   }
+        //   print('파일이 성공적으로 다운로드되었습니다: $filePath');
+        //   vrVideos.add(_video);
+        // }
       } else if (response.statusCode == 401) {
         print("ACCESS_TOKEN 만료");
         TokenService().refreshToken();

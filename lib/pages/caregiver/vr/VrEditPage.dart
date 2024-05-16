@@ -11,6 +11,7 @@ import 'package:remember_me/pages/caregiver/vr/VrQueuePage.dart';
 import 'package:remember_me/pages/carerecipient/home/HomeRecipientMainPage.dart';
 import 'package:remember_me/services/CaregiverService.dart';
 import 'package:remember_me/services/CarerecipientService.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class VrEditPageWidget extends StatefulWidget {
@@ -26,12 +27,14 @@ class _VrEditPageWidgetState extends State<VrEditPageWidget> {
   FocusNode _focusNode1 = FocusNode();
   TextEditingController _textEditingController = TextEditingController();
   bool _isSampleLogin = false;
-
   Future<void> _launchURL() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    String? accessToken = sharedPreferences.getString("access_token");
     try {
       await launchUrl(
         Uri.parse(giverVrUrl +
-            '?scene-id=${widget.scene.id}&avatar-id=${widget.avatars.map((avatar) => avatar.id).join(',')}'),
+            '?accessToken=${accessToken}&scene-id=${widget.scene.id}&avatar-id=${widget.avatars.map((avatar) => avatar.id).join(',')}'),
         customTabsOptions: CustomTabsOptions(
           colorSchemes: CustomTabsColorSchemes.defaults(),
           shareState: CustomTabsShareState.on,
