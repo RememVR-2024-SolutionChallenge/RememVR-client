@@ -12,6 +12,7 @@ import 'package:remember_me/pages/carerecipient/vr/VrSelectPage.dart';
 import 'package:remember_me/pages/carerecipient/vr/VrTestWebViewPage.dart';
 import 'package:remember_me/services/CarerecipientService.dart';
 import 'package:remember_me/services/FileService.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class VrExperiencePageWidget extends StatefulWidget {
@@ -26,10 +27,19 @@ class _VrExperiencePageWidgetState extends State<VrExperiencePageWidget> {
   bool isPut = false;
   bool isEnd = false;
 
+  get sharedPreferences => null;
+
   Future<void> _launchURL() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String? accessToken = sharedPreferences.getString("access_token");
+    print(recipientVrUrl +
+        '?accessToken=${accessToken}' +
+        '&video-id=${widget.videoId}');
     try {
       await launchUrl(
-        Uri.parse(recipientVrUrl + '?video-id=${widget.videoId}'),
+        Uri.parse(recipientVrUrl +
+            '?accessToken=${accessToken}' +
+            '&video-id=${widget.videoId}'),
         customTabsOptions: CustomTabsOptions(
           colorSchemes: CustomTabsColorSchemes.defaults(),
           shareState: CustomTabsShareState.on,
@@ -52,12 +62,7 @@ class _VrExperiencePageWidgetState extends State<VrExperiencePageWidget> {
   void initState() {
     super.initState();
     Future.delayed(Duration(seconds: 2), () {
-      // _launchURL();
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  VrTestWebViewPage(video_id: widget.videoId)));
+      _launchURL();
     });
 
     Future.delayed(Duration(seconds: 4), () {
@@ -65,9 +70,6 @@ class _VrExperiencePageWidgetState extends State<VrExperiencePageWidget> {
         isPut = true;
       });
     });
-    printAllFilesInSubfolders(
-        "/data/user/0/com.example.remember_me/app_flutter");
-    // readAllMetaDataFiles();
   }
 
   @override

@@ -151,40 +151,6 @@ class CaregiverService extends ChangeNotifier {
         vrResources = (jsonData['vrResources'] as List)
             .map((item) => VrResources.fromJson(item))
             .toList();
-
-        // for (int i = 0; i < vrResources.length; i++) {
-        //   String folderName = '';
-        //   Directory vrDirectory = Directory('');
-        //   if (vrResources[i].isSample!) {
-        //     folderName = '${uid}/vr${vrResources[i].id}';
-        //     vrDirectory = Directory('${directory.path}/$folderName');
-        //   } else {
-        //     folderName = 'vr${vrResources[i].id}';
-        //     vrDirectory = Directory('${directory.path}/$folderName');
-        //   }
-
-        //   if (!vrDirectory.existsSync()) {
-        //     vrDirectory.createSync(recursive: true);
-        //   }
-
-        //   if (vrResources[i].storageUrls != null) {
-        //     for (var url
-        //         in vrResources[i].storageUrls!.where((url) => url != null)) {
-        //       final response = await http.get(Uri.parse(url!));
-        //       if (response.statusCode == 200) {
-        //         File file = File(path.join(
-        //             vrDirectory.path,
-        //             vrResources[i].type == "avatar"
-        //                 ? "model.fbx"
-        //                 : "scene.ply"));
-        //         await file.writeAsBytes(response.bodyBytes);
-        //         print(file.path);
-        //       } else {
-        //         print('Failed to download file from $url');
-        //       }
-        //     }
-        //   }
-        // }
       } else if (response.statusCode == 401) {
         print("ACCESS_TOKEN 만료");
         TokenService().refreshToken();
@@ -200,8 +166,6 @@ class CaregiverService extends ChangeNotifier {
   }
 
   Future<void> getAndSaveSampleResources() async {
-    final directory = await getApplicationDocumentsDirectory();
-
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
     String? token = sharedPreferences.getString("access_token");
@@ -221,32 +185,6 @@ class CaregiverService extends ChangeNotifier {
         vrSampleResources = (jsonData['vrResources'] as List)
             .map((item) => VrResources.fromJson(item))
             .toList();
-        // for (int i = 0; i < vrSampleResources.length; i++) {
-        //   String folderName = '${vrSampleResources[i].id}';
-        //   Directory vrDirectory = Directory('${directory.path}/$folderName');
-        //   if (!vrDirectory.existsSync()) {
-        //     vrDirectory.createSync(recursive: true);
-        //   } else {}
-
-        //   if (vrSampleResources[i].storageUrls != null) {
-        //     for (var url in vrSampleResources[i]
-        //         .storageUrls!
-        //         .where((url) => url != null)) {
-        //       final response = await http.get(Uri.parse(url!));
-        //       if (response.statusCode == 200) {
-        //         File file = File(path.join(
-        //             vrDirectory.path,
-        //             vrSampleResources[i].type == "avatar"
-        //                 ? "model.fbx"
-        //                 : "scene.ply"));
-        //         await file.writeAsBytes(response.bodyBytes);
-        //         print(file.path);
-        //       } else {
-        //         print('Failed to download file from $url');
-        //       }
-        //     }
-        //   } else {}
-        // }
       } else if (response.statusCode == 401) {
         print("ACCESS_TOKEN 만료");
         TokenService().refreshToken();
